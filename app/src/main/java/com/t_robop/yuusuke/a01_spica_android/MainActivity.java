@@ -24,27 +24,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         text = findViewById(R.id.editText);
-        text.setText("172.20.10.6");
+        text.setText("192.168.179.4");
     }
 
     public void front(View view) {
         String ip = text.getText().toString();
-        http.setRequest(ip,"FORWARD");
+        http.setRequest(ip,"/?0=FORWARD");
         http.sendHttp();
     }
     public void left(View view) {
         String ip = text.getText().toString();
-        http.setRequest(ip,"LEFT");
+        http.setRequest(ip,"/?3=LEFT");
         http.sendHttp();
     }
     public void right(View view) {
         String ip = text.getText().toString();
-        http.setRequest(ip,"RIGHT");
+        http.setRequest(ip,"/?2=RIGHT");
         http.sendHttp();
     }
     public void back(View view) {
         String ip = text.getText().toString();
-        http.setRequest(ip,"BACK");
+        http.setRequest(ip,"/?1=BACK");
         http.sendHttp();
     }
 }

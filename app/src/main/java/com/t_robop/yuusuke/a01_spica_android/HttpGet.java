@@ -14,21 +14,27 @@ import okhttp3.Response;
 public class HttpGet {
 
     final String HTTP_STR_FRONT = "http://";
-    final String HTTP_STR_BACK = "/?0=";
+
     String ip;
     String command;
 
     Request request;
     void setRequest(String ip,String command){
-        request = new Request.Builder().url(HTTP_STR_FRONT + ip + HTTP_STR_BACK + command).build();
+        this.ip = ip;
+        this.command = command;
+        createRequest();
     }
     void setIpAddress(String ip) {
         this.ip = ip;
-        setRequest(this.ip,this.command);
+        createRequest();
     }
     void setCommand(String command) {
         this.command = command;
-        setRequest(this.ip,this.command);
+        createRequest();
+    }
+
+    private void createRequest(){
+        request = new Request.Builder().url(HTTP_STR_FRONT + ip + command).build();
     }
 
     void sendHttp(){
