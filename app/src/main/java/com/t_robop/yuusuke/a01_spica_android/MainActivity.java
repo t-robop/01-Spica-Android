@@ -4,47 +4,38 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import java.io.UnsupportedEncodingException;
 
-import java.io.IOException;
-import java.util.concurrent.TimeUnit;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText text;
-    final HttpGet http = new HttpGet();
+    EditText sendText;
+    private UdpSend udp = new UdpSend();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         text = findViewById(R.id.editText);
-        text.setText("192.168.179.4");
+        text.setText("192.168.0.75");
+        sendText = findViewById(R.id.editText2);
     }
 
-    public void front(View view) {
-        String ip = text.getText().toString();
-        http.setRequest(ip,"/?0=FORWARD");
-        http.sendHttp();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        udp.disConnect();
     }
-    public void left(View view) {
+
+    public void send(View view) throws UnsupportedEncodingException {
         String ip = text.getText().toString();
-        http.setRequest(ip,"/?3=LEFT");
-        http.sendHttp();
+        String str = sendText.getText().toString();
+        str = System.currentTimeMillis() + str;
+        udp.setIpAddres(ip);
+        udp.setPort(10000);
+        udp.setSendText(str);
+        udp.send();
     }
-    public void right(View view) {
-        String ip = text.getText().toString();
-        http.setRequest(ip,"/?2=RIGHT");
-        http.sendHttp();
-    }
-    public void back(View view) {
-        String ip = text.getText().toString();
-        http.setRequest(ip,"/?1=BACK");
-        http.sendHttp();
-    }
+
 }
