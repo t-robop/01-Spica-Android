@@ -37,7 +37,7 @@ public class UdpSend {
         ByteBuffer buffer = ByteBuffer.wrap(strByte);
         this.textBuffer = buffer;
     }
-    void setport(int port) {
+    void setPort(int port) {
         this.port = port;
     }
 
