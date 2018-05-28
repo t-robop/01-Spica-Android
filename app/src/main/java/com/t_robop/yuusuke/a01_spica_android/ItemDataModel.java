@@ -7,13 +7,13 @@ public class ItemDataModel implements Serializable {
     private int rightSpeed;
     private int leftSpeed;
     private int time;
-    private int orderId;
+    private String orderName;
     private int blockState;
     private int loopCount;
 
     public ItemDataModel(){}
-    ItemDataModel(int orderId, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
-        setOrderId(orderId);
+    ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
+        setOrderName(orderName);
         setRightSpeed(rightSpeed);
         setLeftSpeed(leftSpeed);
         setTime(time);
@@ -29,8 +29,8 @@ public class ItemDataModel implements Serializable {
     public int getTime(){
         return time;
     }
-    public int getOrderId() {
-        return orderId;
+    public String getOrderName() {
+        return orderName;
     }
     public int getBlockState(){
         return blockState;
@@ -61,8 +61,8 @@ public class ItemDataModel implements Serializable {
         }
         this.time = time;
     }
-    void setOrderId(int orderId){
-        this.orderId = orderId ;
+    void setOrderName(String orderName){
+        this.orderName = orderName;
     }
     void setBlockState(int blockState){
         if(blockState < 0){

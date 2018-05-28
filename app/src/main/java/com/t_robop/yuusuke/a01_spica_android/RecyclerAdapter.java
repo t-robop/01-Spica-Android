@@ -92,12 +92,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         final ViewHolder viewHolder = holder;
 
-        if(ItemDataArray.get(position).getOrderId()==5||ItemDataArray.get(position).getOrderId()==6){
+        if(ItemDataArray.get(position).getOrderName().equals("loopStart") || ItemDataArray.get(position).getOrderName().equals("loopEnd")){
             holder.containerLoop.setVisibility(View.VISIBLE);
             holder.containerMove.setVisibility(View.GONE);
 
-            switch (ItemDataArray.get(position).getOrderId()) {
-                case 5:
+            switch (ItemDataArray.get(position).getOrderName()) {
+                case "loopStart":
                     holder.containerLoopNum.setOnClickListener(new View.OnClickListener(){
                         @Override
                         public void onClick(View view){
@@ -109,7 +109,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     holder.imgLoopBack.setImageResource(R.drawable.loop_start_block);
                     break;
 
-                case 6:
+                case "loopEnd":
                     holder.containerLoopNum.setVisibility(View.GONE);
                     holder.imgLoopBack.setImageResource(R.drawable.loop_end_block);
                     break;
@@ -131,20 +131,20 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.containerMove.setVisibility(View.VISIBLE);
             holder.containerLoopNum.setVisibility(View.GONE);
 
-            switch (ItemDataArray.get(position).getOrderId()) {
-                case 1:
+            switch (ItemDataArray.get(position).getOrderName()) {
+                case "forward":
                     holder.image.setImageResource(R.drawable.move_front);
                     break;
 
-                case 2:
+                case "back":
                     holder.image.setImageResource(R.drawable.move_back);
                     break;
 
-                case 3:
+                case "left":
                     holder.image.setImageResource(R.drawable.move_left);
                     break;
 
-                case 4:
+                case "right":
                     holder.image.setImageResource(R.drawable.move_right);
                     break;
 

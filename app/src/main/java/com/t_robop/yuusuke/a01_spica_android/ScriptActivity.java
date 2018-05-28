@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter.OnRecyclerListener {
 
@@ -101,16 +102,22 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                 int orderId = i + 1;
                 switch (orderId) {
                     case 1: //前進
+                        recyclerAdapter.addItem(new ItemDataModel("forward", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                        break;
                     case 2: //後退
+                        recyclerAdapter.addItem(new ItemDataModel("back", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                        break;
                     case 3: //左回転
+                        recyclerAdapter.addItem(new ItemDataModel("left", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                        break;
                     case 4: //右回転
-                        recyclerAdapter.addItem(new ItemDataModel(orderId, DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                        recyclerAdapter.addItem(new ItemDataModel("right", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
                         break;
                     case 5: //ループ開始
-                        recyclerAdapter.addItem(new ItemDataModel(orderId, DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 1, 2));
+                        recyclerAdapter.addItem(new ItemDataModel("loopStart", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 1, 2));
                         break;
                     case 6: //ループ終了
-                        recyclerAdapter.addItem(new ItemDataModel(orderId, DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 2, 0));
+                        recyclerAdapter.addItem(new ItemDataModel("loopEnd", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 2, 0));
                         break;
 
                 }
@@ -125,7 +132,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             public void onClick(View view) {
                 // TODO UDP通信
                 String ip = "";
-                String sendData = "";
+                String sendData = generateUdpStr();
                 udp.setIpAddress(ip);
                 udp.setPort(10000);
                 try {
@@ -133,7 +140,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                udp.send();
+                //udp.send();
+                Log.d("udpText", sendData);
             }
         });
 
@@ -147,7 +155,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             EditLoopParamDialog editLoopParamDialog = new EditLoopParamDialog();
             Bundle data = new Bundle();
             ItemDataModel itemDataModel = new ItemDataModel(
-                    recyclerAdapter.getItem(position).getOrderId(),
+                    recyclerAdapter.getItem(position).getOrderName(),
                     recyclerAdapter.getItem(position).getRightSpeed(),
                     recyclerAdapter.getItem(position).getLeftSpeed(),
                     recyclerAdapter.getItem(position).getTime(),
@@ -166,7 +174,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             Bundle data = new Bundle();
 
             ItemDataModel itemDataModel = new ItemDataModel(
-                    recyclerAdapter.getItem(position).getOrderId(),
+                    recyclerAdapter.getItem(position).getOrderName(),
                     recyclerAdapter.getItem(position).getRightSpeed(),
                     recyclerAdapter.getItem(position).getLeftSpeed(),
                     recyclerAdapter.getItem(position).getTime(),
@@ -185,6 +193,29 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     public void updateItemParam(int listPosition, ItemDataModel dataModel) {
         recyclerAdapter.setItem(listPosition,dataModel);
         recyclerAdapter.notifyDataSetChanged();
+    }
+
+    // TODO ４方向指定コマンドの生成はできてる　ループ対応がまだ
+    private String generateUdpStr(){
+        StringBuilder sendText = new StringBuilder();
+        ArrayList<ItemDataModel> dataArray = recyclerAdapter.getAllItem();
+
+        for (int i=0; i<dataArray.size(); i++){
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getOrderName());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getLeftSpeed());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getRightSpeed());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getTime() * 1000);
+
+            if (i != dataArray.size() -1){
+                sendText.append("+");
+            }
+        }
+
+        return sendText.toString();
     }
 
     // TODO なんかループの処理書く
