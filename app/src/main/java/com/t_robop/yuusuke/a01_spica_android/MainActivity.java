@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         String ip = text.getText().toString();
         String str = sendText.getText().toString();
         str = System.currentTimeMillis() + str;
-        udp.setIpAddres(ip);
+        udp.setIpAddress(ip);
         udp.setPort(10000);
         udp.setSendText(str);
         udp.send();

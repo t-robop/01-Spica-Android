@@ -11,10 +11,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter.OnRecyclerListener {
@@ -24,6 +24,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     private RecyclerAdapter recyclerAdapter;
 
     private ArrayList<ItemDataModel> fullGenerateDataArray = new ArrayList<>();
+
+    private UdpSend udp = new UdpSend();
 
     // コマンドのデフォルトパラメータ
     private int DEFAULT_SPEED_R = 100;
@@ -122,7 +124,16 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             @Override
             public void onClick(View view) {
                 // TODO UDP通信
-
+                String ip = "";
+                String sendData = "";
+                udp.setIpAddress(ip);
+                udp.setPort(10000);
+                try {
+                    udp.setSendText(sendData);
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+                udp.send();
             }
         });
 
