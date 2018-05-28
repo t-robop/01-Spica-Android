@@ -17,6 +17,7 @@ import android.widget.Toast;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.stream.IntStream;
 
 public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter.OnRecyclerListener {
 
@@ -195,6 +196,17 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         recyclerAdapter.notifyDataSetChanged();
     }
 
+    private ArrayList<ItemDataModel> checkLoopContain(){
+        for (int i=0; i<recyclerAdapter.getItemCount(); i++){
+            if (recyclerAdapter.getItem(i).getBlockState() != 0){
+                //ループブロックが入っている
+                // return
+            }
+        }
+        return recyclerAdapter.getAllItem();
+    }
+
+
     // TODO ４方向指定コマンドの生成はできてる　ループ対応がまだ
     private String generateUdpStr(){
         StringBuilder sendText = new StringBuilder();
@@ -202,13 +214,35 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
         for (int i=0; i<dataArray.size(); i++){
             sendText.append("&");
-            sendText.append(dataArray.get(i).getOrderName());
-            sendText.append("&");
-            sendText.append(dataArray.get(i).getLeftSpeed());
-            sendText.append("&");
-            sendText.append(dataArray.get(i).getRightSpeed());
-            sendText.append("&");
-            sendText.append(dataArray.get(i).getTime() * 1000);
+
+            if (dataArray.get(i).getOrderName().equals("loopStart")){
+
+                for (int j=0; j<dataArray.get(i-1).getLoopCount(); j++){
+
+                    sendText.append(dataArray.get(i).getOrderName());
+                    sendText.append("&");
+                    sendText.append(dataArray.get(i).getLeftSpeed());
+                    sendText.append("&");
+                    sendText.append(dataArray.get(i).getRightSpeed());
+                    sendText.append("&");
+                    sendText.append(dataArray.get(i).getTime() * 1000);
+
+                }
+
+                if (dataArray.get(i).getOrderName().equals("loopEnd")){
+                    break;
+                }
+                i++;
+
+            }else{
+                sendText.append(dataArray.get(i).getOrderName());
+                sendText.append("&");
+                sendText.append(dataArray.get(i).getLeftSpeed());
+                sendText.append("&");
+                sendText.append(dataArray.get(i).getRightSpeed());
+                sendText.append("&");
+                sendText.append(dataArray.get(i).getTime() * 1000);
+            }
 
             if (i != dataArray.size() -1){
                 sendText.append("+");
@@ -218,59 +252,4 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         return sendText.toString();
     }
 
-    // TODO なんかループの処理書く
-    private void convertLoopCommand(int start,int end, int depth) {
-
-        for (int i = start; i <= end; i++) {
-            if (recyclerAdapter.getItem(i).getBlockState() == 1) {
-                convertLoopCommand(i + 1, end, depth + 1);
-                for (;i < end; i++){
-                    if (recyclerAdapter.getItem(i).getBlockState() == 2) {
-                        break;
-                    }
-                }
-
-            }else if (recyclerAdapter.getItem(i).getBlockState() == 2) {
-                if (depth != 0) {
-                    ArrayList<ItemDataModel> tmpDataArray = new ArrayList<>();
-                    ArrayList<ItemDataModel> tmpDataArray2 = new ArrayList<>();
-                    for (int j = start; j < i; j++) {
-                        tmpDataArray.add(recyclerAdapter.getItem(j));
-                    }
-                    for (int j = 0; j < recyclerAdapter.getItem(start - 1).getLoopCount(); j++) {
-                        tmpDataArray2.addAll(tmpDataArray);
-                    }
-                    fullGenerateDataArray.addAll(tmpDataArray2);
-                    return;
-                }
-            } else if (depth == 0) {
-                fullGenerateDataArray.add(recyclerAdapter.getItem(i));
-            }
-        }
-    }
-
-    boolean loopErrorCheck() {
-        int loopStart = 0,loopEnd = 0;
-        for (int i = 0; i < recyclerAdapter.getItemCount(); i++) {
-            if (recyclerAdapter.getItem(i).getBlockState() == 1) {
-                loopStart++;
-            } else if (recyclerAdapter.getItem(i).getBlockState() == 2) {
-                loopEnd++;
-                if (loopStart < loopEnd) {
-                    Toast.makeText(this,"forブロックの始まりより前に終わりが来ています",Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-
-            }
-        }
-        if ((loopStart < loopEnd)) {
-            Toast.makeText(this,"forブロックの終わりの数が多すぎます",Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (loopStart > loopEnd){
-            Toast.makeText(this,"forブロックの始まりの数が多すぎます",Toast.LENGTH_SHORT).show();
-            return false;
-        } else {
-            return true;
-        }
-    }
 }

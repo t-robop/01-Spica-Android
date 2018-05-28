@@ -20,6 +20,13 @@ public class ItemDataModel implements Serializable {
         setBlockState(blockState);
         setLoopCount(loopCount);
     }
+
+    ItemDataModel(String orderName, int blockState, int loopCount){
+        setOrderName(orderName);
+        setBlockState(blockState);
+        setLoopCount(loopCount);
+    }
+
     public int getRightSpeed(){
         return rightSpeed;
     }
