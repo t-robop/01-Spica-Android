@@ -7,36 +7,20 @@
     android:orientation="vertical"
     tools:context="com.t_robop.yuusuke.a01_spica_android.MainActivity">
 
+    <EditText
+        android:id="@+id/editText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="送信文字列" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="front"
+        android:onClick="send"
         tools:ignore="OnClick"
-        android:text="front" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="back"
-        android:onClick="back"
-        tools:ignore="OnClick" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="right"
-        android:onClick="right"
-        tools:ignore="OnClick" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="left"
-        android:onClick="left"
-        tools:ignore="OnClick" />
+        android:text="send" />
 
     <EditText
         android:id="@+id/editText"
