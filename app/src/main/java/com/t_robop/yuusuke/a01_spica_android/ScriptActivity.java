@@ -12,8 +12,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter.OnRecyclerListener {
 
@@ -66,14 +69,14 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                         final int fromPos = viewHolder.getAdapterPosition();
                         recyclerAdapter.removeItem(fromPos);
                         recyclerAdapter.notifyItemRemoved(fromPos);
-                        Log.d("","");
+                        Log.d("", "");
                     }
 
                     @Override
                     public void onSelectedChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
                         super.onSelectedChanged(viewHolder, actionState);
 
-                        if (actionState == ItemTouchHelper.ACTION_STATE_DRAG ) {
+                        if (actionState == ItemTouchHelper.ACTION_STATE_DRAG) {
                             ((Vibrator) getSystemService(Context.VIBRATOR_SERVICE)).vibrate(50);
                         }
                     }
@@ -111,10 +114,14 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                         recyclerAdapter.addItem(new ItemDataModel("right", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
                         break;
                     case 5: //ループ開始
-                        recyclerAdapter.addItem(new ItemDataModel("loopStart", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 1, 2));
+                        //recyclerAdapter.addItem(new ItemDataModel("loopStart", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 1, 2));
+
+                        recyclerAdapter.addItem(new ItemDataModel("loopStart", 1, 2));
+
                         break;
                     case 6: //ループ終了
-                        recyclerAdapter.addItem(new ItemDataModel("loopEnd", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 2, 0));
+                        //recyclerAdapter.addItem(new ItemDataModel("loopEnd", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, 2, 0));
+                        recyclerAdapter.addItem(new ItemDataModel("loopEnd", 2, 0));
                         break;
 
                 }
@@ -188,17 +195,66 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
     //View更新
     public void updateItemParam(int listPosition, ItemDataModel dataModel) {
-        recyclerAdapter.setItem(listPosition,dataModel);
+        recyclerAdapter.setItem(listPosition, dataModel);
         recyclerAdapter.notifyDataSetChanged();
     }
 
+    int[] loopStartEndPosition(ArrayList<ItemDataModel> dataArray) {
+        int loopPos[] = new int[dataArray.size()];
+        for (int i = 0; i < dataArray.size(); i++) {
+            ItemDataModel model = dataArray.get(i);
+            if (model.getBlockState() == 1) {
+                loopPos[i] = 1;
+            } else if (model.getBlockState() == 2) {
+                loopPos[i] = 2;
+            }
+        }
+        return loopPos;
+    }
+
+    boolean forCheck(ArrayList<ItemDataModel> dataArray){
+        String s = "";
+        for (int i = 0; i < dataArray.size(); i++) {
+            s += dataArray.get(i).getBlockState();
+        }
+        if (s.contains("1")) {
+            return true;
+        }
+        return false;
+    }
 
     // TODO ４方向指定コマンドの生成はできてる　ループ対応がまだ
-    private String generateUdpStr(){
+    private String generateUdpStr() {
         StringBuilder sendText = new StringBuilder();
-        ArrayList<ItemDataModel> dataArray = recyclerAdapter.getAllItem();
+        ArrayList<ItemDataModel> listArray = recyclerAdapter.getAllItem();
+        ArrayList<ItemDataModel> dataArray = new ArrayList(listArray);
+        int loopPos[] = loopStartEndPosition(dataArray);
 
-        for (int i=0; i<dataArray.size(); i++){
+        if (forCheck(dataArray)) {
+            for (int i = 0; i < loopPos.length; i++) {
+                if (loopPos[i] == 1) {
+                    for (int j = i; j < loopPos.length; j++) {
+                        if (loopPos[j] == 2) {
+                            ArrayList<ItemDataModel> loopContentArray = new ArrayList<>();
+                            ArrayList<ItemDataModel> loopAddArray = new ArrayList<>();
+                            for (int num = i+1; num < j; num++) {
+                                loopContentArray.add(dataArray.get(num));
+                            }
+                            //もともと入っていたブロックがあるので、追加する数が減るため1にしている
+                            for (int num = 1; num < dataArray.get(i).getLoopCount(); num++) {
+                                loopAddArray.addAll(loopContentArray);
+                            }
+                            dataArray.remove(j);
+                            dataArray.remove(i);
+                            dataArray.addAll(i, loopAddArray);
+                        }
+                    }
+                }
+            }
+        }
+
+
+        for (int i = 0; i < dataArray.size(); i++) {
             sendText.append("&");
 
             sendText.append(dataArray.get(i).getOrderName());
@@ -209,7 +265,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             sendText.append("&");
             sendText.append(dataArray.get(i).getTime() * 1000);
 
-            if (i != dataArray.size() -1){
+            if (i != dataArray.size() - 1) {
                 sendText.append("+");
             }
         }
