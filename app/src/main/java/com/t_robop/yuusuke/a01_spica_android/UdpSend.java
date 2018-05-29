@@ -29,7 +29,7 @@ public class UdpSend {
         }
         AsyncServer.getDefault().stop();
     }
-    void setIpAddres(String ip) {
+    void setIpAddress(String ip) {
         this.ip = ip;
     }
     void setSendText(String text) throws UnsupportedEncodingException {
