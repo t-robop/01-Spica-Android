@@ -7,24 +7,18 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter.OnRecyclerListener {
 
     //RecyclerView
     private RecyclerView recyclerView;
     private RecyclerAdapter recyclerAdapter;
-
-    private ArrayList<ItemDataModel> fullGenerateDataArray = new ArrayList<>();
 
     private UdpSend udp = new UdpSend();
 
@@ -69,7 +63,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                         final int fromPos = viewHolder.getAdapterPosition();
                         recyclerAdapter.removeItem(fromPos);
                         recyclerAdapter.notifyItemRemoved(fromPos);
-                        Log.d("", "");
                     }
 
                     @Override
@@ -134,7 +127,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO UDP通信
                 String ip = "";
                 String sendData = generateUdpStr();
                 udp.setIpAddress(ip);
@@ -144,8 +136,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                //udp.send();
-                Log.d("udpText", sendData);
+                udp.send();
             }
         });
 
@@ -213,17 +204,16 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
     boolean forCheck(ArrayList<ItemDataModel> dataArray){
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for (int i = 0; i < dataArray.size(); i++) {
-            s += dataArray.get(i).getBlockState();
+            s.append(dataArray.get(i).getBlockState());
         }
-        if (s.contains("1")) {
+        if (s.toString().contains("1")) {
             return true;
         }
         return false;
     }
 
-    // TODO ４方向指定コマンドの生成はできてる　ループ対応がまだ
     private String generateUdpStr() {
         StringBuilder sendText = new StringBuilder();
         ArrayList<ItemDataModel> listArray = recyclerAdapter.getAllItem();
