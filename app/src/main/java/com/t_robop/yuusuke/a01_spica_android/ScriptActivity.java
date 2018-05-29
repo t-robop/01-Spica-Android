@@ -196,16 +196,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         recyclerAdapter.notifyDataSetChanged();
     }
 
-    private ArrayList<ItemDataModel> checkLoopContain(){
-        for (int i=0; i<recyclerAdapter.getItemCount(); i++){
-            if (recyclerAdapter.getItem(i).getBlockState() != 0){
-                //ループブロックが入っている
-                // return
-            }
-        }
-        return recyclerAdapter.getAllItem();
-    }
-
 
     // TODO ４方向指定コマンドの生成はできてる　ループ対応がまだ
     private String generateUdpStr(){
@@ -215,34 +205,13 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         for (int i=0; i<dataArray.size(); i++){
             sendText.append("&");
 
-            if (dataArray.get(i).getOrderName().equals("loopStart")){
-
-                for (int j=0; j<dataArray.get(i-1).getLoopCount(); j++){
-
-                    sendText.append(dataArray.get(i).getOrderName());
-                    sendText.append("&");
-                    sendText.append(dataArray.get(i).getLeftSpeed());
-                    sendText.append("&");
-                    sendText.append(dataArray.get(i).getRightSpeed());
-                    sendText.append("&");
-                    sendText.append(dataArray.get(i).getTime() * 1000);
-
-                }
-
-                if (dataArray.get(i).getOrderName().equals("loopEnd")){
-                    break;
-                }
-                i++;
-
-            }else{
-                sendText.append(dataArray.get(i).getOrderName());
-                sendText.append("&");
-                sendText.append(dataArray.get(i).getLeftSpeed());
-                sendText.append("&");
-                sendText.append(dataArray.get(i).getRightSpeed());
-                sendText.append("&");
-                sendText.append(dataArray.get(i).getTime() * 1000);
-            }
+            sendText.append(dataArray.get(i).getOrderName());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getLeftSpeed());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getRightSpeed());
+            sendText.append("&");
+            sendText.append(dataArray.get(i).getTime() * 1000);
 
             if (i != dataArray.size() -1){
                 sendText.append("+");
