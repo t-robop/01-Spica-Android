@@ -263,4 +263,49 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         return sendText.toString();
     }
 
+    //todo こいつに送信前のリストデータを与えれば二重loop処理が動くはず
+    //完全体に進化するメソッド(結果にCommitします)
+    public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
+        return convertLoopItem(items,0,0);
+    }
+
+    //loop文があったら外してリスト化してくれるメソッド
+    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart,int cntLoop){
+        int posStart=-1;
+        int posEnd=-1;
+        int i;
+
+        for(i=posLoopStart;i<items.size();i++){
+            if(items.get(i).getBlockState()==1){
+                posStart=i;
+                items=convertLoopItem(items,i+1,items.get(i).getLoopCount());
+            }
+            if(items.get(i).getBlockState()==2){
+                posEnd=i;
+                break;
+            }
+        }
+        if(posStart==-1){
+            return items;
+        }
+
+        //loop前の処理を保持
+        ArrayList<ItemDataModel> content=new ArrayList<>();
+        for(i=posLoopStart;i<posStart;i++){
+            content.add(items.get(i));
+        }
+        //連結
+        for(int cnt=0;cnt<cntLoop;cnt++) {
+            for (i = posStart + 1; i < posEnd; i++) {
+                content.add(items.get(i));
+            }
+        }
+        //loop外の残りを連結
+        for (i=posEnd+1;i<items.size();i++){
+            content.add(items.get(i));
+        }
+
+        return content;
+    }
+
 }
