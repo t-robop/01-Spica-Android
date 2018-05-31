@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -136,7 +137,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                 } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
-                udp.send();
+                Log.d("udpText", sendData);
+                //udp.send();
             }
         });
 
@@ -220,6 +222,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         ArrayList<ItemDataModel> dataArray = new ArrayList(listArray);
         int loopPos[] = loopStartEndPosition(dataArray);
 
+        // TODO 2重ループ・複数ループに対応
+        /*
         if (forCheck(dataArray)) {
             for (int i = 0; i < loopPos.length; i++) {
                 if (loopPos[i] == 1) {
@@ -241,7 +245,9 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                     }
                 }
             }
-        }
+        }*/
+
+        dataArray = evolutionItems(dataArray);
 
 
         for (int i = 0; i < dataArray.size(); i++) {
@@ -264,21 +270,24 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     }
 
     //todo こいつに送信前のリストデータを与えれば二重loop処理が動くはず
+    //TODO 連続ループに対応せよ
     //完全体に進化するメソッド(結果にCommitします)
     public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
-        return convertLoopItem(items,0,0);
+        return convertLoopItem(items,0);
     }
 
     //loop文があったら外してリスト化してくれるメソッド
-    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart,int cntLoop){
+    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart){
         int posStart=-1;
         int posEnd=-1;
         int i;
+        int cntLoop=0;
 
         for(i=posLoopStart;i<items.size();i++){
             if(items.get(i).getBlockState()==1){
                 posStart=i;
-                items=convertLoopItem(items,i+1,items.get(i).getLoopCount());
+                cntLoop=items.get(i).getLoopCount();
+                items=convertLoopItem(items,i+1);
             }
             if(items.get(i).getBlockState()==2){
                 posEnd=i;
@@ -291,7 +300,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
         //loop前の処理を保持
         ArrayList<ItemDataModel> content=new ArrayList<>();
-        for(i=posLoopStart;i<posStart;i++){
+        for(i=0;i<posStart;i++){
             content.add(items.get(i));
         }
         //連結
