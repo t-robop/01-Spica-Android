@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -130,15 +132,17 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             public void onClick(View view) {
                 String ip = "";
                 String sendData = generateUdpStr();
-                udp.setIpAddress(ip);
-                udp.setPort(10000);
-                try {
-                    udp.setSendText(sendData);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if(!sendData.isEmpty()) {
+                    udp.setIpAddress(ip);
+                    udp.setPort(10000);
+                    try {
+                        udp.setSendText(sendData);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    Log.d("udpText", sendData);
+                    //udp.send();
                 }
-                Log.d("udpText", sendData);
-                //udp.send();
             }
         });
 
@@ -222,7 +226,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         ArrayList<ItemDataModel> dataArray = new ArrayList(listArray);
         int loopPos[] = loopStartEndPosition(dataArray);
 
-        // TODO 2重ループ・複数ループに対応
         /*
         if (forCheck(dataArray)) {
             for (int i = 0; i < loopPos.length; i++) {
@@ -247,7 +250,12 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             }
         }*/
 
-        dataArray = evolutionItems(dataArray);
+        //構文チェック
+        if(compileSuccess(dataArray)) {
+            dataArray = evolutionItems(dataArray);
+        }else{
+            return "";
+        }
 
 
         for (int i = 0; i < dataArray.size(); i++) {
@@ -311,6 +319,27 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         }
 
         return content;
+    }
+
+    public boolean compileSuccess(ArrayList<ItemDataModel> items){
+        int cntLoopStart=0;
+        int cntLoopEnd=0;
+
+        for(ItemDataModel item :items){
+            if(item.getBlockState()==1){
+                cntLoopStart++;
+            }
+            else if(item.getBlockState()==2){
+                cntLoopEnd++;
+            }
+        }
+
+        if (cntLoopStart!=cntLoopEnd){
+            Toast.makeText(this,"ループの数が間違ってます",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
 }
