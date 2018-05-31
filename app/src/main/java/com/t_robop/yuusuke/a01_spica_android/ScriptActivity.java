@@ -273,39 +273,35 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     //TODO 連続ループに対応せよ
     //完全体に進化するメソッド(結果にCommitします)
     public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
-        return convertLoopItem(items,0);
+        return convertLoopItem(items,0,0);
     }
 
     //loop文があったら外してリスト化してくれるメソッド
-    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart){
-        int posStart=-1;
+    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart,int cntLoop){
         int posEnd=-1;
         int i;
-        int cntLoop=0;
 
-        for(i=posLoopStart;i<items.size();i++){
+        for(i=posLoopStart+1;i<items.size();i++){
             if(items.get(i).getBlockState()==1){
-                posStart=i;
-                cntLoop=items.get(i).getLoopCount();
-                items=convertLoopItem(items,i+1);
+                items=convertLoopItem(items,i,items.get(i).getLoopCount());
             }
             if(items.get(i).getBlockState()==2){
                 posEnd=i;
                 break;
             }
         }
-        if(posStart==-1){
+        if(items.get(posLoopStart).getBlockState()!=1){
             return items;
         }
 
         //loop前の処理を保持
         ArrayList<ItemDataModel> content=new ArrayList<>();
-        for(i=0;i<posStart;i++){
+        for(i=0;i<posLoopStart;i++){
             content.add(items.get(i));
         }
         //連結
         for(int cnt=0;cnt<cntLoop;cnt++) {
-            for (i = posStart + 1; i < posEnd; i++) {
+            for (i = posLoopStart + 1; i < posEnd; i++) {
                 content.add(items.get(i));
             }
         }
