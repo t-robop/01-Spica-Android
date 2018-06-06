@@ -7,10 +7,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
@@ -129,14 +132,17 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             public void onClick(View view) {
                 String ip = "";
                 String sendData = generateUdpStr();
-                udp.setIpAddress(ip);
-                udp.setPort(10000);
-                try {
-                    udp.setSendText(sendData);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                if(!sendData.isEmpty()) {
+                    udp.setIpAddress(ip);
+                    udp.setPort(10000);
+                    try {
+                        udp.setSendText(sendData);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                    //Log.d("udpText", sendData);
+                    udp.send();
                 }
-                udp.send();
             }
         });
 
@@ -216,31 +222,13 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
     private String generateUdpStr() {
         StringBuilder sendText = new StringBuilder();
-        ArrayList<ItemDataModel> listArray = recyclerAdapter.getAllItem();
-        ArrayList<ItemDataModel> dataArray = new ArrayList(listArray);
-        int loopPos[] = loopStartEndPosition(dataArray);
+        ArrayList<ItemDataModel> dataArray = recyclerAdapter.getAllItem();
 
-        if (forCheck(dataArray)) {
-            for (int i = 0; i < loopPos.length; i++) {
-                if (loopPos[i] == 1) {
-                    for (int j = i; j < loopPos.length; j++) {
-                        if (loopPos[j] == 2) {
-                            ArrayList<ItemDataModel> loopContentArray = new ArrayList<>();
-                            ArrayList<ItemDataModel> loopAddArray = new ArrayList<>();
-                            for (int num = i+1; num < j; num++) {
-                                loopContentArray.add(dataArray.get(num));
-                            }
-                            //もともと入っていたブロックがあるので、追加する数が減るため1にしている
-                            for (int num = 1; num < dataArray.get(i).getLoopCount(); num++) {
-                                loopAddArray.addAll(loopContentArray);
-                            }
-                            dataArray.remove(j);
-                            dataArray.remove(i);
-                            dataArray.addAll(i, loopAddArray);
-                        }
-                    }
-                }
-            }
+        //構文チェック
+        if(compileSuccess(dataArray)) {
+            dataArray = evolutionItems(dataArray);
+        }else{
+            return "";
         }
 
 
@@ -261,6 +249,71 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         }
 
         return sendText.toString();
+    }
+
+    /** こいつに送信前のリストデータを与えれば二重loop処理が動くはず **/
+    //完全体に進化するメソッド(結果にCommitします)
+    public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
+        return convertLoopItem(items,0,0);
+    }
+
+    //loop文があったら外してリスト化してくれるメソッド
+    public ArrayList<ItemDataModel> convertLoopItem(ArrayList<ItemDataModel> items,int posLoopStart,int cntLoop){
+        int posEnd=-1;
+        int i;
+
+        for(i=posLoopStart+1;i<items.size();i++){
+            if(items.get(i).getBlockState()==1){
+                items=convertLoopItem(items,i,items.get(i).getLoopCount());
+            }
+            if(items.get(i).getBlockState()==2){
+                posEnd=i;
+                break;
+            }
+        }
+        if(items.get(posLoopStart).getBlockState()!=1){
+            return items;
+        }
+
+        //loop前の処理を保持
+        ArrayList<ItemDataModel> content=new ArrayList<>();
+        for(i=0;i<posLoopStart;i++){
+            content.add(items.get(i));
+        }
+        //連結
+        for(int cnt=0;cnt<cntLoop;cnt++) {
+            for (i = posLoopStart + 1; i < posEnd; i++) {
+                content.add(items.get(i));
+            }
+        }
+        //loop外の残りを連結
+        for (i=posEnd+1;i<items.size();i++){
+            content.add(items.get(i));
+        }
+
+        return content;
+    }
+
+    //compileの構文チェックメソッド
+    public boolean compileSuccess(ArrayList<ItemDataModel> items){
+        int cntLoopStart=0;
+        int cntLoopEnd=0;
+
+        for(ItemDataModel item :items){
+            if(item.getBlockState()==1){
+                cntLoopStart++;
+            }
+            else if(item.getBlockState()==2){
+                cntLoopEnd++;
+            }
+        }
+
+        if (cntLoopStart!=cntLoopEnd){
+            Toast.makeText(this,"ループの数が間違ってます",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
 }

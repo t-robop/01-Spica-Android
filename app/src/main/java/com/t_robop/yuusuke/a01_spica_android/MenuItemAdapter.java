@@ -67,7 +67,7 @@ public class MenuItemAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        holder.imageBlock.setImageResource(itemList.get(position).getItemImage());
+        holder.imageDirection.setImageResource(itemList.get(position).getItemImage());
         holder.cmdName.setText(itemList.get(position).getCmdName());
         holder.cmdDetail.setText(itemList.get(position).getCmdDetail());
 
