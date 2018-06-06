@@ -140,8 +140,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    Log.d("udpText", sendData);
-                    //udp.send();
+                    //Log.d("udpText", sendData);
+                    udp.send();
                 }
             }
         });
@@ -222,33 +222,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
     private String generateUdpStr() {
         StringBuilder sendText = new StringBuilder();
-        ArrayList<ItemDataModel> listArray = recyclerAdapter.getAllItem();
-        ArrayList<ItemDataModel> dataArray = new ArrayList(listArray);
-        int loopPos[] = loopStartEndPosition(dataArray);
-
-        /*
-        if (forCheck(dataArray)) {
-            for (int i = 0; i < loopPos.length; i++) {
-                if (loopPos[i] == 1) {
-                    for (int j = i; j < loopPos.length; j++) {
-                        if (loopPos[j] == 2) {
-                            ArrayList<ItemDataModel> loopContentArray = new ArrayList<>();
-                            ArrayList<ItemDataModel> loopAddArray = new ArrayList<>();
-                            for (int num = i+1; num < j; num++) {
-                                loopContentArray.add(dataArray.get(num));
-                            }
-                            //もともと入っていたブロックがあるので、追加する数が減るため1にしている
-                            for (int num = 1; num < dataArray.get(i).getLoopCount(); num++) {
-                                loopAddArray.addAll(loopContentArray);
-                            }
-                            dataArray.remove(j);
-                            dataArray.remove(i);
-                            dataArray.addAll(i, loopAddArray);
-                        }
-                    }
-                }
-            }
-        }*/
+        ArrayList<ItemDataModel> dataArray = recyclerAdapter.getAllItem();
 
         //構文チェック
         if(compileSuccess(dataArray)) {
@@ -277,8 +251,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         return sendText.toString();
     }
 
-    //todo こいつに送信前のリストデータを与えれば二重loop処理が動くはず
-    //TODO 連続ループに対応せよ
+    /** こいつに送信前のリストデータを与えれば二重loop処理が動くはず **/
     //完全体に進化するメソッド(結果にCommitします)
     public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
         return convertLoopItem(items,0,0);
@@ -321,6 +294,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         return content;
     }
 
+    //compileの構文チェックメソッド
     public boolean compileSuccess(ArrayList<ItemDataModel> items){
         int cntLoopStart=0;
         int cntLoopEnd=0;
