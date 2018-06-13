@@ -254,6 +254,9 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     /** こいつに送信前のリストデータを与えれば二重loop処理が動くはず **/
     //完全体に進化するメソッド(結果にCommitします)
     public ArrayList<ItemDataModel> evolutionItems(ArrayList<ItemDataModel> items){
+        if(items.isEmpty()){
+            return items;
+        }
         return convertLoopItem(items,0,0);
     }
 
