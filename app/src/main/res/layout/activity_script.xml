@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/repeat_rasen">
+    android:layout_height="match_parent"
+    android:background="@drawable/repeat_rasen">
 
         <FrameLayout
             android:id="@+id/back_ground"
@@ -21,47 +16,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-            <LinearLayout
+            <Button
+                android:id="@+id/start_button"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
-                android:layout_gravity="start|bottom"
-                android:layout_marginBottom="40dp"
-                android:layout_marginLeft="40dp"
-                android:orientation="vertical">
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="30dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/start" />
 
-                <Button
-                    android:id="@+id/start_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/start" />
-
-            </LinearLayout>
+            <ListView
+                android:id="@+id/brock_list"
+                android:layout_width="250dp"
+                android:layout_height="match_parent"
+                android:background="#B1B1B1B1"/>
 
         </FrameLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#fff">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <ListView
-                android:id="@+id/drawer_list"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-</android.support.v4.widget.DrawerLayout>
+</RelativeLayout>
