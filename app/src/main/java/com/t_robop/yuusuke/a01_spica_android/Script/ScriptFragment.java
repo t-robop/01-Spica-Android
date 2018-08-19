@@ -1,9 +1,9 @@
 package com.t_robop.yuusuke.a01_spica_android.Script;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -115,7 +115,7 @@ public class ScriptFragment extends Fragment implements ScriptContract.View {
             bundleData.putInt("listItemPosition", pos);
             dialog.setArguments(bundleData);
             //todo FragmentManagerに依存してる謎
-            //dialog.show(getFragmentManager(), null);
+            dialog.show(getFragmentManager(), null);
         } catch (java.lang.InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
