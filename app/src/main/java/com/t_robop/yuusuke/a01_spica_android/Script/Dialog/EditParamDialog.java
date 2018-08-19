@@ -1,4 +1,4 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.Script.Dialog;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -11,7 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.Script.Model.ItemDataModel;
+import com.t_robop.yuusuke.a01_spica_android.Script.ScriptContract;
+
+@SuppressLint("ValidFragment")
 public class EditParamDialog extends DialogFragment {
+
+    ScriptContract.Presenter mPresenter;
+
+    @SuppressLint("ValidFragment")
+    public EditParamDialog(ScriptContract.Presenter presenter){
+        mPresenter=presenter;
+    }
 
     @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
@@ -48,8 +60,7 @@ public class EditParamDialog extends DialogFragment {
                             dataModel.setLeftSpeed(Integer.valueOf(editSpeedLeft.getText().toString()));
                             dataModel.setTime(Integer.valueOf(editTime.getText().toString()));
 
-                            ScriptActivity scriptActivity = (ScriptActivity) getActivity();
-                            scriptActivity.updateItemParam(listItemPosition, dataModel);
+                            mPresenter.updateItemParam(listItemPosition, dataModel);
                         }
                     }
                 })

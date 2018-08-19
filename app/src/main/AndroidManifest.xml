@@ -16,7 +16,7 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".ScriptActivity"
+        <activity android:name=".Script.ScriptActivity"
             android:screenOrientation="landscape"
             android:configChanges="keyboardHidden|screenSize|orientation">
             <intent-filter>

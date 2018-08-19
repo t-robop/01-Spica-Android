@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/repeat_rasen">
+    android:layout_height="match_parent">
 
-        <FrameLayout
-            android:id="@+id/back_ground"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:scrollbars="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-            <Button
-                android:id="@+id/start_button"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="end|bottom"
-                android:layout_marginBottom="30dp"
-                android:layout_marginRight="40dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/start" />
-
-            <ListView
-                android:id="@+id/brock_list"
-                android:layout_width="250dp"
-                android:layout_height="match_parent"
-                android:background="#B1B1B1B1"/>
-
-        </FrameLayout>
+    <LinearLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    </LinearLayout>
 
 </RelativeLayout>

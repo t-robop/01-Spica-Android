@@ -14,14 +14,14 @@ public class UdpSend {
     private ByteBuffer textBuffer;
 
 
-    UdpSend() {
+     public UdpSend() {
         try {
             socket = AsyncServer.getDefault().openDatagram();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    void disConnect() {
+    public void disConnect() {
         try {
             socket.disconnect();
         } catch (IOException e) {
@@ -29,19 +29,19 @@ public class UdpSend {
         }
         AsyncServer.getDefault().stop();
     }
-    void setIpAddress(String ip) {
+    public void setIpAddress(String ip) {
         this.ip = ip;
     }
-    void setSendText(String text) throws UnsupportedEncodingException {
+    public void setSendText(String text) throws UnsupportedEncodingException {
         byte[] strByte = text.getBytes("UTF-8");
         ByteBuffer buffer = ByteBuffer.wrap(strByte);
         this.textBuffer = buffer;
     }
-    void setPort(int port) {
+    public void setPort(int port) {
         this.port = port;
     }
 
-    void send(){
+    public void send(){
         socket.send(ip, port, textBuffer);
     }
 

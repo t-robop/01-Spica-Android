@@ -1,4 +1,4 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.Script.Model;
 
 import java.io.Serializable;
 
@@ -12,7 +12,7 @@ public class ItemDataModel implements Serializable {
     private int loopCount;
 
     public ItemDataModel(){}
-    ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
+    public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
         setOrderName(orderName);
         setRightSpeed(rightSpeed);
         setLeftSpeed(leftSpeed);
@@ -21,7 +21,7 @@ public class ItemDataModel implements Serializable {
         setLoopCount(loopCount);
     }
 
-    ItemDataModel(String orderName, int blockState, int loopCount){
+    public ItemDataModel(String orderName, int blockState, int loopCount){
         setOrderName(orderName);
         setBlockState(blockState);
         setLoopCount(loopCount);
@@ -46,7 +46,7 @@ public class ItemDataModel implements Serializable {
         return loopCount;
     }
 
-    void setRightSpeed(int rightSpeed){
+    public void setRightSpeed(int rightSpeed){
         if (rightSpeed > 255) {
             this.rightSpeed = 255;
         } else if (rightSpeed < 0) {
@@ -54,7 +54,7 @@ public class ItemDataModel implements Serializable {
         }
         this.rightSpeed = rightSpeed;
     }
-    void setLeftSpeed(int leftSpeed){
+    public void setLeftSpeed(int leftSpeed){
         if (leftSpeed > 255) {
             this.leftSpeed = 255;
         } else if (leftSpeed < 0) {
@@ -62,22 +62,22 @@ public class ItemDataModel implements Serializable {
         }
         this.leftSpeed = leftSpeed;
     }
-    void setTime(int time){
+    public void setTime(int time){
         if (time < 1) {
             this.time = 1;
         }
         this.time = time;
     }
-    void setOrderName(String orderName){
+    public void setOrderName(String orderName){
         this.orderName = orderName;
     }
-    void setBlockState(int blockState){
+    public void setBlockState(int blockState){
         if(blockState < 0){
             this.blockState = 0;
         }
         this.blockState = blockState;
     }
-    void setLoopCount(int loopCount){
+    public void setLoopCount(int loopCount){
         if(loopCount < 0){
             this.loopCount = 0;
         }

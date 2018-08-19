@@ -1,4 +1,4 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.Script.Adapter;
 
 import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
@@ -10,6 +10,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.Script.Model.ItemDataModel;
 
 import java.util.ArrayList;
 
@@ -47,7 +50,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         }
     }
 
-    RecyclerAdapter(ArrayList<ItemDataModel> itemDataList, OnRecyclerListener listener){
+    public RecyclerAdapter(ArrayList<ItemDataModel> itemDataList, OnRecyclerListener listener){
         ItemDataArray = itemDataList;
         recyclerListener = listener;
     }

@@ -1,4 +1,4 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.Script.Dialog;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -11,7 +11,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.Script.Model.ItemDataModel;
+import com.t_robop.yuusuke.a01_spica_android.Script.ScriptContract;
+
+@SuppressLint("ValidFragment")
 public class EditLoopParamDialog extends DialogFragment {
+
+    ScriptContract.Presenter mPresenter;
+
+    @SuppressLint("ValidFragment")
+    public EditLoopParamDialog(ScriptContract.Presenter presenter){
+        mPresenter=presenter;
+    }
 
     @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
@@ -41,8 +53,7 @@ public class EditLoopParamDialog extends DialogFragment {
                             // 数値が入力されてる時
                             dataModel.setLoopCount(Integer.valueOf(editLoopNum.getText().toString()));
 
-                            ScriptActivity scriptActivity = (ScriptActivity) getActivity();
-                            scriptActivity.updateItemParam(listItemPosition, dataModel);
+                            mPresenter.updateItemParam(listItemPosition, dataModel);
                         }
                     }
                 })

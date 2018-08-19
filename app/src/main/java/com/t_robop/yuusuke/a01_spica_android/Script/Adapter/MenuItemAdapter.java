@@ -1,4 +1,4 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.Script.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.Script.Model.MenuItemModel;
+
 import java.util.ArrayList;
 
 public class MenuItemAdapter extends BaseAdapter {
@@ -15,7 +18,7 @@ public class MenuItemAdapter extends BaseAdapter {
     private LayoutInflater layoutInflater;
     private ArrayList<MenuItemModel> itemList = new ArrayList<>();
 
-    MenuItemAdapter(Context context){
+    public MenuItemAdapter(Context context){
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
