@@ -111,7 +111,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         int DEFAULT_SPEED_R = 100;
         int DEFAULT_SPEED_L = 100;
         int DEFAULT_TIME = 2;
-        int DEFAULT_BLOCK_STATE = 0;
 
         switch (position) {
             case 0: //前進
