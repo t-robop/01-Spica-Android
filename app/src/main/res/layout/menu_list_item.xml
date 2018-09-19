@@ -55,7 +55,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="パワーと時間を設定して、ロボットを前に動かします。"
+                    android:text="@string/forward_description"
                     android:textColor="#ffffff"
                     android:textSize="12sp"/>
 

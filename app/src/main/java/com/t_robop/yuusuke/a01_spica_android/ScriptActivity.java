@@ -50,12 +50,12 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
         //画面左のListView内の初期化
         MenuItemAdapter menuItemAdapter = new MenuItemAdapter(this);
-        menuItemAdapter.add(new MenuItemModel(R.drawable.move_front, "前進", "パワーと時間を設定して、ロボットを前に動かします。"));
-        menuItemAdapter.add(new MenuItemModel(R.drawable.move_back, "後退", "パワーと時間を設定して、ロボットを後ろに動かします。"));
-        menuItemAdapter.add(new MenuItemModel(R.drawable.move_left, "左回転", "パワーと時間を設定して、ロボットを左に回転させます。"));
-        menuItemAdapter.add(new MenuItemModel(R.drawable.move_right, "右回転", "パワーと時間を設定して、ロボットを右に回転させます。"));
-        menuItemAdapter.add(new MenuItemModel(R.drawable.loop_start, "ループ開始", "ループの始まり"));
-        menuItemAdapter.add(new MenuItemModel(R.drawable.loop_end, "ループ終了", "ループの終わり"));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.move_front, getString(R.string.common_forward), getString(R.string.forward_description)));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.move_back, getString(R.string.common_back), getString(R.string.back_description)));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.move_left, getString(R.string.common_left), getString(R.string.left_description)));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.move_right, getString(R.string.common_right), getString(R.string.right_description)));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.loop_start, getString(R.string.common_loop_start), getString(R.string.loop_start_description)));
+        menuItemAdapter.add(new MenuItemModel(R.drawable.loop_end, getString(R.string.common_loop_end), getString(R.string.loop_end_description)));
 
         ListView brockList = findViewById(R.id.brock_list);
         brockList.setAdapter(menuItemAdapter);
@@ -106,12 +106,12 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     @Override
     public void onClick(View view) {
         if (UtilBlock.compileSuccess(recyclerAdapter.getAllItem()) == UtilBlock.errorStatus.NO_BLOCK) {
-            Toast.makeText(this, "Blockがありません", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_no_brock), Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (UtilBlock.compileSuccess(recyclerAdapter.getAllItem()) == UtilBlock.errorStatus.LOOP_COUNT) {
-            Toast.makeText(this, "ループの数が間違ってます", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_invalid_loop_count), Toast.LENGTH_SHORT).show();
             return;
         }
         UdpSend udp = new UdpSend();

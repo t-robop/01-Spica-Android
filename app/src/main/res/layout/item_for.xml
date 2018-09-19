@@ -46,7 +46,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:gravity="center|left"
-                android:text="回"
+                android:text="@string/loop_count_text"
                 android:textColor="#ffffff"
                 android:textSize="15dp"
                 android:textStyle="bold" />

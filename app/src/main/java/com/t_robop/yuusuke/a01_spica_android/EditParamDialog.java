@@ -39,7 +39,7 @@ public class EditParamDialog extends DialogFragment {
         editTime.setText(Integer.toString(dataModel.getTime()));
 
         builder.setView(view)
-                .setPositiveButton("決定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -55,7 +55,7 @@ public class EditParamDialog extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton("キャンセル", null);
+                .setNegativeButton(getString(R.string.dialog_cancel), null);
 
         return builder.create();
 
