@@ -1,21 +1,39 @@
 <resources>
-    <string name="app_name">01-Spica-Android</string>
-    <string name="time">時間(秒)</string>
-    <string name="rightSpeed">右タイヤパワー</string>
-    <string name="leftSpeed">左タイヤパワー</string>
-    <string name="err_msg">値が設定されていません</string>
-    <string name="ok">決定</string>h
-    <string name="cancel">キャンセル</string>
-    <string name="frontId">0001</string>
-    <string name="backId">0002</string>
-    <string name="rightId">0003</string>
-    <string name="leftId">0004</string>
-    <string name="loopNum">ループ数</string>
+    <!--ScriptActivity-->
+    <string name="common_forward">前進</string>
+    <string name="common_back">後退</string>
+    <string name="common_left">左回転</string>
+    <string name="common_right">右回転</string>
+    <string name="common_loop_start">ループ開始</string>
+    <string name="common_loop_end">ループ終了</string>
+    <string name="forward_description">パワーと時間を設定して、ロボットを前に動かします。</string>
+    <string name="back_description">パワーと時間を設定して、ロボットを後ろに動かします。</string>
+    <string name="left_description">パワーと時間を設定して、ロボットを左に回転させます。</string>
+    <string name="right_description">パワーと時間を設定して、ロボットを右に回転させます。</string>
+    <string name="loop_start_description">ループの始まり</string>
+    <string name="loop_end_description">ループの終わり</string>
 
-    <string-array name="directionId">
-        <item>0001</item>
-        <item>0002</item>
-        <item>0003</item>
-        <item>0004</item>
-    </string-array>
+
+    <string name="error_no_brock">ブロックがありません</string>
+    <string name="error_invalid_loop_count">ループの数が間違っています</string>
+
+
+    <!--RecyclerAdapter-->
+    <string name="right_power_text">右パワー :</string>
+    <string name="left_power_text">左パワー :</string>
+    <string name="second_text">秒</string>
+    <string name="loop_count_text">回</string>
+
+
+    <!--dialog-->
+    <string name="dialog_ok">決定</string>
+    <string name="dialog_cancel">キャンセル</string>
+    <string name="dialog_right_speed">右タイヤパワー</string>
+    <string name="dialog_left_speed">左タイヤパワー</string>
+    <string name="dialog_time">時間(秒)</string>
+    <string name="dialog_loop_num">ループ数</string>
+
+
+    <string name="app_name">01-Spica-Android</string>
+
 </resources>

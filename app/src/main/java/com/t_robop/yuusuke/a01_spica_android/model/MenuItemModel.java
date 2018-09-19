@@ -1,13 +1,13 @@
-package com.t_robop.yuusuke.a01_spica_android;
+package com.t_robop.yuusuke.a01_spica_android.model;
 
-class MenuItemModel {
+public class MenuItemModel {
 
     private int itemId;
     private int itemImage;
     private String cmdName;
     private String cmdDetail;
 
-    MenuItemModel(int imageResource, String cmdName, String cmdDetail){
+    public MenuItemModel(int imageResource, String cmdName, String cmdDetail){
         this.itemImage = imageResource;
         this.cmdName = cmdName;
         this.cmdDetail = cmdDetail;

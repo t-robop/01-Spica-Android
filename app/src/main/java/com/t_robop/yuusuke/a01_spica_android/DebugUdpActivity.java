@@ -4,10 +4,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
+
 import java.io.UnsupportedEncodingException;
 
 
-public class MainActivity extends AppCompatActivity {
+public class DebugUdpActivity extends AppCompatActivity {
 
     EditText text;
     EditText sendText;
@@ -16,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_debug_udp);
         text = findViewById(R.id.editText);
         text.setText("192.168.0.75");
         sendText = findViewById(R.id.editText2);

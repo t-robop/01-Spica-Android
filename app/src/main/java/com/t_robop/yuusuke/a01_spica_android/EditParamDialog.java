@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.t_robop.yuusuke.a01_spica_android.model.ItemDataModel;
+
 public class EditParamDialog extends DialogFragment {
 
     @SuppressLint({"InflateParams", "SetTextI18n"})
@@ -37,7 +39,7 @@ public class EditParamDialog extends DialogFragment {
         editTime.setText(Integer.toString(dataModel.getTime()));
 
         builder.setView(view)
-                .setPositiveButton("決定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.dialog_ok), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -53,7 +55,7 @@ public class EditParamDialog extends DialogFragment {
                         }
                     }
                 })
-                .setNegativeButton("キャンセル", null);
+                .setNegativeButton(getString(R.string.dialog_cancel), null);
 
         return builder.create();
 

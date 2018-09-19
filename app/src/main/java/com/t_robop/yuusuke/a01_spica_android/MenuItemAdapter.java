@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import com.t_robop.yuusuke.a01_spica_android.model.MenuItemModel;
+
 import java.util.ArrayList;
 
 public class MenuItemAdapter extends BaseAdapter {

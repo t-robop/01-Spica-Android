@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.t_robop.yuusuke.a01_spica_android.MainActivity">
+    tools:context="com.t_robop.yuusuke.a01_spica_android.DebugUdpActivity">
 
     <EditText
         android:id="@+id/editText2"

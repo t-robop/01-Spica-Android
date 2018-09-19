@@ -17,7 +17,7 @@
                 android:id="@+id/edit_speed_right"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/rightSpeed"
+                android:hint="@string/dialog_right_speed"
                 android:maxLength="3"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -31,7 +31,7 @@
                 android:id="@+id/edit_speed_left"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/leftSpeed"
+                android:hint="@string/dialog_left_speed"
                 android:maxLength="3"/>
 
         </android.support.design.widget.TextInputLayout>
@@ -45,7 +45,7 @@
                 android:id="@+id/edit_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/time"
+                android:hint="@string/dialog_time"
                 android:maxLength="2"/>
 
         </android.support.design.widget.TextInputLayout>

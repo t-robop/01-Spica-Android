@@ -4,57 +4,9 @@
     android:layout_height="wrap_content">
 
     <FrameLayout
-        android:id="@+id/container_loop"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/img_loop_back"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:src="@drawable/loop_start_block" />
-
-        <LinearLayout
-            android:id="@+id/container_loop_text"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center|top"
-            android:layout_marginTop="5dp"
-            android:clickable="true"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/cnt_loop"
-                android:layout_width="76dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center|right"
-                android:text="3"
-                android:textColor="#ffffff"
-                android:textSize="30dp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="60dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:gravity="center|left"
-                android:text="回"
-                android:textColor="#ffffff"
-                android:textSize="15dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-    </FrameLayout>
-
-    <FrameLayout
         android:id="@+id/container_move"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:visibility="gone">
+        android:layout_height="100dp">
 
         <ImageView
             android:layout_width="match_parent"
@@ -94,7 +46,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:lines="1"
-                    android:text="右パワー : "
+                    android:text="@string/right_power_text"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -106,7 +58,7 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:lines="1"
-                    android:text="左パワー : "
+                    android:text="@string/left_power_text"
                     android:textColor="#ffffff"
                     android:textSize="15sp"
                     android:textStyle="bold" />
@@ -128,5 +80,4 @@
         </LinearLayout>
 
     </FrameLayout>
-
 </RelativeLayout>
