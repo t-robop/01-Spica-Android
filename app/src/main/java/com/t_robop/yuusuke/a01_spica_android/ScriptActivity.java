@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -56,7 +55,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
                     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                         final int fromPos = viewHolder.getAdapterPosition();
                         final int toPos = target.getAdapterPosition();
-                        recyclerAdapter.itemMoved(fromPos, toPos);
+                        recyclerAdapter.moveItem(fromPos, toPos);
                         recyclerAdapter.notifyItemMoved(fromPos, toPos);
                         return true;
                     }
