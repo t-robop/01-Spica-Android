@@ -37,15 +37,15 @@ public class ItemDataModel implements Serializable {
         setLoopCount(loopCount);
     }
 
-    public int getRightSpeed(){
+    public int getRightSpeed() {
         return rightSpeed;
     }
 
-    public int getLeftSpeed(){
+    public int getLeftSpeed() {
         return leftSpeed;
     }
 
-    public int getTime(){
+    public int getTime() {
         return time;
     }
 
@@ -57,7 +57,7 @@ public class ItemDataModel implements Serializable {
         return blockState;
     }
 
-    public int getLoopCount(){
+    public int getLoopCount() {
         return loopCount;
     }
 
@@ -101,5 +101,36 @@ public class ItemDataModel implements Serializable {
         this.loopCount = loopCount;
     }
 
+    public boolean isLoopBlock() {
+        return isLoopStartBlock() || isLoopEndBlock();
+    }
+
+    public boolean isLoopStartBlock() {
+        return getOrderName().equals("loopStart");
+    }
+
+    public boolean isLoopEndBlock() {
+        return getOrderName().equals("loopEnd");
+    }
+
+    public boolean isStandardBlock() {
+        return isStandardForwardBlock() || isStandardBackBlock() || isStandardLeftBlock() || isStandardRightBlock();
+    }
+
+    public boolean isStandardForwardBlock() {
+        return getOrderName().equals("forward");
+    }
+
+    public boolean isStandardBackBlock() {
+        return getOrderName().equals("back");
+    }
+
+    public boolean isStandardLeftBlock() {
+        return getOrderName().equals("left");
+    }
+
+    public boolean isStandardRightBlock() {
+        return getOrderName().equals("right");
+    }
 
 }

@@ -29,7 +29,7 @@ public class SimpleItemTouchHelperCallback extends ItemTouchHelper.Callback {
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
         final int fromPos = viewHolder.getAdapterPosition();
         final int toPos = target.getAdapterPosition();
-        adapter.itemMoved(fromPos, toPos);
+        adapter.moveItem(fromPos, toPos);
         adapter.notifyItemMoved(fromPos, toPos);
         return true;
     }

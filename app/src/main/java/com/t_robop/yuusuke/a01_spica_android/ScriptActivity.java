@@ -260,5 +260,5 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
         return true;
     }
-    
+
 }
