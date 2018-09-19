@@ -1,13 +1,13 @@
 package com.t_robop.yuusuke.a01_spica_android.model;
 
 import java.io.Serializable;
+import java.util.EnumSet;
 
 public class ItemDataModel implements Serializable {
 
     private int rightSpeed;
     private int leftSpeed;
     private int time;
-    private String orderName;
     private BlockState blockState;
     private int loopCount;
 
@@ -17,13 +17,40 @@ public class ItemDataModel implements Serializable {
         LEFT,
         RIGHT,
         FOR_START,
-        FOR_END
+        FOR_END;
+
+        public static BlockState intToEnum(final int value) {
+            for (BlockState m : EnumSet.allOf(BlockState.class)) {
+                if (m.ordinal() == value) {
+                    return m;
+                }
+            }
+            return null;
+        }
     }
 
-    public ItemDataModel(){}
+    public ItemDataModel() {
 
-    public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, BlockState blockState, int loopCount){
-        setOrderName(orderName);
+    }
+
+    public ItemDataModel(BlockState blockState) {
+        switch (blockState) {
+            case FORWARD:
+            case RIGHT:
+            case LEFT:
+            case BACK:
+                setStandardBlockState(100, 100, 2, blockState, 0);
+                break;
+            case FOR_START:
+                setLoopBlockState(blockState, 2);
+                break;
+            case FOR_END:
+                setLoopBlockState(blockState, 0);
+                break;
+        }
+    }
+
+    private void setStandardBlockState(int rightSpeed, int leftSpeed, int time, BlockState blockState, int loopCount) {
         setRightSpeed(rightSpeed);
         setLeftSpeed(leftSpeed);
         setTime(time);
@@ -31,8 +58,7 @@ public class ItemDataModel implements Serializable {
         setLoopCount(loopCount);
     }
 
-    public ItemDataModel(String orderName, BlockState blockState, int loopCount){
-        setOrderName(orderName);
+    private void setLoopBlockState(BlockState blockState, int loopCount) {
         setBlockState(blockState);
         setLoopCount(loopCount);
     }
@@ -49,11 +75,7 @@ public class ItemDataModel implements Serializable {
         return time;
     }
 
-    public String getOrderName() {
-        return orderName;
-    }
-
-    public BlockState  getBlockState(){
+    public BlockState getBlockState() {
         return blockState;
     }
 
@@ -61,7 +83,7 @@ public class ItemDataModel implements Serializable {
         return loopCount;
     }
 
-    public void setRightSpeed(int rightSpeed){
+    public void setRightSpeed(int rightSpeed) {
         if (rightSpeed > 255) {
             this.rightSpeed = 255;
         } else if (rightSpeed < 0) {
@@ -70,7 +92,7 @@ public class ItemDataModel implements Serializable {
         this.rightSpeed = rightSpeed;
     }
 
-    public void setLeftSpeed(int leftSpeed){
+    public void setLeftSpeed(int leftSpeed) {
         if (leftSpeed > 255) {
             this.leftSpeed = 255;
         } else if (leftSpeed < 0) {
@@ -79,23 +101,20 @@ public class ItemDataModel implements Serializable {
         this.leftSpeed = leftSpeed;
     }
 
-    public void setTime(int time){
+    public void setTime(int time) {
         if (time < 1) {
             this.time = 1;
         }
         this.time = time;
     }
 
-    public void setOrderName(String orderName){
-        this.orderName = orderName;
-    }
 
-    public void setBlockState(BlockState blockState){
+    public void setBlockState(BlockState blockState) {
         this.blockState = blockState;
     }
 
-    public void setLoopCount(int loopCount){
-        if(loopCount < 0){
+    public void setLoopCount(int loopCount) {
+        if (loopCount < 0) {
             this.loopCount = 0;
         }
         this.loopCount = loopCount;
@@ -106,11 +125,11 @@ public class ItemDataModel implements Serializable {
     }
 
     public boolean isLoopStartBlock() {
-        return getOrderName().equals("loopStart");
+        return getBlockState() == BlockState.FOR_START;
     }
 
     public boolean isLoopEndBlock() {
-        return getOrderName().equals("loopEnd");
+        return getBlockState() == BlockState.FOR_END;
     }
 
     public boolean isStandardBlock() {
@@ -118,19 +137,19 @@ public class ItemDataModel implements Serializable {
     }
 
     public boolean isStandardForwardBlock() {
-        return getOrderName().equals("forward");
+        return getBlockState() == BlockState.FORWARD;
     }
 
     public boolean isStandardBackBlock() {
-        return getOrderName().equals("back");
+        return getBlockState() == BlockState.BACK;
     }
 
     public boolean isStandardLeftBlock() {
-        return getOrderName().equals("left");
+        return getBlockState() == BlockState.LEFT;
     }
 
     public boolean isStandardRightBlock() {
-        return getOrderName().equals("right");
+        return getBlockState() == BlockState.RIGHT;
     }
 
 }

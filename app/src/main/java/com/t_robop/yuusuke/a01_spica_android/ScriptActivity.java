@@ -73,13 +73,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         if (recyclerAdapter.getItem(position).getBlockState() == ItemDataModel.BlockState.FOR_START) {
             EditLoopParamDialog editLoopParamDialog = new EditLoopParamDialog();
             Bundle data = new Bundle();
-            ItemDataModel itemDataModel = new ItemDataModel(
-                    recyclerAdapter.getItem(position).getOrderName(),
-                    recyclerAdapter.getItem(position).getRightSpeed(),
-                    recyclerAdapter.getItem(position).getLeftSpeed(),
-                    recyclerAdapter.getItem(position).getTime(),
-                    recyclerAdapter.getItem(position).getBlockState(),
-                    recyclerAdapter.getItem(position).getLoopCount());
+            ItemDataModel itemDataModel = recyclerAdapter.getItem(position);
 
             data.putSerializable("itemData", itemDataModel);
             data.putInt("listItemPosition", position);
@@ -91,14 +85,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             // ダイアログの表示
             EditParamDialog editParamDialog = new EditParamDialog();
             Bundle data = new Bundle();
-
-            ItemDataModel itemDataModel = new ItemDataModel(
-                    recyclerAdapter.getItem(position).getOrderName(),
-                    recyclerAdapter.getItem(position).getRightSpeed(),
-                    recyclerAdapter.getItem(position).getLeftSpeed(),
-                    recyclerAdapter.getItem(position).getTime(),
-                    recyclerAdapter.getItem(position).getBlockState(),
-                    recyclerAdapter.getItem(position).getLoopCount());
+            ItemDataModel itemDataModel = recyclerAdapter.getItem(position);
 
             data.putSerializable("itemData", itemDataModel);
             data.putInt("listItemPosition", position);
@@ -111,32 +98,8 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        int DEFAULT_SPEED_R = 100;
-        int DEFAULT_SPEED_L = 100;
-        int DEFAULT_TIME = 2;
-
-        switch (position) {
-            case 0: //前進
-                recyclerAdapter.addItem(new ItemDataModel("forward", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.FORWARD, 0));
-                break;
-            case 1: //後退
-                recyclerAdapter.addItem(new ItemDataModel("back", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.BACK, 0));
-                break;
-            case 2: //左回転
-                recyclerAdapter.addItem(new ItemDataModel("left", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.LEFT, 0));
-                break;
-            case 3: //右回転
-                recyclerAdapter.addItem(new ItemDataModel("right", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.RIGHT, 0));
-                break;
-            case 4: //ループ開始
-                recyclerAdapter.addItem(new ItemDataModel("loopStart", ItemDataModel.BlockState.FOR_START, 2));
-
-                break;
-            case 5: //ループ終了
-                recyclerAdapter.addItem(new ItemDataModel("loopEnd", ItemDataModel.BlockState.FOR_END, 0));
-                break;
-
-        }
+        ItemDataModel.BlockState state = ItemDataModel.BlockState.intToEnum(position);
+        recyclerAdapter.addItem(new ItemDataModel(state));
         recyclerView.setAdapter(recyclerAdapter);
     }
 

@@ -28,8 +28,10 @@ public class UtilBlock {
 
         for (int i = 0; i < dataArray.size(); i++) {
             sendText.append("&");
+            if (dataArray.get(i).getBlockState() == ItemDataModel.BlockState.FORWARD) {
 
-            sendText.append(dataArray.get(i).getOrderName());
+            }
+            sendText.append(blockstateToId(dataArray.get(i).getBlockState()));
             sendText.append("&");
             sendText.append(dataArray.get(i).getLeftSpeed());
             sendText.append("&");
@@ -43,6 +45,26 @@ public class UtilBlock {
         }
 
         return sendText.toString();
+    }
+
+    private static String blockstateToId(ItemDataModel.BlockState state) {
+        switch (state) {
+            case FORWARD:
+                return "1";
+            case BACK:
+                return "2";
+            case LEFT:
+                return "3";
+            case RIGHT:
+                return "4";
+            case FOR_START:
+                return "5";
+            case FOR_END:
+                return "6";
+
+            default:
+                return "0";
+        }
     }
 
     // convertLoopItemの初回呼び出し
