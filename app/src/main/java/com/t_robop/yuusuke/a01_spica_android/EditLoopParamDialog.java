@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
+import com.t_robop.yuusuke.a01_spica_android.model.ItemDataModel;
+
 public class EditLoopParamDialog extends DialogFragment {
 
     @SuppressLint({"InflateParams", "SetTextI18n"})

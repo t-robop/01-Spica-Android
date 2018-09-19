@@ -21,6 +21,7 @@ public class ItemDataModel implements Serializable {
     }
 
     public ItemDataModel(){}
+
     public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, BlockState blockState, int loopCount){
         setOrderName(orderName);
         setRightSpeed(rightSpeed);
@@ -39,23 +40,28 @@ public class ItemDataModel implements Serializable {
     public int getRightSpeed(){
         return rightSpeed;
     }
+
     public int getLeftSpeed(){
         return leftSpeed;
     }
+
     public int getTime(){
         return time;
     }
+
     public String getOrderName() {
         return orderName;
     }
+
     public BlockState  getBlockState(){
         return blockState;
     }
+
     public int getLoopCount(){
         return loopCount;
     }
 
-    void setRightSpeed(int rightSpeed){
+    public void setRightSpeed(int rightSpeed){
         if (rightSpeed > 255) {
             this.rightSpeed = 255;
         } else if (rightSpeed < 0) {
@@ -63,7 +69,8 @@ public class ItemDataModel implements Serializable {
         }
         this.rightSpeed = rightSpeed;
     }
-    void setLeftSpeed(int leftSpeed){
+
+    public void setLeftSpeed(int leftSpeed){
         if (leftSpeed > 255) {
             this.leftSpeed = 255;
         } else if (leftSpeed < 0) {
@@ -71,19 +78,23 @@ public class ItemDataModel implements Serializable {
         }
         this.leftSpeed = leftSpeed;
     }
-    void setTime(int time){
+
+    public void setTime(int time){
         if (time < 1) {
             this.time = 1;
         }
         this.time = time;
     }
-    void setOrderName(String orderName){
+
+    public void setOrderName(String orderName){
         this.orderName = orderName;
     }
-    void setBlockState(BlockState blockState){
+
+    public void setBlockState(BlockState blockState){
         this.blockState = blockState;
     }
-    void setLoopCount(int loopCount){
+
+    public void setLoopCount(int loopCount){
         if(loopCount < 0){
             this.loopCount = 0;
         }
