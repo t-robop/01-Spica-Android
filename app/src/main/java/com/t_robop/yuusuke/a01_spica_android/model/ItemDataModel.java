@@ -11,8 +11,10 @@ public class ItemDataModel implements Serializable {
     private int blockState;
     private int loopCount;
 
-    public ItemDataModel(){}
-    public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
+    public ItemDataModel() {
+    }
+
+    ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount) {
         setOrderName(orderName);
         setRightSpeed(rightSpeed);
         setLeftSpeed(leftSpeed);
@@ -21,32 +23,37 @@ public class ItemDataModel implements Serializable {
         setLoopCount(loopCount);
     }
 
-    public ItemDataModel(String orderName, int blockState, int loopCount){
+    ItemDataModel(String orderName, int blockState, int loopCount) {
         setOrderName(orderName);
         setBlockState(blockState);
         setLoopCount(loopCount);
     }
 
-    public int getRightSpeed(){
+    public int getRightSpeed() {
         return rightSpeed;
     }
-    public int getLeftSpeed(){
+
+    public int getLeftSpeed() {
         return leftSpeed;
     }
-    public int getTime(){
+
+    public int getTime() {
         return time;
     }
+
     public String getOrderName() {
         return orderName;
     }
-    public int getBlockState(){
+
+    public int getBlockState() {
         return blockState;
     }
-    public int getLoopCount(){
+
+    public int getLoopCount() {
         return loopCount;
     }
 
-    void setRightSpeed(int rightSpeed){
+    void setRightSpeed(int rightSpeed) {
         if (rightSpeed > 255) {
             this.rightSpeed = 255;
         } else if (rightSpeed < 0) {
@@ -54,7 +61,8 @@ public class ItemDataModel implements Serializable {
         }
         this.rightSpeed = rightSpeed;
     }
-    void setLeftSpeed(int leftSpeed){
+
+    void setLeftSpeed(int leftSpeed) {
         if (leftSpeed > 255) {
             this.leftSpeed = 255;
         } else if (leftSpeed < 0) {
@@ -62,27 +70,62 @@ public class ItemDataModel implements Serializable {
         }
         this.leftSpeed = leftSpeed;
     }
-    void setTime(int time){
+
+    void setTime(int time) {
         if (time < 1) {
             this.time = 1;
         }
         this.time = time;
     }
-    void setOrderName(String orderName){
+
+    void setOrderName(String orderName) {
         this.orderName = orderName;
     }
-    void setBlockState(int blockState){
-        if(blockState < 0){
+
+    void setBlockState(int blockState) {
+        if (blockState < 0) {
             this.blockState = 0;
         }
         this.blockState = blockState;
     }
-    void setLoopCount(int loopCount){
-        if(loopCount < 0){
+
+    void setLoopCount(int loopCount) {
+        if (loopCount < 0) {
             this.loopCount = 0;
         }
         this.loopCount = loopCount;
     }
 
+    public boolean isLoopBlock() {
+        return isLoopStartBlock() || !isLoopEndBlock();
+    }
+
+    public boolean isLoopStartBlock() {
+        return getOrderName().equals("loopStart");
+    }
+
+    public boolean isLoopEndBlock() {
+        return getOrderName().equals("loopEnd");
+    }
+
+    public boolean isStandardBlock() {
+        return isStandardForwardBlock() || isStandardBackBlock() || isStandardLeftBlock() || isStandardRightBlock();
+    }
+
+    public boolean isStandardForwardBlock() {
+        return getOrderName().equals("forward");
+    }
+
+    public boolean isStandardBackBlock() {
+        return getOrderName().equals("back");
+    }
+
+    public boolean isStandardLeftBlock() {
+        return getOrderName().equals("left");
+    }
+
+    public boolean isStandardRightBlock() {
+        return getOrderName().equals("right");
+    }
 
 }
