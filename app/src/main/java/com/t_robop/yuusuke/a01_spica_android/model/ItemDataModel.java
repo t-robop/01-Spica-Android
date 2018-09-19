@@ -8,11 +8,20 @@ public class ItemDataModel implements Serializable {
     private int leftSpeed;
     private int time;
     private String orderName;
-    private int blockState;
+    private BlockState blockState;
     private int loopCount;
 
+    public enum BlockState {
+        FORWARD,
+        BACK,
+        LEFT,
+        RIGHT,
+        FOR_START,
+        FOR_END
+    }
+
     public ItemDataModel(){}
-    public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, int blockState, int loopCount){
+    public ItemDataModel(String orderName, int rightSpeed, int leftSpeed, int time, BlockState blockState, int loopCount){
         setOrderName(orderName);
         setRightSpeed(rightSpeed);
         setLeftSpeed(leftSpeed);
@@ -21,7 +30,7 @@ public class ItemDataModel implements Serializable {
         setLoopCount(loopCount);
     }
 
-    public ItemDataModel(String orderName, int blockState, int loopCount){
+    public ItemDataModel(String orderName, BlockState blockState, int loopCount){
         setOrderName(orderName);
         setBlockState(blockState);
         setLoopCount(loopCount);
@@ -39,7 +48,7 @@ public class ItemDataModel implements Serializable {
     public String getOrderName() {
         return orderName;
     }
-    public int getBlockState(){
+    public BlockState  getBlockState(){
         return blockState;
     }
     public int getLoopCount(){
@@ -71,10 +80,7 @@ public class ItemDataModel implements Serializable {
     void setOrderName(String orderName){
         this.orderName = orderName;
     }
-    void setBlockState(int blockState){
-        if(blockState < 0){
-            this.blockState = 0;
-        }
+    void setBlockState(BlockState blockState){
         this.blockState = blockState;
     }
     void setLoopCount(int loopCount){

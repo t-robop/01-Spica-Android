@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.t_robop.yuusuke.a01_spica_android.model.ItemDataModel;
 import com.t_robop.yuusuke.a01_spica_android.util.SimpleItemTouchHelperCallback;
 
 import java.io.UnsupportedEncodingException;
@@ -66,7 +67,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
     public void onRecyclerClicked(View view, int position) {
 
         //ループのとき
-        if (recyclerAdapter.getItem(position).getBlockState() == 1) {
+        if (recyclerAdapter.getItem(position).getBlockState() == ItemDataModel.BlockState.FOR_START) {
             EditLoopParamDialog editLoopParamDialog = new EditLoopParamDialog();
             Bundle data = new Bundle();
             ItemDataModel itemDataModel = new ItemDataModel(
@@ -114,23 +115,23 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
 
         switch (position) {
             case 0: //前進
-                recyclerAdapter.addItem(new ItemDataModel("forward", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                recyclerAdapter.addItem(new ItemDataModel("forward", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.FORWARD, 0));
                 break;
             case 1: //後退
-                recyclerAdapter.addItem(new ItemDataModel("back", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                recyclerAdapter.addItem(new ItemDataModel("back", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.BACK, 0));
                 break;
             case 2: //左回転
-                recyclerAdapter.addItem(new ItemDataModel("left", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                recyclerAdapter.addItem(new ItemDataModel("left", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.LEFT, 0));
                 break;
             case 3: //右回転
-                recyclerAdapter.addItem(new ItemDataModel("right", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, DEFAULT_BLOCK_STATE, 0));
+                recyclerAdapter.addItem(new ItemDataModel("right", DEFAULT_SPEED_R, DEFAULT_SPEED_L, DEFAULT_TIME, ItemDataModel.BlockState.RIGHT, 0));
                 break;
             case 4: //ループ開始
-                recyclerAdapter.addItem(new ItemDataModel("loopStart", 1, 2));
+                recyclerAdapter.addItem(new ItemDataModel("loopStart", ItemDataModel.BlockState.FOR_START, 2));
 
                 break;
             case 5: //ループ終了
-                recyclerAdapter.addItem(new ItemDataModel("loopEnd", 2, 0));
+                recyclerAdapter.addItem(new ItemDataModel("loopEnd", ItemDataModel.BlockState.FOR_END, 0));
                 break;
 
         }
@@ -208,15 +209,15 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         int i;
 
         for (i = posLoopStart + 1; i < items.size(); i++) {
-            if (items.get(i).getBlockState() == 1) {
+            if (items.get(i).getBlockState() == ItemDataModel.BlockState.FOR_START) {
                 items = convertLoopItem(items, i, items.get(i).getLoopCount());
             }
-            if (items.get(i).getBlockState() == 2) {
+            if (items.get(i).getBlockState() == ItemDataModel.BlockState.FOR_END) {
                 posEnd = i;
                 break;
             }
         }
-        if (items.get(posLoopStart).getBlockState() != 1) {
+        if (items.get(posLoopStart).getBlockState() != ItemDataModel.BlockState.FOR_START) {
             return items;
         }
 
@@ -245,9 +246,9 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         int cntLoopEnd = 0;
 
         for (ItemDataModel item : items) {
-            if (item.getBlockState() == 1) {
+            if (item.getBlockState() == ItemDataModel.BlockState.FOR_START) {
                 cntLoopStart++;
-            } else if (item.getBlockState() == 2) {
+            } else if (item.getBlockState() == ItemDataModel.BlockState.FOR_END) {
                 cntLoopEnd++;
             }
         }
