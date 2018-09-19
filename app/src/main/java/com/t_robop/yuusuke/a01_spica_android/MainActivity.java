@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+
+import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
+
 import java.io.UnsupportedEncodingException;
 
 
