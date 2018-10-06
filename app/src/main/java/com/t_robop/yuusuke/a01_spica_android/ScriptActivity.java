@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.t_robop.yuusuke.a01_spica_android.model.ItemDataModel;
 import com.t_robop.yuusuke.a01_spica_android.model.MenuItemModel;
 import com.t_robop.yuusuke.a01_spica_android.util.SimpleItemTouchHelperCallback;
-import com.t_robop.yuusuke.a01_spica_android.util.UdpRecieve;
+import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 import com.t_robop.yuusuke.a01_spica_android.util.UtilBlock;
 
@@ -65,8 +65,6 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
         Button startButton = findViewById(R.id.start_button);
         startButton.setOnClickListener(this);
 
-        //UDPパケット待受
-        new UdpRecieve(this).UdpRecieveStandby();
     }
 
     @Override
@@ -131,7 +129,15 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             e.printStackTrace();
         }
         Log.d("udpText", sendData);
-        udp.send();
+        //udp.send();
+
+        Button startButton = findViewById(R.id.start_button);
+        startButton.setEnabled(false);
+        startButton.setBackgroundResource(R.drawable.start_disable);
+
+        //UDPパケット待受
+        new UdpReceive(this).UdpReceiveStandby();
+
     }
 
     //View更新
