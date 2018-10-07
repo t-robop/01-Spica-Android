@@ -9,7 +9,11 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
-public class ScriptMainActivity extends AppCompatActivity {
+import java.util.ArrayList;
+
+public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.View {
+
+    private ScriptContract.Presenter mScriptPresenter;
 
     private RecyclerView mScriptRecyclerView;
     private ScriptMainAdapter mScriptAdapter;
@@ -38,5 +42,18 @@ public class ScriptMainActivity extends AppCompatActivity {
             mScriptAdapter.add(scriptModel);
         }
         mScriptAdapter.notifyDataSetChanged();
+
+        new ScriptPresenter(this);
+    }
+
+    @Override
+    public void drawScripts(ArrayList<ScriptModel> scrips) {
+        //引数を使ってUIに反映させる
+    }
+
+    @Override
+    public void setPresenter(ScriptContract.Presenter presenter) {
+        this.mScriptPresenter=presenter;
+        this.mScriptPresenter.start();
     }
 }

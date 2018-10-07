@@ -6,6 +6,12 @@ import android.databinding.Bindable;
 public class ScriptModel extends BaseObservable {
     //ブロック
     private BlockModel block;
+    //右パワー
+    private int rightSpeed;
+    //左パワー
+    private int leftSpeed;
+    //ブロック毎の値
+    private int value;
 
     public ScriptModel() {
     }
@@ -21,6 +27,33 @@ public class ScriptModel extends BaseObservable {
 
     public void setBlock(BlockModel block) {
         this.block = block;
+    }
+
+    @Bindable
+    public int getRightSpeed() {
+        return this.rightSpeed;
+    }
+
+    public void setRightSpeed(int rightSpeed) {
+        this.rightSpeed = rightSpeed;
+    }
+
+    @Bindable
+    public int getLeftSpeed() {
+        return this.leftSpeed;
+    }
+
+    public void setLeftSpeed(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
+    }
+
+    @Bindable
+    public int getValue() {
+        return this.value;
+    }
+
+    public void setValue(int value) {
+        this.value = value;
     }
 
 }

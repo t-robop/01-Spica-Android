@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+
+import java.util.ArrayList;
 
 public class BlockSelectActivity extends AppCompatActivity {
 

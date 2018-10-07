@@ -1,7 +1,9 @@
 package com.t_robop.yuusuke.a01_spica_android.model;
 
 public class BlockModel {
+    //ブロックID
     private int blockId;
+    //ブロックicon
     private int iconResource;
 
     public BlockModel(){ }
