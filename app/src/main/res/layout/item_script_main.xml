@@ -17,7 +17,13 @@
             android:id="@+id/id_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@{script.id}" />
+            android:text="@{String.valueOf(script.block.blockId)}"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ss"/>
 
     </android.support.constraint.ConstraintLayout>
 

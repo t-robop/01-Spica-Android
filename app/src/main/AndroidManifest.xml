@@ -13,7 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".DebugUdpActivity"></activity>
+        <activity android:name=".DebugUdpActivity" />
         <activity
             android:name=".UI.Script.ScriptMainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -24,7 +24,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ScriptActivity"></activity>
+        <activity android:name=".ScriptActivity" />
+        <activity
+            android:name=".UI.Script.BlockSelectActivity"
+            android:theme="@style/Theme.DarkTranslucent" />
+        <activity
+            android:name=".UI.Script.BlockDetailActivity"
+            android:theme="@style/Theme.DarkTranslucent" />
     </application>
 
 </manifest>

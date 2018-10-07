@@ -6,31 +6,37 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class ScriptMainActivity extends AppCompatActivity {
 
-    ScriptMainAdapter adapter;
-    private LinearLayoutManager mLayoutManager;
-    RecyclerView recyclerView;
+    private RecyclerView mScriptRecyclerView;
+    private ScriptMainAdapter mScriptAdapter;
+    private LinearLayoutManager mScriptLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_script_main);
 
-        adapter = new ScriptMainAdapter(this);
-        adapter.add(new ScriptModel(12));
-        adapter.add(new ScriptModel(3));
+        mScriptRecyclerView = findViewById(R.id.recycler_script);
 
-        recyclerView = findViewById(R.id.recycler_script);
-        recyclerView.setAdapter(adapter);
+        mScriptRecyclerView.setHasFixedSize(true);
+        mScriptLayoutManager = new LinearLayoutManager(this);
+        mScriptLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
 
-        recyclerView.setHasFixedSize(true);
+        mScriptAdapter = new ScriptMainAdapter(this);
+        mScriptRecyclerView.setAdapter(mScriptAdapter);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL); // ここで横方向に設定
-        recyclerView.setLayoutManager(mLayoutManager);
+        for(int i=0;i<20;i++) {
+            ScriptModel scriptModel = new ScriptModel();
+            BlockModel blockModel = new BlockModel();
+            blockModel.setBlockId(0101+i);
+            scriptModel.setBlock(blockModel);
+            mScriptAdapter.add(scriptModel);
+        }
+        mScriptAdapter.notifyDataSetChanged();
     }
 }

@@ -4,22 +4,23 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
-    //ブロックid
-    private int id;
+    //ブロック
+    private BlockModel block;
 
-    public ScriptModel(){}
-    public ScriptModel(int id){
-        this.id = id;
+    public ScriptModel() {
     }
 
-    // ゲッターに@Bindableをつける。変数につけてゲッター書かなくてもよい？
+    public ScriptModel(BlockModel block) {
+        this.block = block;
+    }
+
     @Bindable
-    public int getId() {
-        return this.id;
+    public BlockModel getBlock() {
+        return this.block;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setBlock(BlockModel block) {
+        this.block = block;
     }
 
 }
