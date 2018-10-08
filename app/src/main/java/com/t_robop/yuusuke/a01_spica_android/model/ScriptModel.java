@@ -4,6 +4,8 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
+    //if
+    private int ifState;
     //ブロック
     private BlockModel block;
     //右パワー
@@ -18,6 +20,14 @@ public class ScriptModel extends BaseObservable {
 
     public ScriptModel(BlockModel block) {
         this.block = block;
+    }
+
+    @Bindable
+    public int getIfState() {
+        return ifState;
+    }
+    public void setIfState(int ifState) {
+        this.ifState = ifState;
     }
 
     @Bindable
