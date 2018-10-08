@@ -8,6 +8,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <com.t_robop.yuusuke.a01_spica_android.util.CanvasView
+        android:id="@+id/canvas_view"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            />
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_script"
             android:layout_width="match_parent"

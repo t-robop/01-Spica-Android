@@ -44,6 +44,7 @@ public class ScriptMainActivity extends AppCompatActivity {
             mScriptAdapter.add(scriptModel);
 
             mCanvasView.setCommandBlockNum(mScriptAdapter.getItemCount() + 2);
+            mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());
         }
         mScriptAdapter.notifyDataSetChanged();
 
@@ -58,17 +59,16 @@ public class ScriptMainActivity extends AppCompatActivity {
                // mScriptLayoutManager.getPo
 
                // mScriptRecyclerView.setScrollX((int)mCanvasView.getPosition());
-//                handler.postDelayed(this, 100);
 
 //                mScriptLayoutManager.scrollVerticallyBy()
 //                mScriptRecyclerView.setScrollY(-1000);
 //                mScriptRecyclerView.setScrollX(-1000);
-                mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());
+              //  mScriptLayoutManager.scrollToPositionWithOffset(4,100);
+                handler.postDelayed(this, 100);
 
             }
         };
         handler.post(r);
-
 
 
         mScriptRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
@@ -81,7 +81,18 @@ public class ScriptMainActivity extends AppCompatActivity {
             }
         });
 
+        ScriptMainActivity scriptMainActivity = this;
+        mCanvasView.setClass(scriptMainActivity);
     }
+
+//    public void setScroll(float pos){
+//        float itemPos =  (mScriptAdapter.getItemCount() * pos);
+//        itemPos = itemPos;
+//         mScriptLayoutManager.computeHorizontalScrollOffset();
+//
+//        mScriptLayoutManager.scrollToPositionWithOffset((int)itemPos,100);
+//    }
+
 
 
     @Override
