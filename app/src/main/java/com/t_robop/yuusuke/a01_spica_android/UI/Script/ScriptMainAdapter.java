@@ -33,6 +33,25 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
+    public static class ScriptSet{
+        private ScriptModel scriptDefault;
+        private ScriptModel scriptSpecial;
+
+        public ScriptModel getScriptDefault() {
+            return scriptDefault;
+        }
+        public void setScriptDefault(ScriptModel scriptDefault) {
+            this.scriptDefault = scriptDefault;
+        }
+
+        public ScriptModel getScriptSpecial() {
+            return scriptSpecial;
+        }
+        public void setScriptSpecial(ScriptModel scriptSpecial) {
+            this.scriptSpecial = scriptSpecial;
+        }
+    }
+
     public ScriptMainAdapter(Context context, ArrayList<ScriptModel> scriptList) {
         mScriptList = scriptList;
         this.mContext = context;
