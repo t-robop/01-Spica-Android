@@ -17,7 +17,7 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import java.util.ArrayList;
 
 public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.BindingHolder> {
-    private ArrayList<ScriptModel> mScriptList;
+    private ArrayList<ScriptSet> mScriptList;
     private Context mContext;
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
@@ -52,18 +52,15 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
-    public ScriptMainAdapter(Context context, ArrayList<ScriptModel> scriptList) {
-        mScriptList = scriptList;
-        this.mContext = context;
-    }
-
     public ScriptMainAdapter(Context context) {
         mScriptList = new ArrayList<>();
         this.mContext = context;
     }
 
     public void add(ScriptModel script) {
-        mScriptList.add(script);
+        ScriptSet set=new ScriptSet();
+        set.setScriptDefault(script);
+        mScriptList.add(set);
     }
 
     @Override
@@ -76,9 +73,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
 
     @Override
     public void onBindViewHolder(final BindingHolder holder, int position) {
-        ScriptModel script = mScriptList.get(position);
+        ScriptSet set = mScriptList.get(position);
 
-        holder.mBinding.setScript(script);
+        holder.mBinding.setScript(set.getScriptDefault());
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
