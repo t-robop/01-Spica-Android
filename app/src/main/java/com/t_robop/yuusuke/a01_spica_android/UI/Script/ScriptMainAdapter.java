@@ -115,6 +115,24 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 }
             }
         });
+
+        holder.mBinding.setScriptOther(set.scriptSpecial);
+
+//        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ActivityOptions options = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//                    options = ActivityOptions.makeScaleUpAnimation(
+//                            holder.mBinding.conductorAdd,
+//                            (int)holder.mBinding.conductorAdd.getX(),
+//                            (int)holder.mBinding.conductorAdd.getY(),
+//                            holder.mBinding.conductorAdd.getWidth(),
+//                            holder.mBinding.conductorAdd.getHeight());
+//                    mContext.startActivity(new Intent(mContext,BlockSelectActivity.class), options.toBundle());
+//                }
+//            }
+//        });
     }
 
     @Override

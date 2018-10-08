@@ -8,12 +8,12 @@
         <import type="android.view.View" />
 
         <variable
-            name="script_if"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel"></variable>
+            name="scriptOther"
+            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
 
         <variable
             name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel"></variable>
+            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
     </data>
 
     <LinearLayout
@@ -26,7 +26,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal"
-            android:visibility="@{script_if==null ? View.INVISIBLE:View.VISIBLE}">
+            android:visibility="@{scriptOther==null ? View.INVISIBLE:View.VISIBLE}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,7 +55,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script_if.block.getBlock.getId)}"
+                        android:text="@{scriptOther.block.getBlock.getId}"
                         tools:text="ススム" />
 
                     <TextView
@@ -64,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script_if.block.getBlock.getId)}"
+                        android:text="@{scriptOther.block.getBlock.getId}"
                         tools:text="0.5 s" />
 
                 </LinearLayout>
@@ -132,7 +132,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script.block.getBlock.getId)}"
+                        android:text="@{script.block.getBlock.getId}"
                         tools:text="ススム" />
 
                     <TextView
@@ -141,7 +141,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script.block.getBlock.getId)}"
+                        android:text="@{script.block.getBlock.getId}"
                         tools:text="0.5 s" />
 
                 </LinearLayout>

@@ -35,62 +35,33 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptRecyclerView.setAdapter(mScriptAdapter);
 
         new ScriptPresenter(this);
-
-        for (int i = 0; i < 20; i++) {
-            ScriptModel scriptModel = new ScriptModel();
-            BlockModel blockModel = new BlockModel();
-            blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
-            scriptModel.setBlock(blockModel);
-            mScriptPresenter.addScript(scriptModel);
-        }
-        ScriptModel scriptModel = new ScriptModel();
-        BlockModel blockModel = new BlockModel();
-        blockModel.setBlock(BlockModel.SpicaBlock.IF_START);
-        scriptModel.setBlock(blockModel);
-        mScriptPresenter.addScript(scriptModel);
-        for (int i = 0; i < 3; i++) {
-            ScriptModel st = new ScriptModel();
-            BlockModel bt = new BlockModel();
-            bt.setBlock(BlockModel.SpicaBlock.FRONT);
-            st.setBlock(bt);
-            st.setIfState(1);
-            mScriptPresenter.addScript(st);
-        }
-        for (int i = 0; i < 5; i++) {
-            ScriptModel st = new ScriptModel();
-            BlockModel bt = new BlockModel();
-            bt.setBlock(BlockModel.SpicaBlock.FRONT);
-            st.setBlock(bt);
-            st.setIfState(2);
-            mScriptPresenter.addScript(st);
-        }
-        ScriptModel st = new ScriptModel();
-        BlockModel bt = new BlockModel();
-        bt.setBlock(BlockModel.SpicaBlock.IF_END);
-        st.setBlock(bt);
-        mScriptPresenter.addScript(st);
     }
 
     @Override
     public void drawScripts(ArrayList<ScriptModel> scripts) {
         //引数を使ってUIに反映させる
         int ifIndex=-1;
+        int laneIndex=0;
         for (int i = 0; i < scripts.size(); i++) {
             ScriptModel script = scripts.get(i);
-            //通常
             if(script.getIfState()==0) {
-                mScriptAdapter.addDefault(i, script);
+                //通常
+                mScriptAdapter.addDefault(laneIndex, script);
+                laneIndex++;
             }else if(script.getIfState()==1){
-                mScriptAdapter.addSpecial(i,script);
+                //true
+                mScriptAdapter.addSpecial(laneIndex,script);
+                laneIndex++;
             }else if(script.getIfState()==2){
-                if(ifIndex!=-1){
-                    i=ifIndex;
-                    ifIndex=-1;
-                }
-                mScriptAdapter.addDefault(i, script);
+                //false
+                mScriptAdapter.addDefault(ifIndex, script);
+                ifIndex++;
             }
             if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
                 ifIndex=i+1;
+            }
+            if (script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_END){
+                ifIndex=-1;
             }
         }
         mScriptAdapter.notifyDataSetChanged();
