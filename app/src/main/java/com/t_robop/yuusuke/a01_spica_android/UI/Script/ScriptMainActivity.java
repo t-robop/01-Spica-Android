@@ -41,7 +41,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             BlockModel blockModel = new BlockModel();
             blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
             scriptModel.setBlock(blockModel);
-            mScriptAdapter.add(scriptModel);
+            mScriptPresenter.addScript(scriptModel);
         }
     }
 
@@ -50,7 +50,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         //引数を使ってUIに反映させる
         for(int i=0;i<scrips.size();i++){
             ScriptModel scriptModel = scrips.get(i);
-            mScriptAdapter.add(scriptModel);
+            mScriptAdapter.addDefault(i,scriptModel);
         }
         mScriptAdapter.notifyDataSetChanged();
     }

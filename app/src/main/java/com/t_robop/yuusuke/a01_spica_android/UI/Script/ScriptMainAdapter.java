@@ -57,10 +57,34 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
-    public void add(ScriptModel script) {
-        ScriptSet set=new ScriptSet();
-        set.setScriptDefault(script);
-        mScriptList.add(set);
+    public void addDefault(int index,ScriptModel script) {
+        if(mScriptList.size()<index) return;
+
+        //普通に追加
+        if(mScriptList.size()==index){
+            ScriptSet set=new ScriptSet();
+            set.setScriptDefault(script);
+            mScriptList.add(set);
+        }else{
+            ScriptSet set=mScriptList.get(index);
+            set.setScriptDefault(script);
+            mScriptList.set(index,set);
+        }
+    }
+
+    public void addSpecial(int index,ScriptModel script) {
+        if(mScriptList.size()<index) return;
+
+        //普通に追加
+        if(mScriptList.size()==index){
+            ScriptSet set=new ScriptSet();
+            set.setScriptSpecial(script);
+            mScriptList.add(set);
+        }else{
+            ScriptSet set=mScriptList.get(index);
+            set.setScriptSpecial(script);
+            mScriptList.set(index,set);
+        }
     }
 
     @Override
