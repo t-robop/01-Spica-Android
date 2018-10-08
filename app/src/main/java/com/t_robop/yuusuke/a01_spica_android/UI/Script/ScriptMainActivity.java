@@ -34,6 +34,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
 
+        new ScriptPresenter(this);
+
         for(int i=0;i<20;i++) {
             ScriptModel scriptModel = new ScriptModel();
             BlockModel blockModel = new BlockModel();
@@ -41,14 +43,16 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             scriptModel.setBlock(blockModel);
             mScriptAdapter.add(scriptModel);
         }
-        mScriptAdapter.notifyDataSetChanged();
-
-        new ScriptPresenter(this);
     }
 
     @Override
     public void drawScripts(ArrayList<ScriptModel> scrips) {
         //引数を使ってUIに反映させる
+        for(int i=0;i<scrips.size();i++){
+            ScriptModel scriptModel = scrips.get(i);
+            mScriptAdapter.add(scriptModel);
+        }
+        mScriptAdapter.notifyDataSetChanged();
     }
 
     @Override

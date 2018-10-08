@@ -23,6 +23,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     @Override
     public void addScript(ScriptModel script) {
         mScripts.add(script);
+        mScriptView.drawScripts(mScripts);
     }
 
     @Override
