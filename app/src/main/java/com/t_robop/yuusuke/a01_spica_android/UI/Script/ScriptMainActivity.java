@@ -36,7 +36,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         new ScriptPresenter(this);
 
-        for(int i=0;i<20;i++) {
+        for (int i = 0; i < 20; i++) {
             ScriptModel scriptModel = new ScriptModel();
             BlockModel blockModel = new BlockModel();
             blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
@@ -46,18 +46,33 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     }
 
     @Override
-    public void drawScripts(ArrayList<ScriptModel> scrips) {
+    public void drawScripts(ArrayList<ScriptModel> scripts) {
         //引数を使ってUIに反映させる
-        for(int i=0;i<scrips.size();i++){
-            ScriptModel scriptModel = scrips.get(i);
-            mScriptAdapter.addDefault(i,scriptModel);
+        int ifIndex=-1;
+        for (int i = 0; i < scripts.size(); i++) {
+            ScriptModel script = scripts.get(i);
+            //通常
+            if(script.getIfState()==0) {
+                mScriptAdapter.addDefault(i, script);
+            }else if(script.getIfState()==1){
+                mScriptAdapter.addSpecial(i,script);
+            }else if(script.getIfState()==2){
+                if(ifIndex!=-1){
+                    i=ifIndex;
+                    ifIndex=-1;
+                }
+                mScriptAdapter.addDefault(i, script);
+            }
+            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
+                ifIndex=i+1;
+            }
         }
         mScriptAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void setPresenter(ScriptContract.Presenter presenter) {
-        this.mScriptPresenter=presenter;
+        this.mScriptPresenter = presenter;
         this.mScriptPresenter.start();
     }
 }
