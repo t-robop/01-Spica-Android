@@ -1,28 +1,43 @@
 package com.t_robop.yuusuke.a01_spica_android.model;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
+
 public class BlockModel {
-    //ブロックID
-    private int blockId;
-    //ブロックicon
-    private int iconResource;
+    //ブロック
+    private SpicaBlock block;
 
     public BlockModel(){ }
-    public BlockModel(int blockId,int iconResource){
-        this.blockId=blockId;
-        this.iconResource=iconResource;
+
+    public SpicaBlock getBlock() {
+        return block;
+    }
+    public void setBlock(SpicaBlock block) {
+        this.block = block;
     }
 
-    public int getBlockId(){
-        return this.blockId;
-    }
-    public void setBlockId(int blockId){
-        this.blockId=blockId;
-    }
+    public enum SpicaBlock{
+        FRONT("01", R.drawable.front),
+        BACK("02", R.drawable.back),
+        LEFT("03", R.drawable.left),
+        RIGHT("04", R.drawable.right),
+        IF_START("05", R.drawable.front),
+        IF_END("06", R.drawable.front),
+        FOR_START("07", R.drawable.front),
+        FOR_END("08", R.drawable.front),
+        BREAK("09", R.drawable.ic_break);
 
-    public int getIconResource(){
-        return this.iconResource;
-    }
-    public void setIconResource(int iconResource){
-        this.iconResource=iconResource;
+        private String id;
+        private int icResource;
+        SpicaBlock(String id,int icResource){
+            this.id=id;
+            this.icResource=icResource;
+        }
+
+        public String getId() {
+            return id;
+        }
+        public int getIcResource() {
+            return icResource;
+        }
     }
 }

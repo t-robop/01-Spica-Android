@@ -37,7 +37,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         for(int i=0;i<20;i++) {
             ScriptModel scriptModel = new ScriptModel();
             BlockModel blockModel = new BlockModel();
-            blockModel.setBlockId(0101+i);
+            blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
             scriptModel.setBlock(blockModel);
             mScriptAdapter.add(scriptModel);
         }

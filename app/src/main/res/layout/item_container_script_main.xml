@@ -55,7 +55,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script_if.block.blockId)}"
+                        android:text="@{String.valueOf(script_if.block.getBlock.getId)}"
                         tools:text="ススム" />
 
                     <TextView
@@ -64,7 +64,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script_if.block.blockId)}"
+                        android:text="@{String.valueOf(script_if.block.getBlock.getId)}"
                         tools:text="0.5 s" />
 
                 </LinearLayout>
@@ -132,7 +132,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script.block.blockId)}"
+                        android:text="@{String.valueOf(script.block.getBlock.getId)}"
                         tools:text="ススム" />
 
                     <TextView
@@ -141,7 +141,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@{String.valueOf(script.block.blockId)}"
+                        android:text="@{String.valueOf(script.block.getBlock.getId)}"
                         tools:text="0.5 s" />
 
                 </LinearLayout>
