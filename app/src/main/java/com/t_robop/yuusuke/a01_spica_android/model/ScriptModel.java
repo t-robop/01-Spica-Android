@@ -5,7 +5,7 @@ import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
     //if
-    private int ifState;
+    private int ifState=0;
     //ブロック
     private BlockModel block;
     //右パワー

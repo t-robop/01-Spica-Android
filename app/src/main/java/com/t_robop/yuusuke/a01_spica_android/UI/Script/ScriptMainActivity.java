@@ -43,6 +43,32 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             scriptModel.setBlock(blockModel);
             mScriptPresenter.addScript(scriptModel);
         }
+        ScriptModel scriptModel = new ScriptModel();
+        BlockModel blockModel = new BlockModel();
+        blockModel.setBlock(BlockModel.SpicaBlock.IF_START);
+        scriptModel.setBlock(blockModel);
+        mScriptPresenter.addScript(scriptModel);
+        for (int i = 0; i < 3; i++) {
+            ScriptModel st = new ScriptModel();
+            BlockModel bt = new BlockModel();
+            bt.setBlock(BlockModel.SpicaBlock.FRONT);
+            st.setBlock(bt);
+            st.setIfState(1);
+            mScriptPresenter.addScript(st);
+        }
+        for (int i = 0; i < 5; i++) {
+            ScriptModel st = new ScriptModel();
+            BlockModel bt = new BlockModel();
+            bt.setBlock(BlockModel.SpicaBlock.FRONT);
+            st.setBlock(bt);
+            st.setIfState(2);
+            mScriptPresenter.addScript(st);
+        }
+        ScriptModel st = new ScriptModel();
+        BlockModel bt = new BlockModel();
+        bt.setBlock(BlockModel.SpicaBlock.IF_END);
+        st.setBlock(bt);
+        mScriptPresenter.addScript(st);
     }
 
     @Override
