@@ -4,9 +4,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
@@ -20,6 +23,8 @@ public class UdpReceive extends Thread{
     private Context context;
     private Handler handler = new Handler();
     private Dialog dialog;
+    private byte[] buffer;
+    private Thread checkReceive;
 
     public UdpReceive(Context context){
         port = 10000;
@@ -29,13 +34,17 @@ public class UdpReceive extends Thread{
     public void UdpReceiveStandby(){
 
         //ダイアログの設定
+        RelativeLayout dialogLayout = new RelativeLayout(context);
+        TextView dialogText = new TextView(context);
+        dialogText.setText("実行中");
+        dialogLayout.addView(dialogText);
         dialog = new Dialog(context);
         dialog.setTitle("実行中");      //タイトル設定
+        dialog.setContentView(dialogLayout);
         dialog.setCancelable(false);
-    //    alertDialog.create();
         dialog.show();
 
-        new Thread(new Runnable() {
+        checkReceive = new Thread(new Runnable() {
             @Override
             public void run() {
                 //Threadが動いてる限り回す
@@ -45,7 +54,7 @@ public class UdpReceive extends Thread{
                         DatagramSocket recvUdpSocket = new DatagramSocket(port);
                         recvUdpSocket.setReuseAddress(true);
 
-                        final byte[] buffer = new byte[2048];
+                        buffer = new byte[2048];
                         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
 
                         // 受信するまでブロック
@@ -56,11 +65,21 @@ public class UdpReceive extends Thread{
                             public void run() {
                                 try {
                                     String result = new String(buffer, "UTF-8");
+
+                                    //結果をトースト表示
                                     Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+
+                                    //ダイアログを消す
                                     dialog.dismiss();
+
+                                    //実行ボタンを実行可能な状態に戻す
                                     Button startButton = (Button)((com.t_robop.yuusuke.a01_spica_android.ScriptActivity) context).findViewById(R.id.start_button);
                                     startButton.setEnabled(true);
                                     startButton.setBackgroundResource(R.drawable.start);
+
+                                    //監視しているスレッドを止める
+                                    checkReceive.interrupt();
+
                                 } catch(IOException e) {
 
                                 }
@@ -71,6 +90,9 @@ public class UdpReceive extends Thread{
                     }
                 }
             }
-        }).start();
+        });
+
+        //スレッドの実行
+        checkReceive.start();
     }
 }
