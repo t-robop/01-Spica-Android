@@ -34,15 +34,7 @@ public class UdpReceive extends Thread{
     public void UdpReceiveStandby(){
 
         //ダイアログの設定
-        RelativeLayout dialogLayout = new RelativeLayout(context);
-        TextView dialogText = new TextView(context);
-        dialogText.setText("実行中");
-        dialogLayout.addView(dialogText);
-        dialog = new Dialog(context);
-        dialog.setTitle("実行中");      //タイトル設定
-        dialog.setContentView(dialogLayout);
-        dialog.setCancelable(false);
-        dialog.show();
+        dialog = dialogSettings(dialog);
 
         checkReceive = new Thread(new Runnable() {
             @Override
@@ -94,5 +86,18 @@ public class UdpReceive extends Thread{
 
         //スレッドの実行
         checkReceive.start();
+    }
+
+    public Dialog dialogSettings(Dialog executionDialog){
+        RelativeLayout dialogLayout = new RelativeLayout(context);
+        TextView dialogText = new TextView(context);
+        dialogText.setText("実行中");
+        dialogLayout.addView(dialogText);
+        executionDialog = new Dialog(context);
+        executionDialog.setTitle("実行中");      //タイトル設定
+        executionDialog.setContentView(dialogLayout);
+        executionDialog.setCancelable(false);
+        executionDialog.show();
+        return executionDialog;
     }
 }
