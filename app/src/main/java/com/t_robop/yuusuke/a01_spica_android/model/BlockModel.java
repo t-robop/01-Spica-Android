@@ -16,23 +16,28 @@ public class BlockModel {
     }
 
     public enum SpicaBlock{
-        FRONT("01", R.drawable.front),
-        BACK("02", R.drawable.back),
-        LEFT("03", R.drawable.left),
-        RIGHT("04", R.drawable.right),
-        IF_START("05", R.drawable.front),
-        IF_END("06", R.drawable.front),
-        FOR_START("07", R.drawable.front),
-        FOR_END("08", R.drawable.front),
-        BREAK("09", R.drawable.ic_break);
+        FRONT("ススム","01", R.drawable.front),
+        BACK("サガル","02", R.drawable.back),
+        LEFT("マガル","03", R.drawable.left),
+        RIGHT("マガル","04", R.drawable.right),
+        IF_START("モシモ","05", R.drawable.front),
+        IF_END("キケツ","06", R.drawable.front),
+        FOR_START("クリカエス","07", R.drawable.front),
+        FOR_END("キケツ","08", R.drawable.front),
+        BREAK("オワル","09", R.drawable.ic_break);
 
+        private String name;
         private String id;
         private int icResource;
-        SpicaBlock(String id,int icResource){
+        SpicaBlock(String name,String id,int icResource){
+            this.name=name;
             this.id=id;
             this.icResource=icResource;
         }
 
+        public String getName() {
+            return name;
+        }
         public String getId() {
             return id;
         }
