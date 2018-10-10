@@ -58,7 +58,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
 
 
-        /////川口追加
+        /////川口追
         mScriptAdapter.setActivity(ScriptMainActivity.this);
     }
 
