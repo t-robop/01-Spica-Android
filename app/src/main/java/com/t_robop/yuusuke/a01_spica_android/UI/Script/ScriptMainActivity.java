@@ -49,22 +49,35 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         blockSelectFragment = new BlockSelectFragment();
         blockDetailFragment = new BlockDetailFragment();
 
-        for(int i=0;i<20;i++) {
-            ScriptModel scriptModel = new ScriptModel();
-            BlockModel blockModel = new BlockModel();
-            blockModel.setBlockId(0101+i);
-            scriptModel.setBlock(blockModel);
-            mScriptAdapter.add(scriptModel);
-        }
-        mScriptAdapter.notifyDataSetChanged();
-
         new ScriptPresenter(this);
 
+        mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener(){
+            @Override
+            public void onClick(View view, int pos) {
+                inflateFragment();
+            }
+        });
 
+        mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener(){
+            @Override
+            public void onClick(View view, int pos) {
+                inflateFragment();
+            }
+        });
 
+        mScriptAdapter.setOnBlockLongClickListener(new ScriptMainAdapter.onItemLongClickListener(){
+            @Override
+            public void onLongClick(View view, int pos) {
+                //実行
+            }
+        });
 
-        /////川口追
-        mScriptAdapter.setActivity(ScriptMainActivity.this);
+        mScriptAdapter.setOnBlockIfLongClickListener(new ScriptMainAdapter.onItemLongClickListener(){
+            @Override
+            public void onLongClick(View view, int pos) {
+                //実行
+            }
+        });
     }
 
     public void inflateFragment(){
@@ -73,31 +86,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
         fragmentTransaction.commit();
-
-        mScriptAdapter.setOnItemClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Toast.makeText(ScriptMainActivity.this,"OK", Toast.LENGTH_SHORT).show();
-//                ActivityOptions options = null;
-//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//                    options = ActivityOptions.makeScaleUpAnimation(
-//                            holder.mBinding.conductorAdd,
-//                            (int)holder.mBinding.conductorAdd.getX(),
-//                            (int)holder.mBinding.conductorAdd.getY(),
-//                            holder.mBinding.conductorAdd.getWidth(),
-//                            holder.mBinding.conductorAdd.getHeight());
-//                    ScriptMainActivity.this.startActivity(new Intent(ScriptMainActivity.this, BlockSelectActivity.class), options.toBundle());
-//                }
-            }
-        });
-
-        mScriptAdapter.setOnItemLongClickListener(new View.OnLongClickListener(){
-            @Override
-            public boolean onLongClick(View v){
-                Toast.makeText(ScriptMainActivity.this,"OK", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
     }
 
 
@@ -141,6 +129,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         int laneIndex=0;
         for (int i = 0; i < scripts.size(); i++) {
             ScriptModel script = scripts.get(i);
+            script.setPos(i);
             if(script.getIfState()==0) {
                 //通常
                 mScriptAdapter.addDefault(laneIndex, script);

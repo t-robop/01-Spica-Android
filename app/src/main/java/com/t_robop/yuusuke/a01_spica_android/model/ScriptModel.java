@@ -4,6 +4,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
+    private int pos;
     //if
     private int ifState=0;
     //ブロック
@@ -20,6 +21,13 @@ public class ScriptModel extends BaseObservable {
 
     public ScriptModel(BlockModel block) {
         this.block = block;
+    }
+
+    public int getPos() {
+        return pos;
+    }
+    public void setPos(int pos) {
+        this.pos = pos;
     }
 
     @Bindable

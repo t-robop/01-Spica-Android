@@ -23,18 +23,17 @@ import java.util.ArrayList;
 public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.BindingHolder> {
     private ArrayList<ScriptSet> mScriptList;
     private Context mContext;
-    private View.OnClickListener clickListener;
-    private View.OnLongClickListener longClicklistener;
-
-
-    ScriptMainActivity scriptMainActivity;
+    private onItemClickListener clickConductor;
+    private onItemClickListener clickConductorIf;
+    private onItemLongClickListener longClickBlock;
+    private onItemLongClickListener longClickBlockIf;
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private ItemContainerScriptMainBinding mBinding;
 
         public BindingHolder(ItemContainerScriptMainBinding binding) {
-                super(binding.getRoot());
-                mBinding = binding;
+            super(binding.getRoot());
+            mBinding = binding;
         }
 
         public ViewDataBinding getBinding() {
@@ -42,13 +41,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
-    public static class ScriptSet{
+    public static class ScriptSet {
         private ScriptModel scriptDefault;
         private ScriptModel scriptSpecial;
 
         public ScriptModel getScriptDefault() {
             return scriptDefault;
         }
+
         public void setScriptDefault(ScriptModel scriptDefault) {
             this.scriptDefault = scriptDefault;
         }
@@ -56,6 +56,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         public ScriptModel getScriptSpecial() {
             return scriptSpecial;
         }
+
         public void setScriptSpecial(ScriptModel scriptSpecial) {
             this.scriptSpecial = scriptSpecial;
         }
@@ -66,41 +67,33 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
-
-    //class保持クラスで置き換える
-    public void setActivity(ScriptMainActivity activity) {
-        this.scriptMainActivity = activity;
-    }
-
-    public void add(ScriptModel script) {
-        mScriptList.add(script);
-    public void addDefault(int index,ScriptModel script) {
-        if(mScriptList.size()<index) return;
+    public void addDefault(int index, ScriptModel script) {
+        if (mScriptList.size() < index) return;
 
         //普通に追加
-        if(mScriptList.size()==index){
-            ScriptSet set=new ScriptSet();
+        if (mScriptList.size() == index) {
+            ScriptSet set = new ScriptSet();
             set.setScriptDefault(script);
             mScriptList.add(set);
-        }else{
-            ScriptSet set=mScriptList.get(index);
+        } else {
+            ScriptSet set = mScriptList.get(index);
             set.setScriptDefault(script);
-            mScriptList.set(index,set);
+            mScriptList.set(index, set);
         }
     }
 
-    public void addSpecial(int index,ScriptModel script) {
-        if(mScriptList.size()<index) return;
+    public void addSpecial(int index, ScriptModel script) {
+        if (mScriptList.size() < index) return;
 
         //普通に追加
-        if(mScriptList.size()==index){
-            ScriptSet set=new ScriptSet();
+        if (mScriptList.size() == index) {
+            ScriptSet set = new ScriptSet();
             set.setScriptSpecial(script);
             mScriptList.add(set);
-        }else{
-            ScriptSet set=mScriptList.get(index);
+        } else {
+            ScriptSet set = mScriptList.get(index);
             set.setScriptSpecial(script);
-            mScriptList.set(index,set);
+            mScriptList.set(index, set);
         }
     }
 
@@ -113,56 +106,76 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     @Override
-    public void onBindViewHolder(final BindingHolder holder, int position) {
+    public void onBindViewHolder(BindingHolder holder, int position) {
         ScriptSet set = mScriptList.get(position);
 
-        holder.mBinding.setScript(set.getScriptDefault());
+        final ScriptModel scriptDefault=set.scriptDefault;
+        holder.mBinding.setScript(scriptDefault);
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickListener.onClick(view);
-//                ActivityOptions options = null;
-//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-//                    options = ActivityOptions.makeScaleUpAnimation(
-//                            holder.mBinding.conductorAdd,
-//                            (int)holder.mBinding.conductorAdd.getX(),
-//                            (int)holder.mBinding.conductorAdd.getY(),
-//                            holder.mBinding.conductorAdd.getWidth(),
-//                            holder.mBinding.conductorAdd.getHeight());
-//                    mContext.startActivity(new Intent(mContext,BlockSelectActivity.class), options.toBundle());
-//                }
+                clickConductor.onClick(view,scriptDefault.getPos());
             }
         });
-
-        holder.mBinding.setScriptOther(set.scriptSpecial);
-
-        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickListener.onClick(view);
-            }
-        });
-
+        if(scriptDefault!=null) {
+            holder.mBinding.blockImage.setImageResource(scriptDefault.getBlock().getBlock().getIcResource());
+        }
         holder.mBinding.blockContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                longClicklistener.onLongClick(view);
+                longClickBlock.onLongClick(view,scriptDefault.getPos());
+                return false;
+            }
+        });
+
+
+        final ScriptModel scriptSpecial=set.scriptSpecial;
+        holder.mBinding.setScriptOther(scriptSpecial);
+        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickConductorIf.onClick(view,scriptSpecial.getPos());
+            }
+        });
+        if(scriptSpecial!=null){
+            holder.mBinding.blockImageIf.setImageResource(scriptSpecial.getBlock().getBlock().getIcResource());
+        }
+        holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                longClickBlock.onLongClick(view,scriptSpecial.getPos());
                 return false;
             }
         });
 
     }
 
+    public interface onItemClickListener {
+        void onClick(View view, int pos);
+    }
+
+    public interface onItemLongClickListener {
+        void onLongClick(View view, int pos);
+    }
+
+    public void setOnConductorClickListener(onItemClickListener listener) {
+        this.clickConductor = listener;
+    }
+
+    public void setOnConductorIfClickListener(onItemClickListener listener) {
+        this.clickConductorIf = listener;
+    }
+
+    public void setOnBlockLongClickListener(onItemLongClickListener listener) {
+        this.longClickBlock = listener;
+    }
+
+    public void setOnBlockIfLongClickListener(onItemLongClickListener listener) {
+        this.longClickBlockIf = listener;
+    }
+
     @Override
     public int getItemCount() {
         return mScriptList.size();
-    }
-
-    public void setOnItemClickListener(View.OnClickListener listener) {
-        this.clickListener = listener;
-    }
-
-    public void setOnItemLongClickListener(View.OnLongClickListener listener){
-        this.longClicklistener = listener;
     }
 }
