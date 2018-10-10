@@ -89,7 +89,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     /**
      スクリプト一覧を送信可能データにするメソッド
-     **/
+     */
     @Override
     public String getSendableScripts() {
         String sendStringData = "";

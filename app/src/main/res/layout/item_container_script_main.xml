@@ -29,6 +29,7 @@
             android:visibility="@{scriptOther==null ? View.INVISIBLE:View.VISIBLE}">
 
             <LinearLayout
+                android:id="@+id/block_container_if"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="8dp"
@@ -106,6 +107,7 @@
             android:visibility="@{script==null ? View.INVISIBLE:View.VISIBLE}">
 
             <LinearLayout
+                android:id="@+id/block_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginVertical="8dp"

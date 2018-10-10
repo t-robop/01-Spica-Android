@@ -1,11 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.ViewDataBinding;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +15,8 @@ import java.util.ArrayList;
 public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.BindingHolder> {
     private ArrayList<ScriptSet> mScriptList;
     private Context mContext;
+    private View.OnClickListener clickListener;
+    private View.OnLongClickListener longClicklistener;
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private ItemContainerScriptMainBinding mBinding;
@@ -103,16 +101,17 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityOptions options = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    options = ActivityOptions.makeScaleUpAnimation(
-                            holder.mBinding.conductorAdd,
-                            (int)holder.mBinding.conductorAdd.getX(),
-                            (int)holder.mBinding.conductorAdd.getY(),
-                            holder.mBinding.conductorAdd.getWidth(),
-                            holder.mBinding.conductorAdd.getHeight());
-                    mContext.startActivity(new Intent(mContext,BlockSelectActivity.class), options.toBundle());
-                }
+                clickListener.onClick(view);
+//                ActivityOptions options = null;
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//                    options = ActivityOptions.makeScaleUpAnimation(
+//                            holder.mBinding.conductorAdd,
+//                            (int)holder.mBinding.conductorAdd.getX(),
+//                            (int)holder.mBinding.conductorAdd.getY(),
+//                            holder.mBinding.conductorAdd.getWidth(),
+//                            holder.mBinding.conductorAdd.getHeight());
+//                    mContext.startActivity(new Intent(mContext,BlockSelectActivity.class), options.toBundle());
+//                }
             }
         });
 
@@ -121,22 +120,30 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ActivityOptions options = null;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    options = ActivityOptions.makeScaleUpAnimation(
-                            holder.mBinding.conductorAdd,
-                            (int)holder.mBinding.conductorAdd.getX(),
-                            (int)holder.mBinding.conductorAdd.getY(),
-                            holder.mBinding.conductorAdd.getWidth(),
-                            holder.mBinding.conductorAdd.getHeight());
-                    mContext.startActivity(new Intent(mContext,BlockSelectActivity.class), options.toBundle());
-                }
+                clickListener.onClick(view);
             }
         });
+
+        holder.mBinding.blockContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                longClicklistener.onLongClick(view);
+                return false;
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return mScriptList.size();
+    }
+
+    public void setOnItemClickListener(View.OnClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    public void setOnItemLongClickListener(View.OnLongClickListener listener){
+        this.longClicklistener = listener;
     }
 }
