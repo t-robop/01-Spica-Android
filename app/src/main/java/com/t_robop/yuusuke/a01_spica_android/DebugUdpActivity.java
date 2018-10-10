@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
-import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
+import com.t_robop.yuusuke.a01_spica_android.util.UdpSendOld;
 
 import java.io.UnsupportedEncodingException;
 
@@ -14,7 +14,7 @@ public class DebugUdpActivity extends AppCompatActivity {
 
     EditText text;
     EditText sendText;
-    private UdpSend udp = new UdpSend();
+    private UdpSendOld udp = new UdpSendOld();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

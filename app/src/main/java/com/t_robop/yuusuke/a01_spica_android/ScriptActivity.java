@@ -17,6 +17,7 @@ import com.t_robop.yuusuke.a01_spica_android.model.MenuItemModel;
 import com.t_robop.yuusuke.a01_spica_android.util.SimpleItemTouchHelperCallback;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
+import com.t_robop.yuusuke.a01_spica_android.util.UdpSendOld;
 import com.t_robop.yuusuke.a01_spica_android.util.UtilBlock;
 
 import java.io.UnsupportedEncodingException;
@@ -116,10 +117,12 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             return;
         }
 
+//        String sendData = UtilBlock.generateUdpStr(recyclerAdapter);
+//        new UdpSend().UdpSendText(sendData);
 
-        UdpSend udp = new UdpSend();
+        UdpSendOld udp = new UdpSendOld();
 
-        String ip = "";
+        String ip = "192.168.0.7";
         String sendData = UtilBlock.generateUdpStr(recyclerAdapter);
         udp.setIpAddress(ip);
         udp.setPort(10000);
@@ -129,7 +132,7 @@ public class ScriptActivity extends AppCompatActivity implements RecyclerAdapter
             e.printStackTrace();
         }
         Log.d("udpText", sendData);
-        //udp.send();
+        udp.send();
 
         Button startButton = findViewById(R.id.start_button);
         startButton.setEnabled(false);
