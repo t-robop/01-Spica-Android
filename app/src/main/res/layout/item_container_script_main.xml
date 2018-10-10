@@ -7,6 +7,8 @@
 
         <import type="android.view.View" />
 
+        <import type="com.t_robop.yuusuke.a01_spica_android.R" />
+
         <variable
             name="scriptOther"
             type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
@@ -41,6 +43,7 @@
                     android:id="@+id/block_image_if"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="4dp"
                     android:layout_weight="4" />
 
                 <LinearLayout
@@ -119,6 +122,7 @@
                     android:id="@+id/block_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_margin="4dp"
                     android:layout_weight="4" />
 
                 <LinearLayout
