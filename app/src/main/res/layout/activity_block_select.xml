@@ -19,7 +19,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/button1_hoge"
+                android:id="@+id/susumu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
@@ -45,7 +45,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/button2_hoge"
+                android:id="@+id/magaru"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
@@ -71,7 +71,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/button3_hoge"
+                android:id="@+id/sagaru"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"

@@ -75,10 +75,29 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     //BlockSelectFragmentで追加したViewのクリックを検出するリスナー
     @Override
-    public void onClickButton( ) {
+    public void onClickButton(String buttonName) {
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Bundle bundle = new Bundle();
 
+        switch (buttonName){
+            case "susumu":
+                bundle.putString("commandDirection", "susumu");
+                break;
+            case "magaru":
+                bundle.putString("commandDirection", "magaru");
+                break;
+            case "sagaru":
+                bundle.putString("commandDirection", "sagaru");
+                break;
+            default:
+                bundle.putString("commandDirection", "null");
+                break;
+
+        }
+
+        blockDetailFragment.setArguments(bundle);
         fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
         fragmentTransaction.commit();
     }

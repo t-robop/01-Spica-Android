@@ -45,9 +45,8 @@ public class BlockSelectFragment extends Fragment {
 
 
     public interface MyListener {
-        public void onClickButton();
+        public void onClickButton(String buttonName);
     }
-
 
     // FragmentがActivityに追加されたら呼ばれるメソッド
     @Override
@@ -74,10 +73,24 @@ public class BlockSelectFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
-        mView.findViewById(R.id.button1_hoge).setOnClickListener(new View.OnClickListener() {
+        mView.findViewById(R.id.susumu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton();
+                mListener.onClickButton("susumu");
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mView.findViewById(R.id.magaru).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickButton("magaru");
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mView.findViewById(R.id.sagaru).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickButton("sagaru");
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
