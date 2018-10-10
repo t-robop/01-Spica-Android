@@ -14,7 +14,11 @@ public interface ScriptContract {
 
         void setScript(ScriptModel script,int index);
 
+        void insertScript(ScriptModel script,int beforeIndex);
+
         ArrayList<ScriptModel> getScripts();
+
+        String getSendableScripts();
     }
 }
 

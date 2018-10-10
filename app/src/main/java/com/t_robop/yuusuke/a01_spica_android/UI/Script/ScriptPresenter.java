@@ -68,8 +68,28 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         mScripts.set(index,script);
     }
 
+    /**
+     指定したindexの次にスクリプトを挿入するメソッド
+     */
+    @Override
+    public void insertScript(ScriptModel script, int beforeIndex) {
+        mScripts.add(mScripts.get(mScripts.size()-1));
+        for (int i=mScripts.size()-2;i>beforeIndex;i--){
+            mScripts.set(i,mScripts.get(i-1));
+        }
+        mScripts.set(beforeIndex+1,script);
+    }
+
     @Override
     public ArrayList<ScriptModel> getScripts() {
         return this.mScripts;
+    }
+
+    /**
+     スクリプト一覧を送信可能データにするメソッド
+     */
+    @Override
+    public String getSendableScripts() {
+        return null;
     }
 }
