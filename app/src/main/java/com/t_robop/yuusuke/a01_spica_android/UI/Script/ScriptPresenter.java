@@ -12,7 +12,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     private ArrayList<ScriptModel> mScripts;
 
     public ScriptPresenter(ScriptContract.View scriptView) {
-        this.mScriptView=scriptView;
+        this.mScriptView = scriptView;
         this.mScriptView.setPresenter(this);
 
         for (int i = 0; i < 5; i++) {
@@ -54,10 +54,9 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     @Override
     public void start() {
-        mScripts=new ArrayList();
+        mScripts = new ArrayList();
     }
 
-    @Override
     public void addScript(ScriptModel script) {
         mScripts.add(script);
         mScriptView.drawScripts(mScripts);
@@ -65,19 +64,24 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     @Override
     public void setScript(ScriptModel script, int index) {
-        mScripts.set(index,script);
+        mScripts.set(index, script);
     }
 
     /**
-     指定したindexの次にスクリプトを挿入するメソッド
+     * 指定したindexの次にスクリプトを挿入するメソッド
+     * もしindexが最後だったら追加処理
      */
     @Override
     public void insertScript(ScriptModel script, int beforeIndex) {
-        mScripts.add(mScripts.get(mScripts.size()-1));
-        for (int i=mScripts.size()-2;i>beforeIndex;i--){
-            mScripts.set(i,mScripts.get(i-1));
+        if (beforeIndex == mScripts.size() - 1) {
+            addScript(script);
+        } else if (beforeIndex < mScripts.size() - 1) {
+            mScripts.add(mScripts.get(mScripts.size() - 1));
+            for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
+                mScripts.set(i, mScripts.get(i - 1));
+            }
+            mScripts.set(beforeIndex + 1, script);
         }
-        mScripts.set(beforeIndex+1,script);
     }
 
     @Override
@@ -86,7 +90,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     }
 
     /**
-     スクリプト一覧を送信可能データにするメソッド
+     * スクリプト一覧を送信可能データにするメソッド
      */
     @Override
     public String getSendableScripts() {

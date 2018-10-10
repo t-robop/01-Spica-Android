@@ -99,7 +99,8 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     public void onBindViewHolder(final BindingHolder holder, int position) {
         ScriptSet set = mScriptList.get(position);
 
-        holder.mBinding.setScript(set.getScriptDefault());
+        ScriptModel scriptDefault=set.scriptDefault;
+        holder.mBinding.setScript(scriptDefault);
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,9 +116,12 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 }
             }
         });
+        if(scriptDefault!=null) {
+            holder.mBinding.blockImage.setImageResource(set.scriptDefault.getBlock().getBlock().getIcResource());
+        }
 
-        holder.mBinding.setScriptOther(set.scriptSpecial);
-
+        ScriptModel scriptSpecial=set.scriptSpecial;
+        holder.mBinding.setScriptOther(scriptSpecial);
         holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +137,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 }
             }
         });
+        if(scriptSpecial!=null){
+            holder.mBinding.blockImageIf.setImageResource(set.scriptSpecial.getBlock().getBlock().getIcResource());
+        }
     }
 
     @Override
