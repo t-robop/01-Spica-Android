@@ -4,28 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.Script.ScriptMainActivity">
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
+        android:id="@+id/conductor_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_script"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:paddingLeft="150dp"
-            android:scrollbars="none"
-            app:layout_constraintBottom_toTopOf="@id/recycler_block_list"
-            app:layout_constraintTop_toTopOf="parent" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_block_list"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:scrollbars="none"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintVertical_weight="1" />
+        <android.support.constraint.ConstraintLayout
+          android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.constraint.ConstraintLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_script"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:paddingLeft="150dp"
+               android:scrollbars="none"
+                app:layout_constraintBottom_toTopOf="@id/recycler_block_list"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_block_list"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:scrollbars="none"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_weight="1" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </FrameLayout>
 
 </layout>

@@ -1,12 +1,20 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
+
 import android.content.Context;
 import android.databinding.ViewDataBinding;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
@@ -17,6 +25,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     private Context mContext;
     private View.OnClickListener clickListener;
     private View.OnLongClickListener longClicklistener;
+
+
+    ScriptMainActivity scriptMainActivity;
 
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private ItemContainerScriptMainBinding mBinding;
@@ -55,6 +66,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
+
+    //class保持クラスで置き換える
+    public void setActivity(ScriptMainActivity activity) {
+        this.scriptMainActivity = activity;
+    }
+
+    public void add(ScriptModel script) {
+        mScriptList.add(script);
     public void addDefault(int index,ScriptModel script) {
         if(mScriptList.size()<index) return;
 

@@ -19,15 +19,15 @@ public class BlockSelectActivity extends AppCompatActivity {
         setContentView(R.layout.activity_block_select);
     }
 
-    public void blockClick(View v){
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(
-                    v,
-                    (int)v.getX(),
-                    (int)v.getY(),
-                    v.getWidth(),
-                    v.getHeight());
-            startActivity(new Intent(this,BlockDetailActivity.class), options.toBundle());
-        }
-    }
+//    public void blockClick(View v){
+//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+//            ActivityOptions options = ActivityOptions.makeScaleUpAnimation(
+//                    v,
+//                    (int)v.getX(),
+//                    (int)v.getY(),
+//                    v.getWidth(),
+//                    v.getHeight());
+//            startActivity(new Intent(this,BlockDetailActivity.class), options.toBundle());
+//        }
+//    }
 }

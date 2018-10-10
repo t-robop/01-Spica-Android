@@ -19,13 +19,13 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/susumu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:tag="01"
-                android:onClick="blockClick"
                 tools:ignore="OnClick">
 
                 <ImageView
@@ -45,13 +45,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/magaru"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:tag="02"
-                android:onClick="blockClick"
                 tools:ignore="OnClick">
 
                 <ImageView
@@ -71,13 +71,13 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sagaru"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
                 android:orientation="vertical"
                 android:tag="01"
-                android:onClick="blockClick"
                 tools:ignore="OnClick">
 
                 <ImageView
