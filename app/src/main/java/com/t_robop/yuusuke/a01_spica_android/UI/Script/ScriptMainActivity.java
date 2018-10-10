@@ -65,6 +65,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         }
         mScriptAdapter.notifyDataSetChanged();
+
+        mScriptPresenter.getSendableScripts();
     }
 
     @Override
