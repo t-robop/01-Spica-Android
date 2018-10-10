@@ -16,16 +16,24 @@ public class BlockDetailFragment extends Fragment {
     public BlockDetailFragment(){}
 
     View mView;
+    Bundle bundle;
+    String commandDirection;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.activity_block_detail, container, false);
+
+        Bundle bundle = getArguments();
+        commandDirection = bundle.getString("commandDirection");
+
         popupAnime(mView);
+
         return mView;
     }
 
     ScriptMainActivity scriptMainActivity;
+
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -39,7 +47,20 @@ public class BlockDetailFragment extends Fragment {
                 Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         // animation時間 msec
-        scaleAnimation.setDuration(200);
+
+
+        if(commandDirection == "susumu")
+        {
+            scaleAnimation.setDuration(200);
+        }else if(commandDirection == "magaru")
+        {
+            scaleAnimation.setDuration(1000);
+        }else if(commandDirection == "sagaru"){
+            scaleAnimation.setDuration(2000);
+        }else {
+            scaleAnimation.setDuration(5000);
+        }
+
         // 繰り返し回数
         scaleAnimation.setRepeatCount(0);
         // animationが終わったそのまま表示にする
@@ -47,4 +68,5 @@ public class BlockDetailFragment extends Fragment {
         //アニメーションの開始
         view.startAnimation(scaleAnimation);
     }
+
 }
