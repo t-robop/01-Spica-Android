@@ -1,10 +1,13 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.TextView;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
@@ -17,6 +20,7 @@ public class ScriptMainActivity extends AppCompatActivity {
     private ScriptMainAdapter mScriptAdapter;
     private LinearLayoutManager mScriptLayoutManager;
     private CanvasView mCanvasView;
+    private TextView textView;
 
     int overallXScroll = 0;
 
@@ -32,6 +36,7 @@ public class ScriptMainActivity extends AppCompatActivity {
         mScriptLayoutManager = new LinearLayoutManager(this);
         mScriptLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
+        textView = findViewById(R.id.textView);
 
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
@@ -46,6 +51,20 @@ public class ScriptMainActivity extends AppCompatActivity {
             mCanvasView.setCommandBlockNum(mScriptAdapter.getItemCount() + 2);
             mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());
         }
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScriptModel scriptModel = new ScriptModel();
+                BlockModel blockModel = new BlockModel();
+                blockModel.setBlockId(0101);
+                scriptModel.setBlock(blockModel);
+                mScriptAdapter.add(scriptModel);
+
+                mCanvasView.setCommandBlockNum(mScriptAdapter.getItemCount() + 2);
+                mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());            }
+        });
+
         mScriptAdapter.notifyDataSetChanged();
 
         final Handler handler = new Handler();

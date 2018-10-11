@@ -226,7 +226,7 @@ public class CanvasView extends View {
 
         for (int i = 0; i < commandBlockNum - 2; i++) {
             commandBlocks[0][i] = 1;
-            switch (i % 1) {
+            switch (i % 5) {
                 case 0:
                     commandBlocks[1][i] = 0;
                     break;
