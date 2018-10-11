@@ -19,14 +19,15 @@ public class BlockModel {
     }
 
     public enum SpicaBlock{
+        START("スタート","00", R.drawable.icon),
         FRONT("ススム","01", R.drawable.front),
         BACK("サガル","02", R.drawable.back),
         LEFT("マガル","03", R.drawable.left),
         RIGHT("マガル","04", R.drawable.right),
         IF_START("モシモ","05", R.drawable.if_wall),
-        IF_END("キケツ","06", R.drawable.icon),
-        FOR_START("クリカエス","07", R.drawable.icon),
-        FOR_END("キケツ","08", R.drawable.icon),
+        IF_END("キケツ","06", R.drawable.ic_setting),
+        FOR_START("クリカエス","07", R.drawable.ic_setting),
+        FOR_END("キケツ","08", R.drawable.ic_setting),
         BREAK("オワル","09", R.drawable.ic_break);
 
         private String name;

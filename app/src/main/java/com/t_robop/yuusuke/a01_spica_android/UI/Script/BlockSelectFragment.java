@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
@@ -40,6 +41,14 @@ public class BlockSelectFragment extends Fragment {
         Bundle bundle = getArguments();
         pos = bundle.getInt("pos");
         ifState=bundle.getInt("ifState");
+
+        RelativeLayout bg=mView.findViewById(R.id.bg_select);
+        bg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction().remove(BlockSelectFragment.this).commit();
+            }
+        });
 
         return mView;
     }

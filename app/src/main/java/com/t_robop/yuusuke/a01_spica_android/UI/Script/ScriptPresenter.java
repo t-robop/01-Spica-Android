@@ -14,49 +14,26 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     private ArrayList<ScriptModel> mScripts;
 
     public ScriptPresenter(ScriptContract.View scriptView) {
-        this.mScriptView=scriptView;
+        this.mScriptView = scriptView;
         this.mScriptView.setPresenter(this);
 
-//        for (int i = 0; i < 5; i++) {
-            ScriptModel scriptModel = new ScriptModel();
-            BlockModel blockModel = new BlockModel();
-            blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
-            scriptModel.setBlock(blockModel);
-            mScripts.add(scriptModel);
-//        }
-//        ScriptModel scriptModel = new ScriptModel();
-//        BlockModel blockModel = new BlockModel();
-//        blockModel.setBlock(BlockModel.SpicaBlock.IF_START);
-//        scriptModel.setBlock(blockModel);
-//        mScripts.add(scriptModel);
-//        for (int i = 0; i < 5; i++) {
-//            ScriptModel st = new ScriptModel();
-//            BlockModel bt = new BlockModel();
-//            bt.setBlock(BlockModel.SpicaBlock.LEFT);
-//            st.setBlock(bt);
-//            st.setIfState(1);
-//            mScripts.add(st);
-//        }
-//        for (int i = 0; i < 3; i++) {
-//            ScriptModel st = new ScriptModel();
-//            BlockModel bt = new BlockModel();
-//            bt.setBlock(BlockModel.SpicaBlock.BACK);
-//            st.setBlock(bt);
-//            st.setIfState(2);
-//            mScripts.add(st);
-//        }
-//        ScriptModel st = new ScriptModel();
-//        BlockModel bt = new BlockModel();
-//        bt.setBlock(BlockModel.SpicaBlock.IF_END);
-//        st.setBlock(bt);
-//        mScripts.add(st);
+        /**
+         * スタートブロックのみ追加
+         */
+        ScriptModel scriptModel = new ScriptModel();
+        BlockModel blockModel = new BlockModel();
+        blockModel.setBlock(BlockModel.SpicaBlock.START);
+        scriptModel.setBlock(blockModel);
+        mScripts.add(scriptModel);
+
+        //todo テストはここに上記スタートブロックのように記述してください
 
         mScriptView.drawScripts(mScripts);
     }
 
     @Override
     public void start() {
-        mScripts=new ArrayList();
+        mScripts = new ArrayList();
     }
 
     public void addScript(ScriptModel script) {
@@ -64,9 +41,9 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     }
 
     /**
-     指定したindexの次にスクリプトを挿入するメソッド
+     * 指定したindexの次にスクリプトを挿入するメソッド
      */
-    public void insert(ScriptModel script, int beforeIndex){
+    public void insert(ScriptModel script, int beforeIndex) {
         mScripts.add(mScripts.get(mScripts.size() - 1));
         for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
             mScripts.set(i, mScripts.get(i - 1));
@@ -76,39 +53,39 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     @Override
     public void setScript(ScriptModel script, int index) {
-        mScripts.set(index,script);
+        mScripts.set(index, script);
     }
 
     /**
-     スクリプト追加メソッド
+     * スクリプト追加メソッド
      */
     @Override
     public void insertScript(ScriptModel script, int beforeIndex) {
-        if(beforeIndex==mScripts.size()-1){
+        if (beforeIndex == mScripts.size() - 1) {
             addScript(script);
-            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
-                ScriptModel scriptOther=new ScriptModel();
+            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+                ScriptModel scriptOther = new ScriptModel();
                 scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
                 scriptOther.setIfState(script.getIfState());
                 addScript(scriptOther);
-            }else if(script.getBlock().getBlock()== BlockModel.SpicaBlock.FOR_START){
-                ScriptModel scriptOther=new ScriptModel();
+            } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
+                ScriptModel scriptOther = new ScriptModel();
                 scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
                 scriptOther.setIfState(script.getIfState());
                 addScript(scriptOther);
             }
-        }else if(beforeIndex<mScripts.size()-1) {
-            insert(script,beforeIndex);
-            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
-                ScriptModel scriptOther=new ScriptModel();
+        } else if (beforeIndex < mScripts.size() - 1) {
+            insert(script, beforeIndex);
+            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+                ScriptModel scriptOther = new ScriptModel();
                 scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
                 scriptOther.setIfState(script.getIfState());
-                insert(scriptOther,beforeIndex+1);
-            }else if(script.getBlock().getBlock()== BlockModel.SpicaBlock.FOR_START){
-                ScriptModel scriptOther=new ScriptModel();
+                insert(scriptOther, beforeIndex + 1);
+            } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
+                ScriptModel scriptOther = new ScriptModel();
                 scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
                 scriptOther.setIfState(script.getIfState());
-                insert(scriptOther,beforeIndex+1);
+                insert(scriptOther, beforeIndex + 1);
             }
         }
         mScriptView.drawScripts(mScripts);
@@ -120,42 +97,39 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     }
 
     /**
-     スクリプト一覧を送信可能データにするメソッド
+     * スクリプト一覧を送信可能データにするメソッド
      */
     @Override
     public String getSendableScripts() {
         String sendStringData = "";
-        for (ScriptModel script:mScripts) {
+        for (ScriptModel script : mScripts) {
             String ifState = "0" + String.valueOf(script.getIfState());
             String blockId = script.getBlock().getBlock().getId();
             String RightSpeed = String.valueOf(script.getRightSpeed());
             String LeftSpeed = String.valueOf(script.getLeftSpeed());
             String value = String.valueOf(script.getValue());
 
-            if(RightSpeed.length() == 1){
+            if (RightSpeed.length() == 1) {
                 RightSpeed = "00" + RightSpeed;
-            }
-            else if(RightSpeed.length() == 2){
+            } else if (RightSpeed.length() == 2) {
                 RightSpeed = "0" + RightSpeed;
             }
 
-            if(LeftSpeed.length() == 1){
+            if (LeftSpeed.length() == 1) {
                 LeftSpeed = "00" + LeftSpeed;
-            }
-            else if(LeftSpeed.length() == 2){
+            } else if (LeftSpeed.length() == 2) {
                 LeftSpeed = "0" + LeftSpeed;
             }
 
-            if(value.length() == 1){
+            if (value.length() == 1) {
                 value = "00" + value;
-            }
-            else if(value.length() == 2){
+            } else if (value.length() == 2) {
                 value = "0" + value;
             }
 
             sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(RightSpeed) + String.valueOf(LeftSpeed) + String.valueOf(value);
         }
-        Log.d("test",sendStringData);
+        Log.d("test", sendStringData);
         return sendStringData;
     }
 }
