@@ -47,7 +47,11 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void insert(ScriptModel script, int beforeIndex) {
         mScripts.add(mScripts.get(mScripts.size() - 1));
         for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
-            mScripts.set(i, mScripts.get(i - 1));
+            if(i-1<0){
+                break;
+            }else{
+                mScripts.set(i, mScripts.get(i - 1));
+            }
         }
         mScripts.set(beforeIndex + 1, script);
     }

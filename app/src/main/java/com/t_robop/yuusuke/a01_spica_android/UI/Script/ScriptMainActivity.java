@@ -166,6 +166,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         BlockModel blockStart = new BlockModel();
         blockStart.setBlock(BlockModel.SpicaBlock.START);
         scriptStart.setBlock(blockStart);
+        scriptStart.setPos(-1);
+        scriptStart.setIfState(0);
         mScriptAdapter.addDefault(0,scriptStart);
 
         //引数を使ってUIに反映させる
