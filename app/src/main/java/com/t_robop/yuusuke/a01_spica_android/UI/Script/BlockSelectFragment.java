@@ -23,6 +23,7 @@ import java.io.FileReader;
 public class BlockSelectFragment extends Fragment {
 
     private int pos=0;
+    private int ifState=0;
 
     public BlockSelectFragment(){}
 
@@ -38,6 +39,7 @@ public class BlockSelectFragment extends Fragment {
 
         Bundle bundle = getArguments();
         pos = bundle.getInt("pos");
+        ifState=bundle.getInt("ifState");
 
         return mView;
     }
@@ -49,7 +51,7 @@ public class BlockSelectFragment extends Fragment {
 
 
     public interface MyListener {
-        public void onClickButton(String buttonName,int pos);
+        public void onClickButton(String buttonName,int pos,int ifState);
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド
@@ -80,21 +82,42 @@ public class BlockSelectFragment extends Fragment {
         mView.findViewById(R.id.susumu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("susumu",pos);
+                mListener.onClickButton("susumu",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.magaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("magaru",pos);
+                mListener.onClickButton("magaru",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.sagaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("sagaru",pos);
+                mListener.onClickButton("sagaru",pos,ifState);
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mView.findViewById(R.id.mosimo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickButton("mosimo",pos,ifState);
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mView.findViewById(R.id.kurikaesu).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickButton("kurikaesu",pos,ifState);
+                //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        mView.findViewById(R.id.nukeru).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickButton("nukeru",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });

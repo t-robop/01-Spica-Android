@@ -27,6 +27,7 @@ public class BlockDetailFragment extends Fragment {
     String commandDirection;
 
     private int pos;
+    private int ifState;
 
     DetailListener listener;
 
@@ -38,6 +39,7 @@ public class BlockDetailFragment extends Fragment {
         Bundle bundle = getArguments();
         commandDirection = bundle.getString("commandDirection");
         pos = bundle.getInt("pos");
+        ifState = bundle.getInt("ifState");
 
         final BlockModel.SpicaBlock spicaBlock;
         switch (commandDirection) {
@@ -50,6 +52,15 @@ public class BlockDetailFragment extends Fragment {
             case "sagaru":
                 spicaBlock = BlockModel.SpicaBlock.BACK;
                 break;
+            case "mosimo":
+                spicaBlock = BlockModel.SpicaBlock.IF_START;
+                break;
+            case "kurikaesu":
+                spicaBlock = BlockModel.SpicaBlock.FOR_START;
+                break;
+            case "nukeru":
+                spicaBlock = BlockModel.SpicaBlock.BREAK;
+                break;
             default:
                 spicaBlock = BlockModel.SpicaBlock.FRONT;
         }
@@ -61,7 +72,8 @@ public class BlockDetailFragment extends Fragment {
                 ScriptModel script = new ScriptModel();
                 script.setBlock(new BlockModel(spicaBlock));
                 script.setValue(100);//todo ここでedittextの値をいれる
-                listener.onClickadd(pos, script);
+                script.setIfState(ifState);
+                listener.onClickadd(script,pos);
             }
         });
 
@@ -116,7 +128,7 @@ public class BlockDetailFragment extends Fragment {
     }
 
     public interface DetailListener {
-        public void onClickadd(int pos, ScriptModel script);
+        public void onClickadd(ScriptModel script, int pos);
     }
 
     public void setAddClickListener(BlockDetailFragment.DetailListener listener) {

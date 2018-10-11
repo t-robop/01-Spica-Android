@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
@@ -67,6 +68,10 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
+    public void clear(){
+        mScriptList.clear();
+    }
+
     public void addDefault(int index, ScriptModel script) {
         if (mScriptList.size() < index) return;
 
@@ -105,8 +110,25 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         return new BindingHolder(binding);
     }
 
+    /**
+     * if文のTrueの終点Indexを返すメソッド
+     */
+    private int getTrueEndIndex(int posIfStart){
+        for(int i=posIfStart+1;i<mScriptList.size();i++){
+            if(mScriptList.get(i).scriptSpecial==null){
+                ScriptModel scriptLastTrue=mScriptList.get(i-1).scriptSpecial;
+                if(scriptLastTrue!=null){
+                    return scriptLastTrue.getPos();
+                }else{
+                    return mScriptList.get(i-1).scriptDefault.getPos();
+                }
+            }
+        }
+        return -1;
+    }
+
     @Override
-    public void onBindViewHolder(BindingHolder holder, int position) {
+    public void onBindViewHolder(BindingHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
 
         final ScriptModel scriptDefault=set.scriptDefault;
@@ -114,7 +136,11 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickConductor.onClick(view,scriptDefault.getPos());
+                if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
+                    clickConductor.onClick(view, getTrueEndIndex(position),2);
+                }else {
+                    clickConductor.onClick(view, scriptDefault.getPos(),scriptDefault.getIfState());
+                }
             }
         });
         if(scriptDefault!=null) {
@@ -134,7 +160,12 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickConductorIf.onClick(view,scriptSpecial.getPos());
+                if(scriptSpecial!=null) {
+                    clickConductorIf.onClick(view, scriptSpecial.getPos(),1);
+                }else{
+                    //if_startの直後
+                    clickConductorIf.onClick(view, scriptDefault.getPos(),1);
+                }
             }
         });
         if(scriptSpecial!=null){
@@ -151,7 +182,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     public interface onItemClickListener {
-        void onClick(View view, int pos);
+        void onClick(View view, int pos,int ifState);
     }
 
     public interface onItemLongClickListener {

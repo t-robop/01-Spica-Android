@@ -50,28 +50,28 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         new ScriptPresenter(this);
 
-        mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener(){
+        mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos) {
-                inflateFragment(pos);
+            public void onClick(View view, int pos, int ifState) {
+                inflateFragment(pos, ifState);
             }
         });
 
-        mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener(){
+        mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos) {
-                inflateFragment(pos);
+            public void onClick(View view, int pos, int ifState) {
+                inflateFragment(pos, ifState);
             }
         });
 
-        mScriptAdapter.setOnBlockLongClickListener(new ScriptMainAdapter.onItemLongClickListener(){
+        mScriptAdapter.setOnBlockLongClickListener(new ScriptMainAdapter.onItemLongClickListener() {
             @Override
             public void onLongClick(View view, int pos) {
                 //実行
             }
         });
 
-        mScriptAdapter.setOnBlockIfLongClickListener(new ScriptMainAdapter.onItemLongClickListener(){
+        mScriptAdapter.setOnBlockIfLongClickListener(new ScriptMainAdapter.onItemLongClickListener() {
             @Override
             public void onLongClick(View view, int pos) {
                 //実行
@@ -80,8 +80,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
-            public void onClickadd(int pos,ScriptModel script) {
-                mScriptPresenter.insertScript(script,pos);
+            public void onClickadd(ScriptModel script, int pos) {
+                mScriptPresenter.insertScript(script, pos);
 
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -92,13 +92,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         });
     }
 
-    public void inflateFragment(int pos){
+    public void inflateFragment(int pos, int ifState) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         blockSelectFragment = new BlockSelectFragment();
-        Bundle bundle=new Bundle();
-        bundle.putInt("pos",pos);
+        Bundle bundle = new Bundle();
+        bundle.putInt("pos", pos);
+        bundle.putInt("ifState", ifState);
         blockSelectFragment.setArguments(bundle);
 
         fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
@@ -106,32 +107,21 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     }
 
 
-
-
     //BlockSelectFragmentで追加したViewのクリックを検出するリスナー
     @Override
-    public void onClickButton(String buttonName,int pos) {
+    public void onClickButton(String buttonName, int pos, int ifState) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Bundle bundle = new Bundle();
 
-        switch (buttonName){
-            case "susumu":
-                bundle.putString("commandDirection", "susumu");
-                break;
-            case "magaru":
-                bundle.putString("commandDirection", "magaru");
-                break;
-            case "sagaru":
-                bundle.putString("commandDirection", "sagaru");
-                break;
-            default:
-                bundle.putString("commandDirection", "null");
-                break;
-
+        if (buttonName != null) {
+            bundle.putString("commandDirection", buttonName);
+        } else {
+            bundle.putString("commandDirection", "null");
         }
-        bundle.putInt("pos",pos);
+        bundle.putInt("pos", pos);
+        bundle.putInt("ifState", ifState);
 
         blockDetailFragment.setArguments(bundle);
         fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
@@ -139,33 +129,36 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     }
 
 
-
     @Override
     public void drawScripts(ArrayList<ScriptModel> scripts) {
+        mScriptAdapter.clear();
         //引数を使ってUIに反映させる
-        int ifIndex=-1;
-        int laneIndex=0;
+        int ifIndex = -1;
+        int laneIndex = 0;
         for (int i = 0; i < scripts.size(); i++) {
             ScriptModel script = scripts.get(i);
             script.setPos(i);
-            if(script.getIfState()==0) {
+            if (script.getIfState() == 0) {
                 //通常
                 mScriptAdapter.addDefault(laneIndex, script);
                 laneIndex++;
-            }else if(script.getIfState()==1){
+            } else if (script.getIfState() == 1) {
                 //true
-                mScriptAdapter.addSpecial(laneIndex,script);
+                mScriptAdapter.addSpecial(laneIndex, script);
                 laneIndex++;
-            }else if(script.getIfState()==2){
+            } else if (script.getIfState() == 2) {
                 //false
                 mScriptAdapter.addDefault(ifIndex, script);
+                if(ifIndex==laneIndex){
+                    laneIndex++;
+                }
                 ifIndex++;
             }
-            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
-                ifIndex=i+1;
+            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+                ifIndex = i + 1;
             }
-            if (script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_END){
-                ifIndex=-1;
+            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_END) {
+                ifIndex = -1;
             }
         }
         mScriptAdapter.notifyDataSetChanged();

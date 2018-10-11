@@ -63,24 +63,53 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         mScripts.add(script);
     }
 
+    /**
+     指定したindexの次にスクリプトを挿入するメソッド
+     */
+    public void insert(ScriptModel script, int beforeIndex){
+        mScripts.add(mScripts.get(mScripts.size() - 1));
+        for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
+            mScripts.set(i, mScripts.get(i - 1));
+        }
+        mScripts.set(beforeIndex + 1, script);
+    }
+
     @Override
     public void setScript(ScriptModel script, int index) {
         mScripts.set(index,script);
     }
 
     /**
-     指定したindexの次にスクリプトを挿入するメソッド
+     スクリプト追加メソッド
      */
     @Override
     public void insertScript(ScriptModel script, int beforeIndex) {
-        if(beforeIndex==mScripts.size()){
+        if(beforeIndex==mScripts.size()-1){
             addScript(script);
-        }else if(beforeIndex<mScripts.size()) {
-            mScripts.add(mScripts.get(mScripts.size() - 1));
-            for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
-                mScripts.set(i, mScripts.get(i - 1));
+            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
+                ScriptModel scriptOther=new ScriptModel();
+                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
+                scriptOther.setIfState(script.getIfState());
+                addScript(scriptOther);
+            }else if(script.getBlock().getBlock()== BlockModel.SpicaBlock.FOR_START){
+                ScriptModel scriptOther=new ScriptModel();
+                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
+                scriptOther.setIfState(script.getIfState());
+                addScript(scriptOther);
             }
-            mScripts.set(beforeIndex + 1, script);
+        }else if(beforeIndex<mScripts.size()-1) {
+            insert(script,beforeIndex);
+            if(script.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
+                ScriptModel scriptOther=new ScriptModel();
+                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
+                scriptOther.setIfState(script.getIfState());
+                insert(scriptOther,beforeIndex+1);
+            }else if(script.getBlock().getBlock()== BlockModel.SpicaBlock.FOR_START){
+                ScriptModel scriptOther=new ScriptModel();
+                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
+                scriptOther.setIfState(script.getIfState());
+                insert(scriptOther,beforeIndex+1);
+            }
         }
         mScriptView.drawScripts(mScripts);
     }

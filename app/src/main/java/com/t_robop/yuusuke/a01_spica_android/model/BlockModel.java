@@ -23,10 +23,10 @@ public class BlockModel {
         BACK("サガル","02", R.drawable.back),
         LEFT("マガル","03", R.drawable.left),
         RIGHT("マガル","04", R.drawable.right),
-        IF_START("モシモ","05", R.drawable.front),
-        IF_END("キケツ","06", R.drawable.front),
-        FOR_START("クリカエス","07", R.drawable.front),
-        FOR_END("キケツ","08", R.drawable.front),
+        IF_START("モシモ","05", R.drawable.if_wall),
+        IF_END("キケツ","06", R.drawable.icon),
+        FOR_START("クリカエス","07", R.drawable.icon),
+        FOR_END("キケツ","08", R.drawable.icon),
         BREAK("オワル","09", R.drawable.ic_break);
 
         private String name;

@@ -24,9 +24,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:tag="01"
-                tools:ignore="OnClick">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -50,9 +48,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:tag="02"
-                tools:ignore="OnClick">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -76,9 +72,7 @@
                 android:layout_height="match_parent"
                 android:layout_margin="16dp"
                 android:layout_weight="1"
-                android:orientation="vertical"
-                android:tag="01"
-                tools:ignore="OnClick">
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="match_parent"
@@ -104,6 +98,77 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
+            <LinearLayout
+                android:id="@+id/mosimo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/if_wall" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="モシモ"
+                    android:textAppearance="@style/TextAppearance.block_title_b" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/kurikaesu"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/back" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="ループ"
+                    android:textAppearance="@style/TextAppearance.block_title_b" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/nukeru"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_break" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="ヌケル"
+                    android:textAppearance="@style/TextAppearance.block_title_b" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
