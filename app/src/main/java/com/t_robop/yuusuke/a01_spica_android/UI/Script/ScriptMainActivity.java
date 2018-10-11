@@ -82,6 +82,12 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             @Override
             public void onClickadd(int pos,ScriptModel script) {
                 mScriptPresenter.insertScript(script,pos);
+
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.remove(blockDetailFragment);
+                fragmentTransaction.remove(blockSelectFragment);
+                fragmentTransaction.commit();
             }
         });
     }
@@ -125,10 +131,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 break;
 
         }
-        bundle.putInt("pos",pos+1);
+        bundle.putInt("pos",pos);
 
         blockDetailFragment.setArguments(bundle);
-        fragmentTransaction.replace(R.id.conductor_fragment, blockDetailFragment);
+        fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
         fragmentTransaction.commit();
     }
 

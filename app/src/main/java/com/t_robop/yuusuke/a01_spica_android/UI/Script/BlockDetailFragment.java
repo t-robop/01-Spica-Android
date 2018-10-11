@@ -19,7 +19,8 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class BlockDetailFragment extends Fragment {
 
-    public BlockDetailFragment(){}
+    public BlockDetailFragment() {
+    }
 
     View mView;
     Bundle bundle;
@@ -36,28 +37,31 @@ public class BlockDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         commandDirection = bundle.getString("commandDirection");
-        pos=bundle.getInt("pos");
+        pos = bundle.getInt("pos");
 
-//        ActivityBlockDetailBinding binding = DataBindingUtil.setContentView(this.getActivity(), R.layout.activity_block_detail);
-//        binding.detailAddBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                ScriptModel script=new ScriptModel();
-//                script.setBlock(new BlockModel(BlockModel.SpicaBlock.FRONT));
-//                script.setValue(100);//todo ここでedittextの値をいれる
-//                listener.onClickadd(pos,script);
-//            }
-//        });
+        final BlockModel.SpicaBlock spicaBlock;
+        switch (commandDirection) {
+            case "susumu":
+                spicaBlock = BlockModel.SpicaBlock.FRONT;
+                break;
+            case "magaru":
+                spicaBlock = BlockModel.SpicaBlock.RIGHT;
+                break;
+            case "sagaru":
+                spicaBlock = BlockModel.SpicaBlock.BACK;
+                break;
+            default:
+                spicaBlock = BlockModel.SpicaBlock.FRONT;
+        }
 
-        Button addBtn=mView.findViewById(R.id.detail_add_btn);
+        Button addBtn = mView.findViewById(R.id.detail_add_btn);
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScriptModel script=new ScriptModel();
-                script.setBlock(new BlockModel(BlockModel.SpicaBlock.FRONT));
+                ScriptModel script = new ScriptModel();
+                script.setBlock(new BlockModel(spicaBlock));
                 script.setValue(100);//todo ここでedittextの値をいれる
-                listener.onClickadd(pos,script);
-                getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
+                listener.onClickadd(pos, script);
             }
         });
 
@@ -84,25 +88,23 @@ public class BlockDetailFragment extends Fragment {
 //        }
 //    }
 
-    private void popupAnime(View view){
+    private void popupAnime(View view) {
         // ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)
         ScaleAnimation scaleAnimation = new ScaleAnimation(
-                0.01f, 1.0f, 0.01f,1.0f,
+                0.01f, 1.0f, 0.01f, 1.0f,
                 Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         // animation時間 msec
 
 
-        if(commandDirection == "susumu")
-        {
+        if (commandDirection == "susumu") {
             scaleAnimation.setDuration(200);
-        }else if(commandDirection == "magaru")
-        {
-            scaleAnimation.setDuration(1000);
-        }else if(commandDirection == "sagaru"){
-            scaleAnimation.setDuration(2000);
-        }else {
-            scaleAnimation.setDuration(5000);
+        } else if (commandDirection == "magaru") {
+            scaleAnimation.setDuration(200);
+        } else if (commandDirection == "sagaru") {
+            scaleAnimation.setDuration(200);
+        } else {
+            scaleAnimation.setDuration(200);
         }
 
         // 繰り返し回数
