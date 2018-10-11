@@ -10,7 +10,6 @@ public interface ScriptContract {
     }
 
     interface Presenter extends BasePresenter {
-        void addScript(ScriptModel script);
 
         void setScript(ScriptModel script,int index);
 

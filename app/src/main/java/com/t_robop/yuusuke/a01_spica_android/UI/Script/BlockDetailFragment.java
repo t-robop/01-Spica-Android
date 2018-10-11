@@ -1,5 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,8 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class BlockDetailFragment extends Fragment {
 
@@ -19,6 +25,10 @@ public class BlockDetailFragment extends Fragment {
     Bundle bundle;
     String commandDirection;
 
+    private int pos;
+
+    DetailListener listener;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -26,19 +36,53 @@ public class BlockDetailFragment extends Fragment {
 
         Bundle bundle = getArguments();
         commandDirection = bundle.getString("commandDirection");
+        pos=bundle.getInt("pos");
+
+//        ActivityBlockDetailBinding binding = DataBindingUtil.setContentView(this.getActivity(), R.layout.activity_block_detail);
+//        binding.detailAddBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ScriptModel script=new ScriptModel();
+//                script.setBlock(new BlockModel(BlockModel.SpicaBlock.FRONT));
+//                script.setValue(100);//todo ここでedittextの値をいれる
+//                listener.onClickadd(pos,script);
+//            }
+//        });
+
+        Button addBtn=mView.findViewById(R.id.detail_add_btn);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ScriptModel script=new ScriptModel();
+                script.setBlock(new BlockModel(BlockModel.SpicaBlock.FRONT));
+                script.setValue(100);//todo ここでedittextの値をいれる
+                listener.onClickadd(pos,script);
+                getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
+            }
+        });
 
         popupAnime(mView);
 
         return mView;
     }
 
-    ScriptMainActivity scriptMainActivity;
-
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+//    // FragmentがActivityに追加されたら呼ばれるメソッド
+//    @Override
+//    public void onAttach(Context context) {
+//        // APILevel23からは引数がActivity->Contextになっているので注意する
+//
+//        // contextクラスがMyListenerを実装しているかをチェックする
+//        super.onAttach(context);
+//        if (context instanceof BlockDetailFragment.DetailListener) {
+//            // リスナーをここでセットするようにします
+//            listener = (BlockDetailFragment.DetailListener) context;
+//        }
+//    }
 
     private void popupAnime(View view){
         // ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)
@@ -68,5 +112,14 @@ public class BlockDetailFragment extends Fragment {
         //アニメーションの開始
         view.startAnimation(scaleAnimation);
     }
+
+    public interface DetailListener {
+        public void onClickadd(int pos, ScriptModel script);
+    }
+
+    public void setAddClickListener(BlockDetailFragment.DetailListener listener) {
+        this.listener = listener;
+    }
+
 
 }

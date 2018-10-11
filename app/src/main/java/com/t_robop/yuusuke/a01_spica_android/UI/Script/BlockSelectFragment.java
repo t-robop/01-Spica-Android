@@ -22,6 +22,8 @@ import java.io.FileReader;
 
 public class BlockSelectFragment extends Fragment {
 
+    private int pos=0;
+
     public BlockSelectFragment(){}
 
     private MyListener mListener;
@@ -33,10 +35,12 @@ public class BlockSelectFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.activity_block_select, container, false);
         popupAnime(mView);
+
+        Bundle bundle = getArguments();
+        pos = bundle.getInt("pos");
+
         return mView;
     }
-
-    ScriptMainActivity scriptMainActivity;
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class BlockSelectFragment extends Fragment {
 
 
     public interface MyListener {
-        public void onClickButton(String buttonName);
+        public void onClickButton(String buttonName,int pos);
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド
@@ -76,21 +80,21 @@ public class BlockSelectFragment extends Fragment {
         mView.findViewById(R.id.susumu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("susumu");
+                mListener.onClickButton("susumu",pos);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.magaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("magaru");
+                mListener.onClickButton("magaru",pos);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.sagaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("sagaru");
+                mListener.onClickButton("sagaru",pos);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });

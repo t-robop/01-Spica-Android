@@ -7,6 +7,9 @@ public class BlockModel {
     private SpicaBlock block;
 
     public BlockModel(){ }
+    public BlockModel(SpicaBlock block){
+        this.block=block;
+    }
 
     public SpicaBlock getBlock() {
         return block;

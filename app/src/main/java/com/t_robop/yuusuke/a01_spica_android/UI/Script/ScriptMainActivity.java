@@ -46,7 +46,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
 
-        blockSelectFragment = new BlockSelectFragment();
         blockDetailFragment = new BlockDetailFragment();
 
         new ScriptPresenter(this);
@@ -54,14 +53,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener(){
             @Override
             public void onClick(View view, int pos) {
-                inflateFragment();
+                inflateFragment(pos);
             }
         });
 
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener(){
             @Override
             public void onClick(View view, int pos) {
-                inflateFragment();
+                inflateFragment(pos);
             }
         });
 
@@ -78,11 +77,23 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 //実行
             }
         });
+
+        blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
+            @Override
+            public void onClickadd(int pos,ScriptModel script) {
+                mScriptPresenter.insertScript(script,pos);
+            }
+        });
     }
 
-    public void inflateFragment(){
+    public void inflateFragment(int pos){
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        blockSelectFragment = new BlockSelectFragment();
+        Bundle bundle=new Bundle();
+        bundle.putInt("pos",pos);
+        blockSelectFragment.setArguments(bundle);
 
         fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
         fragmentTransaction.commit();
@@ -93,7 +104,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     //BlockSelectFragmentで追加したViewのクリックを検出するリスナー
     @Override
-    public void onClickButton(String buttonName) {
+    public void onClickButton(String buttonName,int pos) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -114,9 +125,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 break;
 
         }
+        bundle.putInt("pos",pos+1);
 
         blockDetailFragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
+        fragmentTransaction.replace(R.id.conductor_fragment, blockDetailFragment);
         fragmentTransaction.commit();
     }
 

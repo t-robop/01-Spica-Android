@@ -10,11 +10,11 @@ public class ScriptModel extends BaseObservable {
     //ブロック
     private BlockModel block;
     //右パワー
-    private int rightSpeed;
+    private int rightSpeed=100;
     //左パワー
-    private int leftSpeed;
+    private int leftSpeed=100;
     //ブロック毎の値
-    private int value;
+    private int value=0;
 
     public ScriptModel() {
     }

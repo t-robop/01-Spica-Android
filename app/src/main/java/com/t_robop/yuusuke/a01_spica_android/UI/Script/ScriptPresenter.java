@@ -17,39 +17,39 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         this.mScriptView=scriptView;
         this.mScriptView.setPresenter(this);
 
-        for (int i = 0; i < 5; i++) {
+//        for (int i = 0; i < 5; i++) {
             ScriptModel scriptModel = new ScriptModel();
             BlockModel blockModel = new BlockModel();
             blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
             scriptModel.setBlock(blockModel);
             mScripts.add(scriptModel);
-        }
-        ScriptModel scriptModel = new ScriptModel();
-        BlockModel blockModel = new BlockModel();
-        blockModel.setBlock(BlockModel.SpicaBlock.IF_START);
-        scriptModel.setBlock(blockModel);
-        mScripts.add(scriptModel);
-        for (int i = 0; i < 5; i++) {
-            ScriptModel st = new ScriptModel();
-            BlockModel bt = new BlockModel();
-            bt.setBlock(BlockModel.SpicaBlock.LEFT);
-            st.setBlock(bt);
-            st.setIfState(1);
-            mScripts.add(st);
-        }
-        for (int i = 0; i < 3; i++) {
-            ScriptModel st = new ScriptModel();
-            BlockModel bt = new BlockModel();
-            bt.setBlock(BlockModel.SpicaBlock.BACK);
-            st.setBlock(bt);
-            st.setIfState(2);
-            mScripts.add(st);
-        }
-        ScriptModel st = new ScriptModel();
-        BlockModel bt = new BlockModel();
-        bt.setBlock(BlockModel.SpicaBlock.IF_END);
-        st.setBlock(bt);
-        mScripts.add(st);
+//        }
+//        ScriptModel scriptModel = new ScriptModel();
+//        BlockModel blockModel = new BlockModel();
+//        blockModel.setBlock(BlockModel.SpicaBlock.IF_START);
+//        scriptModel.setBlock(blockModel);
+//        mScripts.add(scriptModel);
+//        for (int i = 0; i < 5; i++) {
+//            ScriptModel st = new ScriptModel();
+//            BlockModel bt = new BlockModel();
+//            bt.setBlock(BlockModel.SpicaBlock.LEFT);
+//            st.setBlock(bt);
+//            st.setIfState(1);
+//            mScripts.add(st);
+//        }
+//        for (int i = 0; i < 3; i++) {
+//            ScriptModel st = new ScriptModel();
+//            BlockModel bt = new BlockModel();
+//            bt.setBlock(BlockModel.SpicaBlock.BACK);
+//            st.setBlock(bt);
+//            st.setIfState(2);
+//            mScripts.add(st);
+//        }
+//        ScriptModel st = new ScriptModel();
+//        BlockModel bt = new BlockModel();
+//        bt.setBlock(BlockModel.SpicaBlock.IF_END);
+//        st.setBlock(bt);
+//        mScripts.add(st);
 
         mScriptView.drawScripts(mScripts);
     }
@@ -59,10 +59,8 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         mScripts=new ArrayList();
     }
 
-    @Override
     public void addScript(ScriptModel script) {
         mScripts.add(script);
-        mScriptView.drawScripts(mScripts);
     }
 
     @Override
@@ -75,11 +73,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
      */
     @Override
     public void insertScript(ScriptModel script, int beforeIndex) {
-        mScripts.add(mScripts.get(mScripts.size()-1));
-        for (int i=mScripts.size()-2;i>beforeIndex;i--){
-            mScripts.set(i,mScripts.get(i-1));
+        if(beforeIndex==mScripts.size()){
+            addScript(script);
+        }else if(beforeIndex<mScripts.size()) {
+            mScripts.add(mScripts.get(mScripts.size() - 1));
+            for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
+                mScripts.set(i, mScripts.get(i - 1));
+            }
+            mScripts.set(beforeIndex + 1, script);
         }
-        mScripts.set(beforeIndex+1,script);
+        mScriptView.drawScripts(mScripts);
     }
 
     @Override
