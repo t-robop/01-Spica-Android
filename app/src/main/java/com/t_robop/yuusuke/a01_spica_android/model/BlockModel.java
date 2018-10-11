@@ -28,7 +28,8 @@ public class BlockModel {
         IF_END("キケツ","06", R.drawable.ic_setting),
         FOR_START("クリカエス","07", R.drawable.ic_setting),
         FOR_END("キケツ","08", R.drawable.ic_setting),
-        BREAK("オワル","09", R.drawable.ic_break);
+        BREAK("オワル","09", R.drawable.ic_break),
+        END("エンド","99", R.drawable.ic_setting);
 
         private String name;
         private String id;

@@ -161,7 +161,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="2"
-                android:background="@drawable/line_vertical">
+                android:background="@drawable/line_vertical"
+                android:visibility="@{script.block.block==SpicaBlock.END ? View.INVISIBLE:View.VISIBLE}">
 
                 <LinearLayout
                     android:id="@+id/conductor_add"

@@ -18,15 +18,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         this.mScriptView.setPresenter(this);
 
         /**
-         * スタートブロックのみ追加
-         */
+         * テスト
+         *
         ScriptModel scriptModel = new ScriptModel();
         BlockModel blockModel = new BlockModel();
-        blockModel.setBlock(BlockModel.SpicaBlock.START);
+        blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
         scriptModel.setBlock(blockModel);
         mScripts.add(scriptModel);
+         */
 
-        //todo テストはここに上記スタートブロックのように記述してください
+        //todo テストはここに上記ブロックのように記述してください
 
         mScriptView.drawScripts(mScripts);
     }

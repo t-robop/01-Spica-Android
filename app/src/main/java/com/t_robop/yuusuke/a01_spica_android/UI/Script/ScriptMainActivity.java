@@ -50,13 +50,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         new ScriptPresenter(this);
 
+        /**
+         * 追加ボタンクリック時
+         */
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
                 inflateFragment(pos, ifState);
             }
         });
-
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
@@ -64,13 +66,36 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+        /**
+         * ブロッククリック時
+         */
+        mScriptAdapter.setOnBlockClickListener(new ScriptMainAdapter.onItemClickListener() {
+            @Override
+            public void onClick(View view, int pos, int ifState) {
+                //スタートボタン時
+                if (pos==-1) {
+                    //todo スクリプト送信処理
+                    String sendData = mScriptPresenter.getSendableScripts();
+                    Toast.makeText(ScriptMainActivity.this,"ロボットに送信完了",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        mScriptAdapter.setOnBlockIfClickListener(new ScriptMainAdapter.onItemClickListener() {
+            @Override
+            public void onClick(View view, int pos, int ifState) {
+
+            }
+        });
+
+        /**
+         * ブロックロングクリック時
+         */
         mScriptAdapter.setOnBlockLongClickListener(new ScriptMainAdapter.onItemLongClickListener() {
             @Override
             public void onLongClick(View view, int pos) {
                 //実行
             }
         });
-
         mScriptAdapter.setOnBlockIfLongClickListener(new ScriptMainAdapter.onItemLongClickListener() {
             @Override
             public void onLongClick(View view, int pos) {
@@ -78,6 +103,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+        /**
+         * フラグメントから追加が押された時
+         */
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
             public void onClickadd(ScriptModel script, int pos) {
@@ -132,9 +160,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     @Override
     public void drawScripts(ArrayList<ScriptModel> scripts) {
         mScriptAdapter.clear();
+
+        //スタートブロック記述
+        ScriptModel scriptStart = new ScriptModel();
+        BlockModel blockStart = new BlockModel();
+        blockStart.setBlock(BlockModel.SpicaBlock.START);
+        scriptStart.setBlock(blockStart);
+        mScriptAdapter.addDefault(0,scriptStart);
+
         //引数を使ってUIに反映させる
         int ifIndex = -1;
-        int laneIndex = 0;
+        int laneIndex = 1;
         for (int i = 0; i < scripts.size(); i++) {
             ScriptModel script = scripts.get(i);
             script.setPos(i);
@@ -149,7 +185,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             } else if (script.getIfState() == 2) {
                 //false
                 mScriptAdapter.addDefault(ifIndex, script);
-                if(ifIndex==laneIndex){
+                if (ifIndex == laneIndex) {
                     laneIndex++;
                 }
                 ifIndex++;
@@ -161,9 +197,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 ifIndex = -1;
             }
         }
-        mScriptAdapter.notifyDataSetChanged();
 
-        mScriptPresenter.getSendableScripts();
+        //エンドブロック記述
+        ScriptModel scriptEnd = new ScriptModel();
+        BlockModel blockEnd = new BlockModel();
+        blockEnd.setBlock(BlockModel.SpicaBlock.END);
+        scriptEnd.setBlock(blockEnd);
+        mScriptAdapter.addDefault(mScriptAdapter.getItemCount(),scriptEnd);
+
+        mScriptAdapter.notifyDataSetChanged();
     }
 
     @Override

@@ -26,6 +26,8 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     private Context mContext;
     private onItemClickListener clickConductor;
     private onItemClickListener clickConductorIf;
+    private onItemClickListener clickBlock;
+    private onItemClickListener clickBlockIf;
     private onItemLongClickListener longClickBlock;
     private onItemLongClickListener longClickBlockIf;
 
@@ -146,6 +148,16 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         if(scriptDefault!=null) {
             holder.mBinding.blockImage.setImageResource(scriptDefault.getBlock().getBlock().getIcResource());
         }
+        holder.mBinding.blockContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.START){
+                    clickBlock.onClick(view,-1,0);
+                }else {
+                    clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+                }
+            }
+        });
         holder.mBinding.blockContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -171,6 +183,12 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         if(scriptSpecial!=null){
             holder.mBinding.blockImageIf.setImageResource(scriptSpecial.getBlock().getBlock().getIcResource());
         }
+        holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickBlockIf.onClick(view,scriptSpecial.getPos(),scriptSpecial.getIfState());
+            }
+        });
         holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -195,6 +213,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
 
     public void setOnConductorIfClickListener(onItemClickListener listener) {
         this.clickConductorIf = listener;
+    }
+
+    public void setOnBlockClickListener(onItemClickListener listener) {
+        this.clickBlock = listener;
+    }
+
+    public void setOnBlockIfClickListener(onItemClickListener listener) {
+        this.clickBlockIf = listener;
     }
 
     public void setOnBlockLongClickListener(onItemLongClickListener listener) {
