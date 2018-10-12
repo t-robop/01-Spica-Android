@@ -36,7 +36,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/front" />
+                        android:src="@drawable/ic_block_front" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -60,7 +60,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/right" />
+                        android:src="@drawable/ic_block_right" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/back" />
+                        android:src="@drawable/ic_block_back" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/if_wall" />
+                        android:src="@drawable/ic_block_if_wall" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -140,7 +140,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/back" />
+                        android:src="@drawable/ic_setting" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -164,7 +164,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_break" />
+                        android:src="@drawable/ic_block_break" />
 
                     <TextView
                         android:layout_width="match_parent"
