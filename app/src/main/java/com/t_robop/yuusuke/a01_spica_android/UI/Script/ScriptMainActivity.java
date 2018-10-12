@@ -156,7 +156,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fragmentTransaction.commit();
     }
 
-
+    /**
+     * スクリプトのリストを投げるとUI構築してくれる神メソッド
+     */
     @Override
     public void drawScripts(ArrayList<ScriptModel> scripts) {
         mScriptAdapter.clear();
@@ -193,7 +195,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 ifIndex++;
             }
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                ifIndex = i + 1;
+                ifIndex = laneIndex;
             }
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_END) {
                 ifIndex = -1;

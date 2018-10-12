@@ -133,6 +133,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     public void onBindViewHolder(BindingHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
 
+        /**
+         * 通常レーンの描画・ハンドラ設定
+         */
         final ScriptModel scriptDefault=set.scriptDefault;
         holder.mBinding.setScript(scriptDefault);
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +169,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
             }
         });
 
-
+        /**
+         * ifレーンの描画・ハンドラ設定
+         */
         final ScriptModel scriptSpecial=set.scriptSpecial;
         holder.mBinding.setScriptOther(scriptSpecial);
         holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
