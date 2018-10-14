@@ -83,7 +83,7 @@
                 </android.support.constraint.ConstraintLayout>
 
                 <SeekBar
-                    android:id="@+id/SeekBar01"
+                    android:id="@+id/seek_value"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:max="2"

@@ -5,8 +5,30 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import java.util.ArrayList;
 
 public interface ScriptContract {
-    interface View extends BaseView<Presenter> {
+
+    /**
+     * メインのスクリプト
+     */
+    interface ScriptView extends BaseView<Presenter> {
         void drawScripts(ArrayList<ScriptModel> scrips);
+    }
+
+    /**
+     * ブロック選択画面
+     */
+    interface SelectView extends BaseView<Presenter> {
+        /**
+         * 配置可能なブロックのみ描画するメソッド
+         * todo なにでわたすか決める(リスト or state ?)
+         */
+        void drawArrangeableBlocks();
+    }
+
+    /**
+     * ブロック詳細画面
+     */
+    interface DetailView extends BaseView<Presenter> {
+        void drawScript(ScriptModel script);
     }
 
     interface Presenter extends BasePresenter {
@@ -18,6 +40,8 @@ public interface ScriptContract {
         ArrayList<ScriptModel> getScripts();
 
         String getSendableScripts();
+
+        void setState(ScriptPresenter.ViewState state);
     }
 }
 

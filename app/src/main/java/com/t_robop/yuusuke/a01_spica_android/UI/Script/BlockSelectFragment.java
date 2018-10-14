@@ -91,42 +91,42 @@ public class BlockSelectFragment extends Fragment {
         mView.findViewById(R.id.susumu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("susumu",pos,ifState);
+                mListener.onClickButton("01",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.magaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("magaru",pos,ifState);
+                mListener.onClickButton("03",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.sagaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("sagaru",pos,ifState);
+                mListener.onClickButton("02",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.mosimo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("mosimo",pos,ifState);
+                mListener.onClickButton("05",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.kurikaesu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("kurikaesu",pos,ifState);
+                mListener.onClickButton("07",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });
         mView.findViewById(R.id.nukeru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton("nukeru",pos,ifState);
+                mListener.onClickButton("09",pos,ifState);
                 //Toast.makeText(getActivity(), "hoge!", Toast.LENGTH_SHORT).show();
             }
         });

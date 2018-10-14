@@ -9,27 +9,27 @@ import java.util.ArrayList;
 
 public class ScriptPresenter implements ScriptContract.Presenter {
 
-    private ScriptContract.View mScriptView;
+    private ScriptContract.ScriptView mScriptView;
+    private ScriptContract.SelectView mSelectView;
+    private ScriptContract.DetailView mDetailView;
 
     private ArrayList<ScriptModel> mScripts;
 
-    public ScriptPresenter(ScriptContract.View scriptView) {
+    //今自分がどの画面にいるのかを管理する
+    private ViewState mState;
+
+    public ScriptPresenter(ScriptContract.ScriptView scriptView) {
         this.mScriptView = scriptView;
         this.mScriptView.setPresenter(this);
-
-        /**
-         * テスト
-         *
-        ScriptModel scriptModel = new ScriptModel();
-        BlockModel blockModel = new BlockModel();
-        blockModel.setBlock(BlockModel.SpicaBlock.FRONT);
-        scriptModel.setBlock(blockModel);
-        mScripts.add(scriptModel);
-         */
-
-        //todo テストはここに上記ブロックのように記述してください
-
         mScriptView.drawScripts(mScripts);
+    }
+    public ScriptPresenter(ScriptContract.SelectView selectView) {
+        this.mSelectView = selectView;
+        this.mSelectView.setPresenter(this);
+    }
+    public ScriptPresenter(ScriptContract.DetailView detailView) {
+        this.mDetailView = detailView;
+        this.mDetailView.setPresenter(this);
     }
 
     @Override
@@ -56,6 +56,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         mScripts.set(beforeIndex + 1, script);
     }
 
+    /**
+     *
+     */
+    public ScriptModel createEmptyBlock(BlockModel.SpicaBlock spicaBlock,int ifState){
+        ScriptModel scriptOther = new ScriptModel();
+        scriptOther.setBlock(new BlockModel(spicaBlock));
+        scriptOther.setIfState(ifState);
+        return scriptOther;
+    }
+
     @Override
     public void setScript(ScriptModel script, int index) {
         mScripts.set(index, script);
@@ -69,28 +79,18 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         if (beforeIndex == mScripts.size() - 1) {
             addScript(script);
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                ScriptModel scriptOther = new ScriptModel();
-                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
-                scriptOther.setIfState(script.getIfState());
-                addScript(scriptOther);
+                addScript(createEmptyBlock(BlockModel.SpicaBlock.IF_END,script.getIfState()));
             } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                ScriptModel scriptOther = new ScriptModel();
-                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
-                scriptOther.setIfState(script.getIfState());
-                addScript(scriptOther);
+                addScript(createEmptyBlock(BlockModel.SpicaBlock.FOR_END,script.getIfState()));
             }
         } else if (beforeIndex < mScripts.size() - 1) {
             insert(script, beforeIndex);
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                ScriptModel scriptOther = new ScriptModel();
-                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.IF_END));
-                scriptOther.setIfState(script.getIfState());
-                insert(scriptOther, beforeIndex + 1);
+                insert(createEmptyBlock(BlockModel.SpicaBlock.IF_END,script.getIfState()),
+                        beforeIndex + 1);
             } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                ScriptModel scriptOther = new ScriptModel();
-                scriptOther.setBlock(new BlockModel(BlockModel.SpicaBlock.FOR_END));
-                scriptOther.setIfState(script.getIfState());
-                insert(scriptOther, beforeIndex + 1);
+                insert(createEmptyBlock(BlockModel.SpicaBlock.FOR_END,script.getIfState()),
+                        beforeIndex + 1);
             }
         }
         mScriptView.drawScripts(mScripts);
@@ -136,5 +136,26 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         }
         Log.d("test", sendStringData);
         return sendStringData;
+    }
+
+    @Override
+    public void setState(ViewState state) {
+        this.mState=state;
+    }
+
+    public enum ViewState{
+        SCRIPT(0),
+        SELECT(1),
+        ADD(2),
+        EDIT(3);
+
+        int id;
+        ViewState(int id){
+            this.id=id;
+        }
+
+        public int getId() {
+            return id;
+        }
     }
 }

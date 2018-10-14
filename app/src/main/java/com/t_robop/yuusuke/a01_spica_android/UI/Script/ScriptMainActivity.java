@@ -20,7 +20,7 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
-public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.View, BlockSelectFragment.MyListener {
+public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.MyListener {
 
     private ScriptContract.Presenter mScriptPresenter;
 
@@ -56,13 +56,13 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-                inflateFragment(pos, ifState);
+                inflateFragment(pos, ifState, false);
             }
         });
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-                inflateFragment(pos, ifState);
+                inflateFragment(pos, ifState, false);
             }
         });
 
@@ -73,10 +73,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             @Override
             public void onClick(View view, int pos, int ifState) {
                 //スタートボタン時
-                if (pos==-1) {
+                if (pos == -1) {
                     //todo スクリプト送信処理
                     String sendData = mScriptPresenter.getSendableScripts();
-                    Toast.makeText(ScriptMainActivity.this,"ロボットに送信完了",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
+                } else if (pos == -2) {
+
+                } else {
+                    /**
+                     * ブロック設定へ
+                     */
+                    inflateFragment(pos, ifState, true);
                 }
             }
         });
@@ -108,29 +115,57 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          */
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
-            public void onClickadd(ScriptModel script, int pos) {
-                mScriptPresenter.insertScript(script, pos);
-
-                FragmentManager fragmentManager = getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.remove(blockDetailFragment);
-                fragmentTransaction.remove(blockSelectFragment);
-                fragmentTransaction.commit();
+            public void onClickAdd(ScriptModel script, int pos, boolean isEdit) {
+                if (!isEdit) {
+                    mScriptPresenter.insertScript(script, pos);
+                } else {
+                    mScriptPresenter.setScript(script, pos);
+                }
+                clearFragments();
             }
         });
     }
 
-    public void inflateFragment(int pos, int ifState) {
+    /**
+     * Fragment生成メソッド
+     */
+    public void inflateFragment(int pos, int ifState, boolean isEdit) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        blockSelectFragment = new BlockSelectFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("pos", pos);
         bundle.putInt("ifState", ifState);
-        blockSelectFragment.setArguments(bundle);
 
-        fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
+        if (!isEdit) {
+            /**
+             * ブロック追加用の選択画面へ
+             */
+            blockSelectFragment = new BlockSelectFragment();
+            blockSelectFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
+        } else {
+            /**
+             * ブロック設定用の詳細画面へ
+             */
+            String command = mScriptPresenter.getScripts().get(pos).getBlock().getBlock().getId();
+            int value = mScriptPresenter.getScripts().get(pos).getValue();
+            bundle.putString("commandDirection", command);
+            bundle.putBoolean("isEdit", true);
+            bundle.putInt("value", value);
+            blockDetailFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
+        }
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * 出てるFragmentを消すメソッド
+     */
+    public void clearFragments() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(blockDetailFragment);
+        fragmentTransaction.remove(blockSelectFragment);
         fragmentTransaction.commit();
     }
 
@@ -170,7 +205,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         scriptStart.setBlock(blockStart);
         scriptStart.setPos(-1);
         scriptStart.setIfState(0);
-        mScriptAdapter.addDefault(0,scriptStart);
+        mScriptAdapter.addDefault(0, scriptStart);
 
         //引数を使ってUIに反映させる
         int ifIndex = -1;
@@ -207,7 +242,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         BlockModel blockEnd = new BlockModel();
         blockEnd.setBlock(BlockModel.SpicaBlock.END);
         scriptEnd.setBlock(blockEnd);
-        mScriptAdapter.addDefault(mScriptAdapter.getItemCount(),scriptEnd);
+        mScriptAdapter.addDefault(mScriptAdapter.getItemCount(), scriptEnd);
 
         mScriptAdapter.notifyDataSetChanged();
     }

@@ -156,7 +156,11 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
             public void onClick(View view) {
                 if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.START){
                     clickBlock.onClick(view,-1,0);
-                }else {
+                }
+                else if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.END){
+                    clickBlock.onClick(view,-2,0);
+                }
+                else {
                     clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
                 }
             }
