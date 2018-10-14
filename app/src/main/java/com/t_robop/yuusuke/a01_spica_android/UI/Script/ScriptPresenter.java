@@ -104,6 +104,29 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     }
 
     @Override
+    public void removeScript(int index) {
+        ScriptModel script = mScripts.get(index);
+        int size = mScripts.size();
+        if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+            for (int i = index; i < size; i++) {
+                if (mScripts.get(index).getBlock().getBlock() == BlockModel.SpicaBlock.IF_END) {
+                    break;
+                }
+                mScripts.remove(index);
+            }
+        } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
+            for (int i = index; i < size; i++) {
+                if (mScripts.get(index).getBlock().getBlock() == BlockModel.SpicaBlock.FOR_END) {
+                    break;
+                }
+                mScripts.remove(index);
+            }
+        }
+        mScripts.remove(index);
+        mScriptView.drawScripts(mScripts);
+    }
+
+    @Override
     public ArrayList<ScriptModel> getScripts() {
         return this.mScripts;
     }

@@ -118,7 +118,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         });
 
         /**
-         * フラグメントから追加が押された時
+         * Detailフラグメントのボタンが押された時
          */
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
@@ -131,6 +131,13 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 } else {
                     Toast.makeText(ScriptMainActivity.this, "ADDorEDITでエラー", Toast.LENGTH_SHORT).show();
                 }
+                mScriptPresenter.setState(ScriptPresenter.ViewState.SCRIPT);
+                clearFragments();
+            }
+
+            @Override
+            public void onClickDelete(int pos) {
+                mScriptPresenter.removeScript(pos);
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SCRIPT);
                 clearFragments();
             }

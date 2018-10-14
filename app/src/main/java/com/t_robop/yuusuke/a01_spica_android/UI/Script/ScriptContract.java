@@ -36,6 +36,8 @@ public interface ScriptContract {
 
         void insertScript(ScriptModel script, int beforeIndex);
 
+        void removeScript(int index);
+
         ArrayList<ScriptModel> getScripts();
 
         String getSendableScripts();

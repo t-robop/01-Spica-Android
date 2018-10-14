@@ -90,6 +90,12 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         } else {
             mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
         }
+
+        if (mScriptPresenter.getState() == ScriptPresenter.ViewState.EDIT) {
+            mBinding.detailDeleteBtn.setVisibility(View.VISIBLE);
+        } else {
+            mBinding.detailDeleteBtn.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -99,6 +105,8 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
 
     public interface DetailListener {
         void onClickAdd(ScriptModel script);
+
+        void onClickDelete(int pos);
     }
 
     public void setAddClickListener(BlockDetailFragment.DetailListener listener) {
@@ -124,6 +132,13 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
         listener.onClickAdd(script);
+    }
+
+    /**
+     * 削除ボタン
+     */
+    public void delete() {
+        listener.onClickDelete(mScriptPresenter.getTargetScript().getPos());
     }
 
     /**
