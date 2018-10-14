@@ -17,21 +17,27 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     //今自分がどの画面にいるのかを管理する
     private ViewState mState;
+    //画面移動で必要なスクリプト
+    private ScriptModel targetScript;
 
-    public ScriptPresenter(ScriptContract.ScriptView scriptView) {
+    public ScriptPresenter(
+            ScriptContract.ScriptView scriptView,
+            ScriptContract.SelectView selectView,
+            ScriptContract.DetailView detailView) {
         this.mScriptView = scriptView;
         this.mScriptView.setPresenter(this);
         mScriptView.drawScripts(mScripts);
-    }
-    public ScriptPresenter(ScriptContract.SelectView selectView) {
+
         this.mSelectView = selectView;
         this.mSelectView.setPresenter(this);
-    }
-    public ScriptPresenter(ScriptContract.DetailView detailView) {
+
         this.mDetailView = detailView;
         this.mDetailView.setPresenter(this);
     }
 
+    /**
+     * 最初の一回だけでok
+     */
     @Override
     public void start() {
         mScripts = new ArrayList();
@@ -47,9 +53,9 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void insert(ScriptModel script, int beforeIndex) {
         mScripts.add(mScripts.get(mScripts.size() - 1));
         for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
-            if(i-1<0){
+            if (i - 1 < 0) {
                 break;
-            }else{
+            } else {
                 mScripts.set(i, mScripts.get(i - 1));
             }
         }
@@ -59,7 +65,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      *
      */
-    public ScriptModel createEmptyBlock(BlockModel.SpicaBlock spicaBlock,int ifState){
+    public ScriptModel createEmptyBlock(BlockModel.SpicaBlock spicaBlock, int ifState) {
         ScriptModel scriptOther = new ScriptModel();
         scriptOther.setBlock(new BlockModel(spicaBlock));
         scriptOther.setIfState(ifState);
@@ -69,6 +75,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     @Override
     public void setScript(ScriptModel script, int index) {
         mScripts.set(index, script);
+        mScriptView.drawScripts(mScripts);
     }
 
     /**
@@ -79,17 +86,17 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         if (beforeIndex == mScripts.size() - 1) {
             addScript(script);
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                addScript(createEmptyBlock(BlockModel.SpicaBlock.IF_END,script.getIfState()));
+                addScript(createEmptyBlock(BlockModel.SpicaBlock.IF_END, script.getIfState()));
             } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                addScript(createEmptyBlock(BlockModel.SpicaBlock.FOR_END,script.getIfState()));
+                addScript(createEmptyBlock(BlockModel.SpicaBlock.FOR_END, script.getIfState()));
             }
         } else if (beforeIndex < mScripts.size() - 1) {
             insert(script, beforeIndex);
             if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                insert(createEmptyBlock(BlockModel.SpicaBlock.IF_END,script.getIfState()),
+                insert(createEmptyBlock(BlockModel.SpicaBlock.IF_END, script.getIfState()),
                         beforeIndex + 1);
             } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                insert(createEmptyBlock(BlockModel.SpicaBlock.FOR_END,script.getIfState()),
+                insert(createEmptyBlock(BlockModel.SpicaBlock.FOR_END, script.getIfState()),
                         beforeIndex + 1);
             }
         }
@@ -140,18 +147,34 @@ public class ScriptPresenter implements ScriptContract.Presenter {
 
     @Override
     public void setState(ViewState state) {
-        this.mState=state;
+        this.mState = state;
     }
 
-    public enum ViewState{
+    @Override
+    public ViewState getState() {
+        return this.mState;
+    }
+
+    @Override
+    public void setTargetScript(ScriptModel script) {
+        this.targetScript = script;
+    }
+
+    @Override
+    public ScriptModel getTargetScript() {
+        return this.targetScript;
+    }
+
+    public enum ViewState {
         SCRIPT(0),
         SELECT(1),
         ADD(2),
         EDIT(3);
 
         int id;
-        ViewState(int id){
-            this.id=id;
+
+        ViewState(int id) {
+            this.id = id;
         }
 
         public int getId() {

@@ -23,6 +23,11 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
+    public ScriptModel(int pos,int ifState){
+        this.pos = pos;
+        this.ifState=ifState;
+    }
+
     public int getPos() {
         return pos;
     }

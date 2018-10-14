@@ -37,18 +37,19 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         setContentView(R.layout.activity_script_main);
 
         mScriptRecyclerView = findViewById(R.id.recycler_script);
-
         mScriptRecyclerView.setHasFixedSize(true);
         mScriptLayoutManager = new LinearLayoutManager(this);
         mScriptLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
-
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
 
+        /**
+         * Presenterの初期化
+         */
+        blockSelectFragment = new BlockSelectFragment();
         blockDetailFragment = new BlockDetailFragment();
-
-        new ScriptPresenter(this);
+        new ScriptPresenter(this, blockSelectFragment, blockDetailFragment);
 
         /**
          * 追加ボタンクリック時
@@ -56,13 +57,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-                inflateFragment(pos, ifState, false);
+                mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
+                ScriptModel scriptModel = new ScriptModel(pos, ifState);
+                inflateFragment(scriptModel);
             }
         });
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-                inflateFragment(pos, ifState, false);
+                mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
+                ScriptModel scriptModel = new ScriptModel(pos, ifState);
+                inflateFragment(scriptModel);
             }
         });
 
@@ -83,7 +88,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                     /**
                      * ブロック設定へ
                      */
-                    inflateFragment(pos, ifState, true);
+                    mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
+                    ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
+                    inflateFragment(scriptModel);
                 }
             }
         });
@@ -115,12 +122,16 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          */
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
-            public void onClickAdd(ScriptModel script, int pos, boolean isEdit) {
-                if (!isEdit) {
-                    mScriptPresenter.insertScript(script, pos);
+            public void onClickAdd(ScriptModel script) {
+                ScriptPresenter.ViewState state = mScriptPresenter.getState();
+                if (state == ScriptPresenter.ViewState.ADD) {
+                    mScriptPresenter.insertScript(script, script.getPos());
+                } else if (state == ScriptPresenter.ViewState.EDIT) {
+                    mScriptPresenter.setScript(script, script.getPos());
                 } else {
-                    mScriptPresenter.setScript(script, pos);
+                    Toast.makeText(ScriptMainActivity.this, "ADDorEDITでエラー", Toast.LENGTH_SHORT).show();
                 }
+                mScriptPresenter.setState(ScriptPresenter.ViewState.SCRIPT);
                 clearFragments();
             }
         });
@@ -129,30 +140,27 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     /**
      * Fragment生成メソッド
      */
-    public void inflateFragment(int pos, int ifState, boolean isEdit) {
+    public void inflateFragment(ScriptModel scriptModel) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Bundle bundle = new Bundle();
-        bundle.putInt("pos", pos);
-        bundle.putInt("ifState", ifState);
 
-        if (!isEdit) {
+        ScriptPresenter.ViewState state = mScriptPresenter.getState();
+        mScriptPresenter.setTargetScript(scriptModel);
+        if (state == ScriptPresenter.ViewState.SELECT) {
             /**
              * ブロック追加用の選択画面へ
              */
-            blockSelectFragment = new BlockSelectFragment();
-            blockSelectFragment.setArguments(bundle);
             fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
-        } else {
+        } else if (state == ScriptPresenter.ViewState.EDIT) {
             /**
              * ブロック設定用の詳細画面へ
              */
-            String command = mScriptPresenter.getScripts().get(pos).getBlock().getBlock().getId();
-            int value = mScriptPresenter.getScripts().get(pos).getValue();
-            bundle.putString("commandDirection", command);
-            bundle.putBoolean("isEdit", true);
-            bundle.putInt("value", value);
-            blockDetailFragment.setArguments(bundle);
+            fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
+        } else if (state == ScriptPresenter.ViewState.ADD) {
+            /**
+             * ブロック追加用の詳細画面へ
+             * todo 上記EDITと同じなのは一旦分かりやすさのため
+             */
             fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
         }
         fragmentTransaction.commit();
@@ -170,25 +178,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     }
 
 
-    //BlockSelectFragmentで追加したViewのクリックを検出するリスナー
+    /**
+     * 追加時のブロック選択画面で選択されたブロックを元にフラグメント生成
+     */
     @Override
-    public void onClickButton(String buttonName, int pos, int ifState) {
-
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Bundle bundle = new Bundle();
-
-        if (buttonName != null) {
-            bundle.putString("commandDirection", buttonName);
-        } else {
-            bundle.putString("commandDirection", "null");
-        }
-        bundle.putInt("pos", pos);
-        bundle.putInt("ifState", ifState);
-
-        blockDetailFragment.setArguments(bundle);
-        fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
-        fragmentTransaction.commit();
+    public void onClickButton(BlockModel.SpicaBlock block) {
+        mScriptPresenter.setState(ScriptPresenter.ViewState.ADD);
+        ScriptModel scriptModel = mScriptPresenter.getTargetScript();
+        scriptModel.setBlock(new BlockModel(block));
+        inflateFragment(scriptModel);
     }
 
     /**

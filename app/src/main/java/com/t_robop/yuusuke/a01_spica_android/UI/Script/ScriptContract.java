@@ -21,34 +21,39 @@ public interface ScriptContract {
          * 配置可能なブロックのみ描画するメソッド
          * todo なにでわたすか決める(リスト or state ?)
          */
-        void drawArrangeableBlocks();
     }
 
     /**
      * ブロック詳細画面
      */
     interface DetailView extends BaseView<Presenter> {
-        void drawScript(ScriptModel script);
+
     }
 
     interface Presenter extends BasePresenter {
 
-        void setScript(ScriptModel script,int index);
+        void setScript(ScriptModel script, int index);
 
-        void insertScript(ScriptModel script,int beforeIndex);
+        void insertScript(ScriptModel script, int beforeIndex);
 
         ArrayList<ScriptModel> getScripts();
 
         String getSendableScripts();
 
         void setState(ScriptPresenter.ViewState state);
+
+        ScriptPresenter.ViewState getState();
+
+        void setTargetScript(ScriptModel script);
+
+        ScriptModel getTargetScript();
     }
 }
 
-interface BaseView<T>{
+interface BaseView<T> {
     void setPresenter(T presenter);
 }
 
-interface BasePresenter{
+interface BasePresenter {
     void start();
 }

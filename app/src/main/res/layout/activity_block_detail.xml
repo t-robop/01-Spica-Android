@@ -4,10 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.Script.BlockDetailActivity">
 
+    <data>
+        <variable name="fragment" type="com.t_robop.yuusuke.a01_spica_android.UI.Script.BlockDetailFragment" />
+    </data>
+
     <RelativeLayout
         android:id="@+id/bg_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:onClick="@{()->fragment.close()}"
         android:background="#00000000">
 
         <LinearLayout
@@ -78,6 +83,8 @@
                         android:id="@+id/switch_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:checked="false"
+                        android:onCheckedChanged="@{()->fragment.onCheckedChanged()}"
                         app:layout_constraintRight_toRightOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
@@ -103,7 +110,8 @@
                         android:layout_weight="1"
                         android:background="@drawable/block_script_item"
                         android:text="キャンセル"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:onClick="@{()->fragment.close()}"/>
 
                     <Button
                         android:id="@+id/detail_add_btn"
@@ -113,6 +121,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/block_script_item"
                         android:text="決定"
+                        android:onClick="@{()->fragment.confirm()}"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>

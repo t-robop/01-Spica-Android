@@ -70,7 +70,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
-    public void clear(){
+    public void clear() {
         mScriptList.clear();
     }
 
@@ -115,14 +115,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     /**
      * if文のTrueの終点Indexを返すメソッド
      */
-    private int getTrueEndIndex(int posIfStart){
-        for(int i=posIfStart+1;i<mScriptList.size();i++){
-            if(mScriptList.get(i).scriptSpecial==null){
-                ScriptModel scriptLastTrue=mScriptList.get(i-1).scriptSpecial;
-                if(scriptLastTrue!=null){
+    private int getTrueEndIndex(int posIfStart) {
+        for (int i = posIfStart + 1; i < mScriptList.size(); i++) {
+            if (mScriptList.get(i).scriptSpecial == null) {
+                ScriptModel scriptLastTrue = mScriptList.get(i - 1).scriptSpecial;
+                if (scriptLastTrue != null) {
                     return scriptLastTrue.getPos();
-                }else{
-                    return mScriptList.get(i-1).scriptDefault.getPos();
+                } else {
+                    return mScriptList.get(i - 1).scriptDefault.getPos();
                 }
             }
         }
@@ -136,31 +136,31 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         /**
          * 通常レーンの描画・ハンドラ設定
          */
-        final ScriptModel scriptDefault=set.scriptDefault;
+        final ScriptModel scriptDefault = set.scriptDefault;
         holder.mBinding.setScript(scriptDefault);
         holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.IF_START){
-                    clickConductor.onClick(view, getTrueEndIndex(position),2);
-                }else {
-                    clickConductor.onClick(view, scriptDefault.getPos(),scriptDefault.getIfState());
+                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+                if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+                    //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
+                    clickConductor.onClick(view, getTrueEndIndex(position), 2);
+                } else {
+                    clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
                 }
             }
         });
-        if(scriptDefault!=null) {
+        if (scriptDefault != null) {
             holder.mBinding.blockImage.setImageResource(scriptDefault.getBlock().getBlock().getIcResource());
         }
         holder.mBinding.blockContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.START){
-                    clickBlock.onClick(view,-1,0);
-                }
-                else if(scriptDefault.getBlock().getBlock()== BlockModel.SpicaBlock.END){
-                    clickBlock.onClick(view,-2,0);
-                }
-                else {
+                if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.START) {
+                    clickBlock.onClick(view, -1, 0);
+                } else if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.END) {
+                    clickBlock.onClick(view, -2, 0);
+                } else {
                     clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
                 }
             }
@@ -168,7 +168,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         holder.mBinding.blockContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                longClickBlock.onLongClick(view,scriptDefault.getPos());
+                longClickBlock.onLongClick(view, scriptDefault.getPos());
                 return false;
             }
         });
@@ -176,32 +176,33 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         /**
          * ifレーンの描画・ハンドラ設定
          */
-        final ScriptModel scriptSpecial=set.scriptSpecial;
+        final ScriptModel scriptSpecial = set.scriptSpecial;
         holder.mBinding.setScriptOther(scriptSpecial);
         holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(scriptSpecial!=null) {
-                    clickConductorIf.onClick(view, scriptSpecial.getPos(),1);
-                }else{
-                    //if_startの直後
-                    clickConductorIf.onClick(view, scriptDefault.getPos(),1);
+                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+                if (scriptSpecial != null) {
+                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
+                } else {
+                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
+                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
                 }
             }
         });
-        if(scriptSpecial!=null){
+        if (scriptSpecial != null) {
             holder.mBinding.blockImageIf.setImageResource(scriptSpecial.getBlock().getBlock().getIcResource());
         }
         holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                clickBlockIf.onClick(view,scriptSpecial.getPos(),scriptSpecial.getIfState());
+                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
             }
         });
         holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                longClickBlock.onLongClick(view,scriptSpecial.getPos());
+                longClickBlock.onLongClick(view, scriptSpecial.getPos());
                 return false;
             }
         });
@@ -209,7 +210,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     public interface onItemClickListener {
-        void onClick(View view, int pos,int ifState);
+        void onClick(View view, int pos, int ifState);
     }
 
     public interface onItemLongClickListener {
