@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <data>
+        <variable
+            name="script"
+            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel">
+        </variable>
+    </data>
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="150dp"
+        android:layout_height="242.7dp">
+
+        <TextView
+            android:id="@+id/id_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@{String.valueOf(script.block.getBlock.getId)}"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="ss"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

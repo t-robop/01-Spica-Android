@@ -8,23 +8,29 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/spica_icon"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".DebugUdpActivity">
-
-        </activity>
-        <activity android:name=".ScriptActivity"
-            android:screenOrientation="landscape"
-            android:configChanges="keyboardHidden|screenSize|orientation">
+        <activity android:name=".DebugUdpActivity" />
+        <activity
+            android:name=".UI.Script.ScriptMainActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ScriptActivity" />
+        <activity
+            android:name=".UI.Script.BlockSelectActivity"
+            android:theme="@style/Theme.DarkTranslucent" />
+        <activity
+            android:name=".UI.Script.BlockDetailActivity"
+            android:theme="@style/Theme.DarkTranslucent" />
     </application>
 
 </manifest>
