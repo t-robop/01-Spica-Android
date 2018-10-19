@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="colorMainLine">#707070</color>
+
+    <color name="colorFrontBlock">#ffffff</color>
+    <color name="colorTurnBlock">#ffffff</color>
+    <color name="colorBackBlock">#ffffff</color>
+    <color name="colorIfBlock">#ffffff</color>
+    <color name="colorForBlock">#ffffff</color>
+    <color name="colorBreakBlock">#ffffff</color>
+    <color name="colorStartBlock">#ffffff</color>
+    <color name="colorEndBlock">#ffffff</color>
 </resources>
