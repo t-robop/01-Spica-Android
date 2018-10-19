@@ -97,7 +97,12 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnBlockIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-
+                /**
+                 * ブロック設定へ
+                 */
+                mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
+                ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
+                inflateFragment(scriptModel);
             }
         });
 
