@@ -152,6 +152,8 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         });
         if (scriptDefault != null) {
             holder.mBinding.blockImage.setImageResource(scriptDefault.getBlock().getBlock().getIcResource());
+            holder.mBinding.blockContainer.setBackgroundResource(scriptDefault.getBlock().getBlock().getBgResource());
+            holder.mBinding.titleText.setBackgroundResource(scriptDefault.getBlock().getBlock().getBgResource());
         }
         holder.mBinding.blockContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -192,6 +194,8 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         });
         if (scriptSpecial != null) {
             holder.mBinding.blockImageIf.setImageResource(scriptSpecial.getBlock().getBlock().getIcResource());
+            holder.mBinding.blockContainerIf.setBackgroundResource(scriptSpecial.getBlock().getBlock().getBgResource());
+            holder.mBinding.titleTextIf.setBackgroundResource(scriptSpecial.getBlock().getBlock().getBgResource());
         }
         holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
             @Override

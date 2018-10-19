@@ -6,48 +6,66 @@ public class BlockModel {
     //ブロック
     private SpicaBlock block;
 
-    public BlockModel(){ }
-    public BlockModel(SpicaBlock block){
-        this.block=block;
+    public BlockModel() {
+    }
+
+    public BlockModel(SpicaBlock block) {
+        this.block = block;
     }
 
     public SpicaBlock getBlock() {
         return block;
     }
+
     public void setBlock(SpicaBlock block) {
         this.block = block;
     }
 
-    public enum SpicaBlock{
-        START("スタート","00", R.drawable.ic_block_start),
-        FRONT("ススム","01", R.drawable.ic_block_front),
-        BACK("サガル","02", R.drawable.ic_block_back),
-        LEFT("マガル","03", R.drawable.ic_block_left),
-        RIGHT("マガル","04", R.drawable.ic_block_right),
-        IF_START("モシモ","05", R.drawable.ic_block_if_wall),
-        IF_END("キケツ","06", R.drawable.ic_block_if_end),
-        FOR_START("クリカエス","07", R.drawable.ic_setting),
-        FOR_END("キケツ","08", R.drawable.ic_setting),
-        BREAK("オワル","09", R.drawable.ic_block_break),
-        END("エンド","99", R.drawable.ic_block_end);
+    public enum SpicaBlock {
+        START("00", "スタート", "", R.drawable.ic_block_start, R.drawable.block_start),
+        FRONT("01", "ススム", "", R.drawable.ic_block_front, R.drawable.block_front),
+        BACK("02", "サガル", "", R.drawable.ic_block_back, R.drawable.block_back),
+        LEFT("03", "マガル", "", R.drawable.ic_block_left, R.drawable.block_turn),
+        RIGHT("04", "マガル", "", R.drawable.ic_block_right, R.drawable.block_turn),
+        IF_START("05", "モシモ", "", R.drawable.ic_block_if_wall, R.drawable.block_if),
+        IF_END("06", "キケツ", "", R.drawable.ic_block_if_end, R.drawable.block_if),
+        FOR_START("07", "クリカエス", "", R.drawable.ic_setting, R.drawable.block_for),
+        FOR_END("08", "キケツ", "", R.drawable.ic_setting, R.drawable.block_for),
+        BREAK("09", "オワル", "", R.drawable.ic_block_break, R.drawable.block_break),
+        END("99", "エンド", "", R.drawable.ic_block_end, R.drawable.block_end);
 
-        private String name;
         private String id;
+        private String name;
+        private String description;
         private int icResource;
-        SpicaBlock(String name,String id,int icResource){
-            this.name=name;
-            this.id=id;
-            this.icResource=icResource;
+        private int bgResource;
+
+        SpicaBlock(String id, String name, String description, int icResource, int bgResource) {
+            this.id = id;
+            this.name = name;
+            this.description=description;
+            this.icResource = icResource;
+            this.bgResource=bgResource;
+        }
+
+        public String getId() {
+            return id;
         }
 
         public String getName() {
             return name;
         }
-        public String getId() {
-            return id;
+
+        public String getDescription() {
+            return description;
         }
+
         public int getIcResource() {
             return icResource;
+        }
+
+        public int getBgResource() {
+            return bgResource;
         }
     }
 }
