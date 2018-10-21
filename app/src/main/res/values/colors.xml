@@ -14,4 +14,7 @@
     <color name="colorBreakBlock">#ffffff</color>
     <color name="colorStartBlock">#ffffff</color>
     <color name="colorEndBlock">#ffffff</color>
+
+    <!--FAB -->
+    <color name="FABBGColor">#FF4081</color>
 </resources>
