@@ -1,27 +1,22 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
-import android.app.Activity;
-import android.app.ActivityOptions;
-
 import android.content.Context;
 import android.databinding.ViewDataBinding;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
-import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
-public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.BindingHolder> {
+public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.viewHolder> {
     private ArrayList<ScriptSet> mScriptList;
     private Context mContext;
     private onItemClickListener clickConductor;
@@ -31,16 +26,34 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     private onItemLongClickListener longClickBlock;
     private onItemLongClickListener longClickBlockIf;
 
-    public static class BindingHolder extends RecyclerView.ViewHolder {
-        private ItemContainerScriptMainBinding mBinding;
 
-        public BindingHolder(ItemContainerScriptMainBinding binding) {
-            super(binding.getRoot());
-            mBinding = binding;
-        }
+    private final int FRONT = 1;
+    private final int BACK = 2;
+    private final int LEFT = 3;
+    private final int RIGHT = 4;
+    private final int IF_START = 5;
+    private final int IF_END = 6;
+    private final int FOR_START = 7;
+    private final int FOR_END = 8;
+    private final int BREAK = 9;
+    private final int START = 10;
+    private final int END = 11;
 
-        public ViewDataBinding getBinding() {
-            return mBinding;
+
+    public static class viewHolder extends RecyclerView.ViewHolder {
+        TextView pramText;
+        LinearLayout laneIfLayout;
+        LinearLayout laneDefaultLayout;
+        LinearLayout blockContainerLayout;
+        LinearLayout conductorAddLayout;
+
+        public viewHolder(View view) {
+            super(view);
+            laneIfLayout = view.findViewById(R.id.lane_if);
+            laneDefaultLayout = view.findViewById(R.id.lane_default);
+            pramText = view.findViewById(R.id.id_text);
+            blockContainerLayout = view.findViewById(R.id.block_container);
+            conductorAddLayout = view.findViewById(R.id.conductor_add);
         }
     }
 
@@ -104,13 +117,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
-    @Override
-    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // recycler_itemレイアウト
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        ItemContainerScriptMainBinding binding = ItemContainerScriptMainBinding.inflate(layoutInflater, parent, false);
-        return new BindingHolder(binding);
-    }
+//    @Override
+//    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        // recycler_itemレイアウト
+//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+//        ItemContainerScriptMainBinding binding = ItemContainerScriptMainBinding.inflate(layoutInflater, parent, false);
+//        return new BindingHolder(binding);
+//    }
+
 
     /**
      * if文のTrueの終点Indexを返すメソッド
@@ -130,19 +144,86 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     @Override
-    public void onBindViewHolder(BindingHolder holder, final int position) {
-        ScriptSet set = mScriptList.get(position);
+    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = null;
+        LinearLayout test = (LinearLayout) parent.getChildAt(1);
+        Log.d("aaaaaaaa",String.valueOf(parent.getTag()));
+        switch (viewType) {
+            case FRONT:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_front, parent, false);
+                break;
+            case BACK:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_back, parent, false);
+                break;
+            case LEFT:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_left, parent, false);
+                break;
+            case RIGHT:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_right, parent, false);
+                break;
+            case IF_START:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_if_start, parent, false);
+                break;
+            case IF_END:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_if_end, parent, false);
+                break;
+            case FOR_START:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_start, parent, false);
+                break;
+            case FOR_END:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_end, parent, false);
+                break;
+            case BREAK:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_break, parent, false);
+                break;
+            case START:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_start, test, false);
+                break;
+            case END:
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_end, parent, false);
+                break;
 
+        }
+        final ScriptMainAdapter.viewHolder viewHold = new viewHolder(view);
+        return viewHold;
+
+    }
+
+    @Override
+    public void onBindViewHolder(viewHolder holder, final int position) {
+        ScriptSet set = mScriptList.get(position);
+        holder.pramText.setText("q1");
         /**
          * 通常レーンの描画・ハンドラ設定
          */
         final ScriptModel scriptDefault = set.scriptDefault;
-        holder.mBinding.setScript(scriptDefault);
-        holder.mBinding.conductor.setOnClickListener(new View.OnClickListener() {
+
+        /**
+         * Blockを押した時
+         */
+        holder.blockContainerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(mContext, "aaa", Toast.LENGTH_SHORT).show();
+                if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
+                    clickBlock.onClick(view, -1, 0);
+                } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
+                    clickBlock.onClick(view, -2, 0);
+                } else {
+                    clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+                }
+            }
+        });
+
+        /**
+         * 追加ボタンを押した時
+         */
+        holder.conductorAddLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "bbb", Toast.LENGTH_SHORT).show();
                 //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-                if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+                if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
                     //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
                     clickConductor.onClick(view, getTrueEndIndex(position), 2);
                 } else {
@@ -150,24 +231,10 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 }
             }
         });
-        if (scriptDefault != null) {
-            holder.mBinding.blockImage.setImageResource(scriptDefault.getBlock().getBlock().getIcResource());
-            holder.mBinding.blockContainer.setBackgroundResource(scriptDefault.getBlock().getBlock().getBgResource());
-            holder.mBinding.titleText.setBackgroundResource(scriptDefault.getBlock().getBlock().getBgResource());
-        }
-        holder.mBinding.blockContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.START) {
-                    clickBlock.onClick(view, -1, 0);
-                } else if (scriptDefault.getBlock().getBlock() == BlockModel.SpicaBlock.END) {
-                    clickBlock.onClick(view, -2, 0);
-                } else {
-                    clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
-                }
-            }
-        });
-        holder.mBinding.blockContainer.setOnLongClickListener(new View.OnLongClickListener() {
+
+
+
+        holder.blockContainerLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 longClickBlock.onLongClick(view, scriptDefault.getPos());
@@ -179,37 +246,33 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
          * ifレーンの描画・ハンドラ設定
          */
         final ScriptModel scriptSpecial = set.scriptSpecial;
-        holder.mBinding.setScriptOther(scriptSpecial);
-        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-                if (scriptSpecial != null) {
-                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
-                } else {
-                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
-                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
-                }
-            }
-        });
-        if (scriptSpecial != null) {
-            holder.mBinding.blockImageIf.setImageResource(scriptSpecial.getBlock().getBlock().getIcResource());
-            holder.mBinding.blockContainerIf.setBackgroundResource(scriptSpecial.getBlock().getBlock().getBgResource());
-            holder.mBinding.titleTextIf.setBackgroundResource(scriptSpecial.getBlock().getBlock().getBgResource());
-        }
-        holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
-            }
-        });
-        holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                longClickBlock.onLongClick(view, scriptSpecial.getPos());
-                return false;
-            }
-        });
+        //holder.mBinding.setScriptOther(scriptSpecial);
+//        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+//                if (scriptSpecial != null) {
+//                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
+//                } else {
+//                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
+//                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
+//                }
+//            }
+//        });
+
+//        holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
+//            }
+//        });
+//        holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View view) {
+//                longClickBlock.onLongClick(view, scriptSpecial.getPos());
+//                return false;
+//            }
+//        });
 
     }
 
@@ -248,5 +311,15 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     @Override
     public int getItemCount() {
         return mScriptList.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        //TODO たぶんバグる
+        ScriptModel.SpicaBlock block = mScriptList.get(position).getScriptDefault().getBlock();
+        // Scriptを受け取る
+        // Scriptのenumである、blockを取得する
+        // blockによって返す値を変える
+        return block.getId();
     }
 }

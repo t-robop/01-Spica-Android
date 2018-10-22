@@ -1,9 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 
-import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,12 +11,9 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
-
-import java.io.FileReader;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class BlockSelectFragment extends Fragment implements ScriptContract.SelectView {
 
@@ -46,37 +41,37 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         mView.findViewById(R.id.susumu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.FRONT);
+                mListener.onClickButton(ScriptModel.SpicaBlock.FRONT);
             }
         });
         mView.findViewById(R.id.magaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.RIGHT);
+                mListener.onClickButton(ScriptModel.SpicaBlock.RIGHT);
             }
         });
         mView.findViewById(R.id.sagaru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.BACK);
+                mListener.onClickButton(ScriptModel.SpicaBlock.BACK);
             }
         });
         mView.findViewById(R.id.mosimo).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.IF_START);
+                mListener.onClickButton(ScriptModel.SpicaBlock.IF_START);
             }
         });
         mView.findViewById(R.id.kurikaesu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.FOR_START);
+                mListener.onClickButton(ScriptModel.SpicaBlock.FOR_START);
             }
         });
         mView.findViewById(R.id.nukeru).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(BlockModel.SpicaBlock.BREAK);
+                mListener.onClickButton(ScriptModel.SpicaBlock.BREAK);
             }
         });
 
@@ -99,7 +94,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
 
     public interface MyListener {
-        void onClickButton(BlockModel.SpicaBlock block);
+        void onClickButton(ScriptModel.SpicaBlock block);
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド

@@ -2,7 +2,6 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.util.Log;
 
-import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
@@ -65,9 +64,8 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      *
      */
-    public ScriptModel createEmptyBlock(BlockModel.SpicaBlock spicaBlock, int ifState) {
-        ScriptModel scriptOther = new ScriptModel();
-        scriptOther.setBlock(new BlockModel(spicaBlock));
+    public ScriptModel createEmptyBlock(ScriptModel.SpicaBlock spicaBlock, int ifState) {
+        ScriptModel scriptOther = new ScriptModel(spicaBlock);
         scriptOther.setIfState(ifState);
         return scriptOther;
     }
@@ -85,18 +83,18 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void insertScript(ScriptModel script, int beforeIndex) {
         if (beforeIndex == mScripts.size() - 1) {
             addScript(script);
-            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                addScript(createEmptyBlock(BlockModel.SpicaBlock.IF_END, script.getIfState()));
-            } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                addScript(createEmptyBlock(BlockModel.SpicaBlock.FOR_END, script.getIfState()));
+            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+                addScript(createEmptyBlock(ScriptModel.SpicaBlock.IF_END, script.getIfState()));
+            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+                addScript(createEmptyBlock(ScriptModel.SpicaBlock.FOR_END, script.getIfState()));
             }
         } else if (beforeIndex < mScripts.size() - 1) {
             insert(script, beforeIndex);
-            if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
-                insert(createEmptyBlock(BlockModel.SpicaBlock.IF_END, script.getIfState()),
+            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+                insert(createEmptyBlock(ScriptModel.SpicaBlock.IF_END, script.getIfState()),
                         beforeIndex + 1);
-            } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
-                insert(createEmptyBlock(BlockModel.SpicaBlock.FOR_END, script.getIfState()),
+            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+                insert(createEmptyBlock(ScriptModel.SpicaBlock.FOR_END, script.getIfState()),
                         beforeIndex + 1);
             }
         }
@@ -107,16 +105,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void removeScript(int index) {
         ScriptModel script = mScripts.get(index);
         int size = mScripts.size();
-        if (script.getBlock().getBlock() == BlockModel.SpicaBlock.IF_START) {
+        if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
             for (int i = index; i < size; i++) {
-                if (mScripts.get(index).getBlock().getBlock() == BlockModel.SpicaBlock.IF_END) {
+                if (mScripts.get(index).getBlock() == ScriptModel.SpicaBlock.IF_END) {
                     break;
                 }
                 mScripts.remove(index);
             }
-        } else if (script.getBlock().getBlock() == BlockModel.SpicaBlock.FOR_START) {
+        } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
             for (int i = index; i < size; i++) {
-                if (mScripts.get(index).getBlock().getBlock() == BlockModel.SpicaBlock.FOR_END) {
+                if (mScripts.get(index).getBlock() == ScriptModel.SpicaBlock.FOR_END) {
                     break;
                 }
                 mScripts.remove(index);
@@ -139,7 +137,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         String sendStringData = "";
         for (ScriptModel script : mScripts) {
             String ifState = "0" + String.valueOf(script.getIfState());
-            String blockId = script.getBlock().getBlock().getId();
+            String blockId = script.getId();
             String RightSpeed = String.valueOf(script.getRightSpeed());
             String LeftSpeed = String.valueOf(script.getLeftSpeed());
             String value = String.valueOf(script.getValue());
