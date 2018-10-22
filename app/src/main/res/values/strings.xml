@@ -36,4 +36,18 @@
 
     <string name="app_name">Spica</string>
 
+    <!--BlockName-->
+    <string name="block_front_name">まえ</string>
+    <string name="block_back_name">うしろ</string>
+    <string name="block_left_name">ひだり</string>
+    <string name="block_right_name">みぎ</string>
+    <string name="block_if_start_name">もしも</string>
+    <string name="block_if_end_name">おわり</string>
+    <string name="block_for_start_name">くりかえし</string>
+    <string name="block_for_end_name">k_おわり</string>
+    <string name="block_start_name">スタート</string>
+    <string name="block_end_name">エンド</string>
+    <string name="block_break_name">ブレーク</string>
+
+
 </resources>

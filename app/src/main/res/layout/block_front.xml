@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="150dp"
+    android:layout_height="140dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/block_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginVertical="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/block_script_item"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/block_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:layout_weight="4"
+                android:src="@drawable/ic_block_front"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="5"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:background="@drawable/block_script_item"
+                    android:gravity="center"
+                    android:text="@string/block_front_name" />
+
+                <TextView
+                    android:id="@+id/id_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"
+                    android:text="0.5s" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/conductor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@drawable/line_vertical"
+            android:visibility="@{script.block.block==SpicaBlock.END ? View.INVISIBLE:View.VISIBLE}">
+
+            <LinearLayout
+                android:id="@+id/conductor_add"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:background="@drawable/block_script_item"
+                android:transitionName="trans_block_list">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="+"
+                    android:textAppearance="@style/TextAppearance.block_title_b" />
+
+            </LinearLayout>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
