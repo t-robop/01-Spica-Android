@@ -41,19 +41,33 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
 
 
     public static class viewHolder extends RecyclerView.ViewHolder {
-        TextView pramText;
+
         LinearLayout laneIfLayout;
         LinearLayout laneDefaultLayout;
-        LinearLayout blockContainerLayout;
-        LinearLayout conductorAddLayout;
+        LinearLayout laneIfblockContainerLayout;
+        LinearLayout laneIfconductorAddLayout;
+        TextView laneIfpramText;
 
+        LinearLayout laneDefaultblockContainerLayout;
+        LinearLayout laneDefaultconductorAddLayout;
+        TextView laneDefaultpramText;
         public viewHolder(View view) {
             super(view);
+
             laneIfLayout = view.findViewById(R.id.lane_if);
             laneDefaultLayout = view.findViewById(R.id.lane_default);
-            pramText = view.findViewById(R.id.id_text);
-            blockContainerLayout = view.findViewById(R.id.block_container);
-            conductorAddLayout = view.findViewById(R.id.conductor_add);
+
+
+            laneIfblockContainerLayout = laneIfLayout.findViewById(R.id.block_container);
+            laneIfconductorAddLayout = laneIfLayout.findViewById(R.id.conductor_add);
+            laneIfpramText = laneIfLayout.findViewById(R.id.id_text);
+
+            laneDefaultblockContainerLayout = laneDefaultLayout.findViewById(R.id.block_container);
+            laneDefaultconductorAddLayout = laneDefaultLayout.findViewById(R.id.conductor_add);
+            laneDefaultpramText = laneDefaultLayout.findViewById(R.id.id_text);
+
+
+
         }
     }
 
@@ -145,45 +159,116 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
 
     @Override
     public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = null;
-        LinearLayout test = (LinearLayout) parent.getChildAt(1);
-        Log.d("aaaaaaaa",String.valueOf(parent.getTag()));
+        View view;
+        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_container_script_main, parent, false);
+        LayoutInflater inflater;
+        LinearLayout blockLayout;
+        LinearLayout mainLayout;
         switch (viewType) {
             case FRONT:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_front, parent, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
                 break;
             case BACK:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_back, parent, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_back, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
+
                 break;
             case LEFT:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_left, parent, false);
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_left, parent, false);
                 break;
             case RIGHT:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_right, parent, false);
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_right, parent, false);
                 break;
             case IF_START:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_if_start, parent, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
                 break;
             case IF_END:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_if_end, parent, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
                 break;
             case FOR_START:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_start, parent, false);
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_start, parent, false);
                 break;
             case FOR_END:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_end, parent, false);
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_end, parent, false);
                 break;
             case BREAK:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_break, parent, false);
+//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_break, parent, false);
                 break;
             case START:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_start, test, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_start, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
+
+
                 break;
             case END:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_end, parent, false);
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_end, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
+
                 break;
 
+
+            case FRONT+100:
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+                mainLayout.addView(blockLayout);
+
+                inflater = LayoutInflater.from(parent.getContext());
+                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
+                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+                mainLayout.addView(blockLayout);
+                break;
+
+
         }
+
+
         final ScriptMainAdapter.viewHolder viewHold = new viewHolder(view);
         return viewHold;
 
@@ -192,7 +277,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
     @Override
     public void onBindViewHolder(viewHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
-        holder.pramText.setText("q1");
+        //holder.laneDefaultpramText.setText("q1");
         /**
          * 通常レーンの描画・ハンドラ設定
          */
@@ -201,7 +286,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
         /**
          * Blockを押した時
          */
-        holder.blockContainerLayout.setOnClickListener(new View.OnClickListener() {
+        holder.laneDefaultblockContainerLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "aaa", Toast.LENGTH_SHORT).show();
@@ -218,7 +303,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
         /**
          * 追加ボタンを押した時
          */
-        holder.conductorAddLayout.setOnClickListener(new View.OnClickListener() {
+        holder.laneDefaultconductorAddLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "bbb", Toast.LENGTH_SHORT).show();
@@ -234,7 +319,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
 
 
 
-        holder.blockContainerLayout.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.laneDefaultblockContainerLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 longClickBlock.onLongClick(view, scriptDefault.getPos());
@@ -247,32 +332,32 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
          */
         final ScriptModel scriptSpecial = set.scriptSpecial;
         //holder.mBinding.setScriptOther(scriptSpecial);
-//        holder.mBinding.conductorIf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-//                if (scriptSpecial != null) {
-//                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
-//                } else {
-//                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
-//                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
-//                }
-//            }
-//        });
+        holder.laneIfconductorAddLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+                if (scriptSpecial != null) {
+                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
+                } else {
+                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
+                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
+                }
+            }
+        });
 
-//        holder.mBinding.blockContainerIf.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
-//            }
-//        });
-//        holder.mBinding.blockContainerIf.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                longClickBlock.onLongClick(view, scriptSpecial.getPos());
-//                return false;
-//            }
-//        });
+        holder.laneIfblockContainerLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
+            }
+        });
+        holder.laneIfconductorAddLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                longClickBlock.onLongClick(view, scriptSpecial.getPos());
+                return false;
+            }
+        });
 
     }
 
@@ -315,11 +400,19 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
 
     @Override
     public int getItemViewType(int position) {
+        ScriptModel.SpicaBlock block;
         //TODO たぶんバグる
-        ScriptModel.SpicaBlock block = mScriptList.get(position).getScriptDefault().getBlock();
+        try {
+            block = mScriptList.get(position).getScriptDefault().getBlock();
+            return block.getId();
+        }catch (Exception e){
+            block = mScriptList.get(position).getScriptSpecial().getBlock();
+            return block.getId() + 100;
+        }
+
         // Scriptを受け取る
         // Scriptのenumである、blockを取得する
         // blockによって返す値を変える
-        return block.getId();
+        //return block.getId();
     }
 }
