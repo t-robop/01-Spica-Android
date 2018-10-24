@@ -1,5 +1,12 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.app.ActivityOptions;
+import android.content.Intent;
+import android.databinding.ViewDataBinding;
+import android.content.Context;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -139,6 +146,19 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 mScriptPresenter.removeScript(pos);
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SCRIPT);
                 clearFragments();
+            }
+        });
+
+        /**
+         * fabがクリックされた時
+         */
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //todo スクリプト送信処理
+                String sendData = mScriptPresenter.getSendableScripts();
+                Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
             }
         });
     }
