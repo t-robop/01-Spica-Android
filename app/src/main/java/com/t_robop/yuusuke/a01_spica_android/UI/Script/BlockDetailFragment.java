@@ -46,6 +46,9 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
+
+        setDetailComponents(spicaBlock);
+
         //シークバーはここで描画
         mBinding.seekValue.setProgress(targetScript.getValue());
         //アニメーションスタート
@@ -146,6 +149,61 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
             spicaBlock = defaultBlock;
         }
         drawScript(spicaBlock);
+    }
+
+    private void setDetailComponents(ScriptModel.SpicaBlock blockId){
+        switch (blockId){
+            case FRONT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
+                mBinding.blockTitleText.setText(R.string.detail_block_front_title);
+                mBinding.blockDesText.setText(R.string.detail_block_front_description);
+                break;
+
+            case BACK:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
+                mBinding.blockTitleText.setText(R.string.detail_block_back_title);
+                mBinding.blockDesText.setText(R.string.detail_block_back_description);
+                break;
+
+            case LEFT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
+                mBinding.blockTitleText.setText(R.string.detail_block_left_title);
+                mBinding.blockDesText.setText(R.string.detail_block_left_description);
+                break;
+
+            case RIGHT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
+                mBinding.blockTitleText.setText(R.string.detail_block_right_title);
+                mBinding.blockDesText.setText(R.string.detail_block_right_description);
+                break;
+
+            case IF_START:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
+                mBinding.blockTitleText.setText(R.string.detail_if_start_title);
+                mBinding.blockDesText.setText(R.string.detail_if_start_description);
+                break;
+
+            case IF_END:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_end);
+                break;
+
+            case FOR_START:
+                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
+                mBinding.blockTitleText.setText(R.string.detail_loop_title);
+                mBinding.blockDesText.setText(R.string.detail_loop_description);
+                break;
+
+            case FOR_END:
+                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
+                break;
+
+            case BREAK:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
+                mBinding.blockTitleText.setText(R.string.detail_break_title);
+                mBinding.blockDesText.setText(R.string.detail_break_description);
+                break;
+
+        }
     }
 
 }
