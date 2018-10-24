@@ -2,26 +2,16 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.print.PrinterId;
 import android.support.annotation.Nullable;
-import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.widget.SeekBar;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
-import com.t_robop.yuusuke.a01_spica_android.model.BlockModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class BlockDetailFragment extends Fragment implements ScriptContract.DetailView {
@@ -35,7 +25,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
 
     DetailListener listener;
 
-    private BlockModel.SpicaBlock spicaBlock;
+    private ScriptModel.SpicaBlock spicaBlock;
 
     @Nullable
     @Override
@@ -53,7 +43,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         //presenterで保持してるTargetScriptを取得
         ScriptModel targetScript = mScriptPresenter.getTargetScript();
         //ブロック種類を取得
-        spicaBlock = targetScript.getBlock().getBlock();
+        spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
         //シークバーはここで描画
@@ -81,11 +71,11 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     /**
      * mBindingを通して描画するメソッド
      */
-    public void drawScript(BlockModel.SpicaBlock spicaBlock) {
-        mBinding.blockImage.setImageResource(spicaBlock.getIcResource());
-        mBinding.blockTitleText.setText(spicaBlock.getName());
+    public void drawScript(ScriptModel.SpicaBlock spicaBlock) {
+//        mBinding.blockImage.setImageResource(spicaBlock.getIcResource());
+//        mBinding.blockTitleText.setText(spicaBlock.getName());
 
-        if (spicaBlock == BlockModel.SpicaBlock.RIGHT || spicaBlock == BlockModel.SpicaBlock.LEFT) {
+        if (spicaBlock == ScriptModel.SpicaBlock.RIGHT || spicaBlock == ScriptModel.SpicaBlock.LEFT) {
             mBinding.switchContainerDetail.setVisibility(View.VISIBLE);
         } else {
             mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
@@ -127,7 +117,6 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
      */
     public void confirm() {
         ScriptModel script = mScriptPresenter.getTargetScript();
-        script.setBlock(new BlockModel(spicaBlock));
         script.setValue(mBinding.seekValue.getProgress());
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
@@ -146,12 +135,12 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
      */
     public void onCheckedChanged() {
         boolean b = mBinding.switchDetail.isChecked();
-        BlockModel.SpicaBlock defaultBlock = mScriptPresenter.getTargetScript().getBlock().getBlock();
+        ScriptModel.SpicaBlock defaultBlock = mScriptPresenter.getTargetScript().getBlock();
         if (b) {
-            if (defaultBlock == BlockModel.SpicaBlock.LEFT) {
-                spicaBlock = BlockModel.SpicaBlock.RIGHT;
+            if (defaultBlock == ScriptModel.SpicaBlock.LEFT) {
+                spicaBlock = ScriptModel.SpicaBlock.RIGHT;
             } else {
-                spicaBlock = BlockModel.SpicaBlock.LEFT;
+                spicaBlock = ScriptModel.SpicaBlock.LEFT;
             }
         } else {
             spicaBlock = defaultBlock;
