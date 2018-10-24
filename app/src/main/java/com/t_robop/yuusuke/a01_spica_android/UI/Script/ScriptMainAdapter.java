@@ -46,6 +46,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         public BindingHolder(ItemContainerScriptMainBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
+            LayoutInflater layoutInflater = LayoutInflater.from(mBinding.laneDefault.getContext());
         }
 
         public ViewDataBinding getBinding() {
@@ -264,93 +265,110 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
          * ifレーンの描画
          */
         final ScriptModel scriptSpecial = set.scriptSpecial;
+        if (scriptSpecial != null) {
+            holder.mBinding.laneIf.removeAllViews();
+            drawCommandBlock(position,holder.mBinding.laneIf,scriptSpecial);
+        }
 
         /**
          * 通常レーンの描画
          */
         final ScriptModel scriptDefault = set.scriptDefault;
-        LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneDefault.getContext());
         if (scriptDefault != null) {
-            switch (scriptDefault.getBlock()) {
-                case START:
-                    BlockStartBinding bindingStart = BlockStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingStart.setAdapter(this);
-                    bindingStart.setPosition(position);
-                    bindingStart.setScript(scriptDefault);
-                    bindingStart.setIfState(scriptDefault.getIfState());
-                    holder.mBinding.laneDefault.addView(BlockStartBinding.class.cast(bindingStart).getRoot());
-                    break;
-                case END:
-                    BlockEndBinding bindingEnd = BlockEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingEnd.setAdapter(this);
-                    bindingEnd.setPosition(position);
-                    bindingEnd.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockEndBinding.class.cast(bindingEnd).getRoot());
-                    break;
-                case FRONT:
-                    BlockFrontBinding bindingFront = BlockFrontBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingFront.setAdapter(this);
-                    bindingFront.setPosition(position);
-                    bindingFront.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockFrontBinding.class.cast(bindingFront).getRoot());
-                    break;
-                case BACK:
-                    BlockBackBinding bindingBack = BlockBackBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingBack.setAdapter(this);
-                    bindingBack.setPosition(position);
-                    bindingBack.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
-                    break;
-                case LEFT:
-                    BlockLeftBinding bindingLeft = BlockLeftBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingLeft.setAdapter(this);
-                    bindingLeft.setPosition(position);
-                    bindingLeft.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
-                    break;
-                case RIGHT:
-                    BlockRightBinding bindingRight = BlockRightBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingRight.setAdapter(this);
-                    bindingRight.setPosition(position);
-                    bindingRight.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
-                    break;
-                case IF_START:
-                    BlockIfStartBinding bindingIfStart = BlockIfStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingIfStart.setAdapter(this);
-                    bindingIfStart.setPosition(position);
-                    bindingIfStart.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
-                    break;
-                case IF_END:
-                    BlockIfEndBinding bindingIfEnd = BlockIfEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingIfEnd.setAdapter(this);
-                    bindingIfEnd.setPosition(position);
-                    bindingIfEnd.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockIfEndBinding.class.cast(bindingIfEnd).getRoot());
-                    break;
-                case FOR_START:
-                    BlockForStartBinding bindingForStart = BlockForStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingForStart.setAdapter(this);
-                    bindingForStart.setPosition(position);
-                    bindingForStart.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
-                    break;
-                case FOR_END:
-                    BlockForEndBinding bindingForEnd = BlockForEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingForEnd.setAdapter(this);
-                    bindingForEnd.setPosition(position);
-                    bindingForEnd.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockForEndBinding.class.cast(bindingForEnd).getRoot());
-                    break;
-                case BREAK:
-                    BlockBreakBinding bindingBreak = BlockBreakBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
-                    bindingBreak.setAdapter(this);
-                    bindingBreak.setPosition(position);
-                    bindingBreak.setScript(scriptDefault);
-                    holder.mBinding.laneDefault.addView(BlockBreakBinding.class.cast(bindingBreak).getRoot());
-                    break;
-            }
+            holder.mBinding.laneDefault.removeAllViews();
+            drawCommandBlock(position,holder.mBinding.laneDefault,scriptDefault);
+        }
+    }
+
+    public void drawCommandBlock(int position,LinearLayout lane,ScriptModel script){
+        LayoutInflater layoutInflater = LayoutInflater.from(lane.getContext());
+        switch (script.getBlock()) {
+            case START:
+                BlockStartBinding bindingStart = BlockStartBinding.inflate(layoutInflater, lane, false);
+                bindingStart.setAdapter(this);
+                bindingStart.setPosition(position);
+                bindingStart.setScript(script);
+                bindingStart.setIfState(script.getIfState());
+                lane.addView(bindingStart.getRoot());
+                break;
+            case END:
+                BlockEndBinding bindingEnd = BlockEndBinding.inflate(layoutInflater, lane, false);
+                bindingEnd.setPosition(position);
+                bindingEnd.setScript(script);
+                lane.addView(BlockEndBinding.class.cast(bindingEnd).getRoot());
+                break;
+            case FRONT:
+                BlockFrontBinding bindingFront = BlockFrontBinding.inflate(layoutInflater, lane, false);
+                bindingFront.setAdapter(this);
+                bindingFront.setPosition(position);
+                bindingFront.setScript(script);
+                bindingFront.setIfState(script.getIfState());
+                lane.addView(bindingFront.getRoot());
+                break;
+            case BACK:
+                BlockBackBinding bindingBack = BlockBackBinding.inflate(layoutInflater, lane, false);
+                bindingBack.setAdapter(this);
+                bindingBack.setPosition(position);
+                bindingBack.setScript(script);
+                bindingBack.setIfState(script.getIfState());
+                lane.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
+                break;
+            case LEFT:
+                BlockLeftBinding bindingLeft = BlockLeftBinding.inflate(layoutInflater, lane, false);
+                bindingLeft.setAdapter(this);
+                bindingLeft.setPosition(position);
+                bindingLeft.setScript(script);
+                bindingLeft.setIfState(script.getIfState());
+                lane.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
+                break;
+            case RIGHT:
+                BlockRightBinding bindingRight = BlockRightBinding.inflate(layoutInflater, lane, false);
+                bindingRight.setAdapter(this);
+                bindingRight.setPosition(position);
+                bindingRight.setScript(script);
+                bindingRight.setIfState(script.getIfState());
+                lane.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
+                break;
+            case IF_START:
+                BlockIfStartBinding bindingIfStart = BlockIfStartBinding.inflate(layoutInflater, lane, false);
+                bindingIfStart.setAdapter(this);
+                bindingIfStart.setPosition(position);
+                bindingIfStart.setScript(script);
+                bindingIfStart.setIfState(script.getIfState());
+                lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
+                break;
+            case IF_END:
+                BlockIfEndBinding bindingIfEnd = BlockIfEndBinding.inflate(layoutInflater, lane, false);
+                bindingIfEnd.setAdapter(this);
+                bindingIfEnd.setPosition(position);
+                bindingIfEnd.setScript(script);
+                bindingIfEnd.setIfState(script.getIfState());
+                lane.addView(BlockIfEndBinding.class.cast(bindingIfEnd).getRoot());
+                break;
+            case FOR_START:
+                BlockForStartBinding bindingForStart = BlockForStartBinding.inflate(layoutInflater, lane, false);
+                bindingForStart.setAdapter(this);
+                bindingForStart.setPosition(position);
+                bindingForStart.setScript(script);
+                bindingForStart.setIfState(script.getIfState());
+                lane.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
+                break;
+            case FOR_END:
+                BlockForEndBinding bindingForEnd = BlockForEndBinding.inflate(layoutInflater, lane, false);
+                bindingForEnd.setAdapter(this);
+                bindingForEnd.setPosition(position);
+                bindingForEnd.setScript(script);
+                bindingForEnd.setIfState(script.getIfState());
+                lane.addView(BlockForEndBinding.class.cast(bindingForEnd).getRoot());
+                break;
+            case BREAK:
+                BlockBreakBinding bindingBreak = BlockBreakBinding.inflate(layoutInflater, lane, false);
+                bindingBreak.setAdapter(this);
+                bindingBreak.setPosition(position);
+                bindingBreak.setScript(script);
+                bindingBreak.setIfState(script.getIfState());
+                lane.addView(BlockBreakBinding.class.cast(bindingBreak).getRoot());
+                break;
         }
     }
 

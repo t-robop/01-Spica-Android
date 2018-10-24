@@ -8,10 +8,6 @@
         <import type="android.view.View" />
 
         <variable
-            name="adapter"
-            type="com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainAdapter" />
-
-        <variable
             name="position"
             type="Integer" />
 

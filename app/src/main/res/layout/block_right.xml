@@ -18,6 +18,10 @@
         <variable
             name="script"
             type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
+
+        <variable
+            name="ifState"
+            type="Integer" />
     </data>
 
     <LinearLayout
@@ -37,6 +41,7 @@
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
                 android:background="@drawable/block_script_item"
+                android:onClick="@{(v)->adapter.clickBlock(v,position,ifState)}"
                 android:orientation="vertical">
 
                 <ImageView
@@ -88,6 +93,7 @@
                     android:layout_height="24dp"
                     android:layout_gravity="center"
                     android:background="@drawable/block_script_item"
+                    android:onClick="@{(v)->adapter.clickConductor(v,position,ifState)}"
                     android:transitionName="trans_block_list">
 
                     <TextView
