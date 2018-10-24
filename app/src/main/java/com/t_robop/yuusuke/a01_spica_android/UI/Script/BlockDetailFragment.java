@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
@@ -49,7 +50,13 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //アニメーションスタート
+        popupAnime(view);
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
         //presenterで保持してるTargetScriptを取得
         ScriptModel targetScript = mScriptPresenter.getTargetScript();
         //ブロック種類を取得
@@ -57,9 +64,8 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         //描画
         drawScript(spicaBlock);
         //シークバーはここで描画
+        mBinding.seekValue.setMax(2);
         mBinding.seekValue.setProgress(targetScript.getValue());
-        //アニメーションスタート
-        popupAnime(view);
     }
 
     private void popupAnime(View view) {
@@ -119,6 +125,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     public void close() {
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
+        mBinding.seekValue.setProgress(0);
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
     }
 
@@ -131,6 +138,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         script.setValue(mBinding.seekValue.getProgress());
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
+        mBinding.seekValue.setProgress(0);
         listener.onClickAdd(script);
     }
 
