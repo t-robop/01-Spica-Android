@@ -1,6 +1,8 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.app.Activity;
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -12,11 +14,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockStartBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockFrontBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBackBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockLeftBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockRightBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfStartBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForStartBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBreakBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
-public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.viewHolder> {
+public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.BindingHolder> {
     private ArrayList<ScriptSet> mScriptList;
     private Context mContext;
     private onItemClickListener clickConductor;
@@ -26,48 +40,16 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
     private onItemLongClickListener longClickBlock;
     private onItemLongClickListener longClickBlockIf;
 
+    public static class BindingHolder extends RecyclerView.ViewHolder {
+        private ItemContainerScriptMainBinding mBinding;
 
-    private final int FRONT = 1;
-    private final int BACK = 2;
-    private final int LEFT = 3;
-    private final int RIGHT = 4;
-    private final int IF_START = 5;
-    private final int IF_END = 6;
-    private final int FOR_START = 7;
-    private final int FOR_END = 8;
-    private final int BREAK = 9;
-    private final int START = 10;
-    private final int END = 11;
+        public BindingHolder(ItemContainerScriptMainBinding binding) {
+            super(binding.getRoot());
+            mBinding = binding;
+        }
 
-
-    public static class viewHolder extends RecyclerView.ViewHolder {
-
-        LinearLayout laneIfLayout;
-        LinearLayout laneDefaultLayout;
-        LinearLayout laneIfblockContainerLayout;
-        LinearLayout laneIfconductorAddLayout;
-        TextView laneIfpramText;
-
-        LinearLayout laneDefaultblockContainerLayout;
-        LinearLayout laneDefaultconductorAddLayout;
-        TextView laneDefaultpramText;
-        public viewHolder(View view) {
-            super(view);
-
-            laneIfLayout = view.findViewById(R.id.lane_if);
-            laneDefaultLayout = view.findViewById(R.id.lane_default);
-
-
-            laneIfblockContainerLayout = laneIfLayout.findViewById(R.id.block_container);
-            laneIfconductorAddLayout = laneIfLayout.findViewById(R.id.conductor_add);
-            laneIfpramText = laneIfLayout.findViewById(R.id.id_text);
-
-            laneDefaultblockContainerLayout = laneDefaultLayout.findViewById(R.id.block_container);
-            laneDefaultconductorAddLayout = laneDefaultLayout.findViewById(R.id.conductor_add);
-            laneDefaultpramText = laneDefaultLayout.findViewById(R.id.id_text);
-
-
-
+        public ViewDataBinding getBinding() {
+            return mBinding;
         }
     }
 
@@ -131,13 +113,13 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
         }
     }
 
-//    @Override
-//    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        // recycler_itemレイアウト
-//        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-//        ItemContainerScriptMainBinding binding = ItemContainerScriptMainBinding.inflate(layoutInflater, parent, false);
-//        return new BindingHolder(binding);
-//    }
+    @Override
+    public BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        // recycler_itemレイアウト
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+        ItemContainerScriptMainBinding binding = ItemContainerScriptMainBinding.inflate(layoutInflater, parent, false);
+        return new BindingHolder(binding);
+    }
 
 
     /**
@@ -157,208 +139,267 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
         return -1;
     }
 
+//    @Override
+//    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//        View view;
+//        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_container_script_main, parent, false);
+//        LayoutInflater inflater;
+//        LinearLayout blockLayout;
+//        LinearLayout mainLayout;
+//        switch (viewType) {
+//            case FRONT:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//                break;
+//            case BACK:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_back, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//
+//                break;
+//            case LEFT:
+////                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_left, parent, false);
+//                break;
+//            case RIGHT:
+////                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_right, parent, false);
+//                break;
+//            case IF_START:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//                break;
+//            case IF_END:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//                break;
+//            case FOR_START:
+////                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_start, parent, false);
+//                break;
+//            case FOR_END:
+////                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_end, parent, false);
+//                break;
+//            case BREAK:
+////                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_break, parent, false);
+//                break;
+//            case START:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_start, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//
+//
+//                break;
+//            case END:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_end, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//
+//                break;
+//
+//
+//            case FRONT + 100:
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
+//                mainLayout.addView(blockLayout);
+//
+//                inflater = LayoutInflater.from(parent.getContext());
+//                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
+//                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
+//                mainLayout.addView(blockLayout);
+//                break;
+//
+//
+//        }
+//
+//
+//        final ScriptMainAdapter.viewHolder viewHold = new viewHolder(view);
+//        return viewHold;
+//
+//    }
+
     @Override
-    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view;
-        view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_container_script_main, parent, false);
-        LayoutInflater inflater;
-        LinearLayout blockLayout;
-        LinearLayout mainLayout;
-        switch (viewType) {
-            case FRONT:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-                break;
-            case BACK:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_back, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-
-                break;
-            case LEFT:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_left, parent, false);
-                break;
-            case RIGHT:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_right, parent, false);
-                break;
-            case IF_START:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_start, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-                break;
-            case IF_END:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_if_end, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-                break;
-            case FOR_START:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_start, parent, false);
-                break;
-            case FOR_END:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_for_end, parent, false);
-                break;
-            case BREAK:
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.block_break, parent, false);
-                break;
-            case START:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_start, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-
-
-                break;
-            case END:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_end, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-
-                break;
-
-
-            case FRONT+100:
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_null, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_default);
-                mainLayout.addView(blockLayout);
-
-                inflater = LayoutInflater.from(parent.getContext());
-                blockLayout = (LinearLayout) inflater.inflate(R.layout.block_front, null);
-                mainLayout = (LinearLayout) view.findViewById(R.id.lane_if);
-                mainLayout.addView(blockLayout);
-                break;
-
-
-        }
-
-
-        final ScriptMainAdapter.viewHolder viewHold = new viewHolder(view);
-        return viewHold;
-
-    }
-
-    @Override
-    public void onBindViewHolder(viewHolder holder, final int position) {
+    public void onBindViewHolder(BindingHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
-        //holder.laneDefaultpramText.setText("q1");
-        /**
-         * 通常レーンの描画・ハンドラ設定
-         */
-        final ScriptModel scriptDefault = set.scriptDefault;
 
         /**
-         * Blockを押した時
-         */
-        holder.laneDefaultblockContainerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "aaa", Toast.LENGTH_SHORT).show();
-                if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
-                    clickBlock.onClick(view, -1, 0);
-                } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
-                    clickBlock.onClick(view, -2, 0);
-                } else {
-                    clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
-                }
-            }
-        });
-
-        /**
-         * 追加ボタンを押した時
-         */
-        holder.laneDefaultconductorAddLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(mContext, "bbb", Toast.LENGTH_SHORT).show();
-                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-                if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
-                    //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
-                    clickConductor.onClick(view, getTrueEndIndex(position), 2);
-                } else {
-                    clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
-                }
-            }
-        });
-
-
-
-        holder.laneDefaultblockContainerLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                longClickBlock.onLongClick(view, scriptDefault.getPos());
-                return false;
-            }
-        });
-
-        /**
-         * ifレーンの描画・ハンドラ設定
+         * ifレーンの描画
          */
         final ScriptModel scriptSpecial = set.scriptSpecial;
-        //holder.mBinding.setScriptOther(scriptSpecial);
-        holder.laneIfconductorAddLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-                if (scriptSpecial != null) {
-                    clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
-                } else {
-                    //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
-                    clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
-                }
-            }
-        });
 
-        holder.laneIfblockContainerLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
+        /**
+         * 通常レーンの描画
+         */
+        final ScriptModel scriptDefault = set.scriptDefault;
+        LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneDefault.getContext());
+        if (scriptDefault != null) {
+            switch (scriptDefault.getBlock()) {
+                case START:
+                    BlockStartBinding bindingStart = BlockStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingStart.setAdapter(this);
+                    bindingStart.setPosition(position);
+                    bindingStart.setScript(scriptDefault);
+                    bindingStart.setIfState(scriptDefault.getIfState());
+                    holder.mBinding.laneDefault.addView(BlockStartBinding.class.cast(bindingStart).getRoot());
+                    break;
+                case END:
+                    BlockEndBinding bindingEnd = BlockEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingEnd.setAdapter(this);
+                    bindingEnd.setPosition(position);
+                    bindingEnd.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockEndBinding.class.cast(bindingEnd).getRoot());
+                    break;
+                case FRONT:
+                    BlockFrontBinding bindingFront = BlockFrontBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingFront.setAdapter(this);
+                    bindingFront.setPosition(position);
+                    bindingFront.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockFrontBinding.class.cast(bindingFront).getRoot());
+                    break;
+                case BACK:
+                    BlockBackBinding bindingBack = BlockBackBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingBack.setAdapter(this);
+                    bindingBack.setPosition(position);
+                    bindingBack.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
+                    break;
+                case LEFT:
+                    BlockLeftBinding bindingLeft = BlockLeftBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingLeft.setAdapter(this);
+                    bindingLeft.setPosition(position);
+                    bindingLeft.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
+                    break;
+                case RIGHT:
+                    BlockRightBinding bindingRight = BlockRightBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingRight.setAdapter(this);
+                    bindingRight.setPosition(position);
+                    bindingRight.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
+                    break;
+                case IF_START:
+                    BlockIfStartBinding bindingIfStart = BlockIfStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingIfStart.setAdapter(this);
+                    bindingIfStart.setPosition(position);
+                    bindingIfStart.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
+                    break;
+                case IF_END:
+                    BlockIfEndBinding bindingIfEnd = BlockIfEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingIfEnd.setAdapter(this);
+                    bindingIfEnd.setPosition(position);
+                    bindingIfEnd.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockIfEndBinding.class.cast(bindingIfEnd).getRoot());
+                    break;
+                case FOR_START:
+                    BlockForStartBinding bindingForStart = BlockForStartBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingForStart.setAdapter(this);
+                    bindingForStart.setPosition(position);
+                    bindingForStart.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
+                    break;
+                case FOR_END:
+                    BlockForEndBinding bindingForEnd = BlockForEndBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingForEnd.setAdapter(this);
+                    bindingForEnd.setPosition(position);
+                    bindingForEnd.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockForEndBinding.class.cast(bindingForEnd).getRoot());
+                    break;
+                case BREAK:
+                    BlockBreakBinding bindingBreak = BlockBreakBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+                    bindingBreak.setAdapter(this);
+                    bindingBreak.setPosition(position);
+                    bindingBreak.setScript(scriptDefault);
+                    holder.mBinding.laneDefault.addView(BlockBreakBinding.class.cast(bindingBreak).getRoot());
+                    break;
             }
-        });
-        holder.laneIfconductorAddLayout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                longClickBlock.onLongClick(view, scriptSpecial.getPos());
-                return false;
-            }
-        });
+        }
+    }
 
+    public void clickConductor(View view, int position, int ifState) {
+        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
+        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
+        if (ifState == 1) {
+            //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+            if (scriptSpecial != null) {
+                clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
+            } else {
+                //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
+                clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
+            }
+        } else {
+            //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
+            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+                //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
+                clickConductor.onClick(view, getTrueEndIndex(position), 2);
+            } else {
+                clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+            }
+        }
+    }
+
+    public void clickBlock(View view, int position, int ifState) {
+        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
+        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
+        if (ifState == 1) {
+            clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
+        } else {
+            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
+                clickBlock.onClick(view, -1, 0);
+            } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
+                clickBlock.onClick(view, -2, 0);
+            } else {
+                clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+            }
+        }
+    }
+
+    public void longClickBlock(View view, int position) {
+        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
+        longClickBlock.onLongClick(view, scriptDefault.getPos());
+    }
+
+    public void longClickBlockIf(View view, int position) {
+        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
+        longClickBlockIf.onLongClick(view, scriptSpecial.getPos());
     }
 
     public interface onItemClickListener {
@@ -396,23 +437,5 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.vi
     @Override
     public int getItemCount() {
         return mScriptList.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        ScriptModel.SpicaBlock block;
-        //TODO たぶんバグる
-        try {
-            block = mScriptList.get(position).getScriptDefault().getBlock();
-            return block.getId();
-        }catch (Exception e){
-            block = mScriptList.get(position).getScriptSpecial().getBlock();
-            return block.getId() + 100;
-        }
-
-        // Scriptを受け取る
-        // Scriptのenumである、blockを取得する
-        // blockによって返す値を変える
-        //return block.getId();
     }
 }

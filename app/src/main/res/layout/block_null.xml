@@ -3,61 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="android.view.View" />
-
-        <import type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
-
-        <variable
-            name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
-    </data>
-
     <LinearLayout
         android:layout_width="150dp"
         android:layout_height="140dp">
 
-        <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="140dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/block_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginVertical="8dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:id="@+id/conductor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="2">
-
-                <LinearLayout
-                    android:id="@+id/conductor_add"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_gravity="center"
-                    android:transitionName="trans_block_list">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:text=""
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
-
-                </LinearLayout>
-            </FrameLayout>
-
-
-        </LinearLayout>
     </LinearLayout>
 </layout>
