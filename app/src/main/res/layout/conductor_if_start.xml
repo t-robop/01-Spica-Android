@@ -16,10 +16,6 @@
             type="Integer" />
 
         <variable
-            name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
-
-        <variable
             name="ifState"
             type="Integer" />
     </data>
@@ -41,6 +37,8 @@
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
+
 
             </LinearLayout>
 

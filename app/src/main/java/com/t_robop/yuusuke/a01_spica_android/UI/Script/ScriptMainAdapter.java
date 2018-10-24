@@ -25,6 +25,9 @@ import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBreakBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorHorizontalBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfStartBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
@@ -260,23 +263,42 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     @Override
     public void onBindViewHolder(BindingHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
+        final ScriptModel scriptSpecial = set.scriptSpecial;
+        final ScriptModel scriptDefault = set.scriptDefault;
 
         /**
          * ifレーンの描画
          */
-        final ScriptModel scriptSpecial = set.scriptSpecial;
+        holder.mBinding.laneIf.removeAllViews();
         if (scriptSpecial != null) {
-            holder.mBinding.laneIf.removeAllViews();
             drawCommandBlock(position,holder.mBinding.laneIf,scriptSpecial);
+        }else{
+            LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneIf.getContext());
+            if(scriptDefault.getBlock()== ScriptModel.SpicaBlock.IF_START){
+                ConductorIfStartBinding bindingConIfStart = ConductorIfStartBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
+                bindingConIfStart.setAdapter(this);
+                bindingConIfStart.setPosition(position);
+                bindingConIfStart.setIfState(1);
+                holder.mBinding.laneIf.addView(bindingConIfStart.getRoot());
+            }else if(scriptDefault.getBlock()== ScriptModel.SpicaBlock.IF_END){
+                ConductorIfEndBinding bindingConIfEnd = ConductorIfEndBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
+                holder.mBinding.laneIf.addView(bindingConIfEnd.getRoot());
+            }else if(scriptDefault.getIfState()==2){
+                ConductorHorizontalBinding bindingConHorizontal = ConductorHorizontalBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
+                holder.mBinding.laneIf.addView(bindingConHorizontal.getRoot());
+            }
         }
 
         /**
          * 通常レーンの描画
          */
-        final ScriptModel scriptDefault = set.scriptDefault;
+        holder.mBinding.laneDefault.removeAllViews();
         if (scriptDefault != null) {
-            holder.mBinding.laneDefault.removeAllViews();
             drawCommandBlock(position,holder.mBinding.laneDefault,scriptDefault);
+        }else if(scriptSpecial.getIfState()==1){
+            LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneDefault.getContext());
+            ConductorHorizontalBinding bindingConHorizontal = ConductorHorizontalBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
+            holder.mBinding.laneDefault.addView(bindingConHorizontal.getRoot());
         }
     }
 
