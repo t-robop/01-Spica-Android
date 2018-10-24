@@ -14,6 +14,9 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
+
 public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.MyListener {
 
     private ScriptContract.Presenter mScriptPresenter;
@@ -84,6 +87,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                      */
                     mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
                     ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
+                    if(scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END) return;
                     inflateFragment(scriptModel);
                 }
             }
@@ -236,7 +240,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
                 ifIndex = laneIndex;
             }
-            if (script.getBlock() == ScriptModel.SpicaBlock.IF_END) {
+            if (script.getBlock() == IF_END) {
                 ifIndex = -1;
             }
         }

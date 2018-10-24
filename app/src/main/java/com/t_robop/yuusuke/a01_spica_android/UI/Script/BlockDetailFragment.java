@@ -46,11 +46,8 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
-
-        setDetailComponents(spicaBlock);
-
-        //シークバーはここで描画
-        mBinding.seekValue.setProgress(targetScript.getValue());
+        //シークバー描画
+        setSeekValue(spicaBlock, targetScript.getValue());
         //アニメーションスタート
         popupAnime(view);
     }
@@ -74,11 +71,53 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     /**
      * mBindingを通して描画するメソッド
      */
-    public void drawScript(ScriptModel.SpicaBlock spicaBlock) {
-//        mBinding.blockImage.setImageResource(spicaBlock.getIcResource());
-//        mBinding.blockTitleText.setText(spicaBlock.getName());
+    public void drawScript(ScriptModel.SpicaBlock blockId) {
 
-        if (spicaBlock == ScriptModel.SpicaBlock.RIGHT || spicaBlock == ScriptModel.SpicaBlock.LEFT) {
+        switch (blockId) {
+            case FRONT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
+                mBinding.blockTitleText.setText(R.string.detail_block_front_title);
+                mBinding.blockDesText.setText(R.string.detail_block_front_description);
+                break;
+
+            case BACK:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
+                mBinding.blockTitleText.setText(R.string.detail_block_back_title);
+                mBinding.blockDesText.setText(R.string.detail_block_back_description);
+                break;
+
+            case LEFT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
+                mBinding.blockTitleText.setText(R.string.detail_block_left_title);
+                mBinding.blockDesText.setText(R.string.detail_block_left_description);
+                break;
+
+            case RIGHT:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
+                mBinding.blockTitleText.setText(R.string.detail_block_right_title);
+                mBinding.blockDesText.setText(R.string.detail_block_right_description);
+                break;
+
+            case IF_START:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
+                mBinding.blockTitleText.setText(R.string.detail_if_start_title);
+                mBinding.blockDesText.setText(R.string.detail_if_start_description);
+                break;
+
+            case FOR_START:
+                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
+                mBinding.blockTitleText.setText(R.string.detail_loop_title);
+                mBinding.blockDesText.setText(R.string.detail_loop_description);
+                break;
+
+            case BREAK:
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
+                mBinding.blockTitleText.setText(R.string.detail_break_title);
+                mBinding.blockDesText.setText(R.string.detail_break_description);
+                break;
+        }
+
+        if (blockId == ScriptModel.SpicaBlock.RIGHT || blockId == ScriptModel.SpicaBlock.LEFT) {
             mBinding.switchContainerDetail.setVisibility(View.VISIBLE);
         } else {
             mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
@@ -151,58 +190,12 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         drawScript(spicaBlock);
     }
 
-    private void setDetailComponents(ScriptModel.SpicaBlock blockId){
-        switch (blockId){
-            case FRONT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
-                mBinding.blockTitleText.setText(R.string.detail_block_front_title);
-                mBinding.blockDesText.setText(R.string.detail_block_front_description);
-                break;
-
-            case BACK:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
-                mBinding.blockTitleText.setText(R.string.detail_block_back_title);
-                mBinding.blockDesText.setText(R.string.detail_block_back_description);
-                break;
-
-            case LEFT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
-                mBinding.blockTitleText.setText(R.string.detail_block_left_title);
-                mBinding.blockDesText.setText(R.string.detail_block_left_description);
-                break;
-
-            case RIGHT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
-                mBinding.blockTitleText.setText(R.string.detail_block_right_title);
-                mBinding.blockDesText.setText(R.string.detail_block_right_description);
-                break;
-
-            case IF_START:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
-                mBinding.blockTitleText.setText(R.string.detail_if_start_title);
-                mBinding.blockDesText.setText(R.string.detail_if_start_description);
-                break;
-
-            case IF_END:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_end);
-                break;
-
-            case FOR_START:
-                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
-                mBinding.blockTitleText.setText(R.string.detail_loop_title);
-                mBinding.blockDesText.setText(R.string.detail_loop_description);
-                break;
-
-            case FOR_END:
-                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
-                break;
-
-            case BREAK:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
-                mBinding.blockTitleText.setText(R.string.detail_break_title);
-                mBinding.blockDesText.setText(R.string.detail_break_description);
-                break;
-
+    private void setSeekValue(ScriptModel.SpicaBlock blockId, int seekValue){
+        if ((blockId == ScriptModel.SpicaBlock.FRONT || blockId == ScriptModel.SpicaBlock.BACK || blockId == ScriptModel.SpicaBlock.LEFT || blockId == ScriptModel.SpicaBlock.RIGHT)){
+            mBinding.seekValue.setVisibility(View.VISIBLE);
+            mBinding.seekValue.setProgress(seekValue);
+        }else{
+            mBinding.seekValue.setVisibility(View.GONE);
         }
     }
 
