@@ -39,7 +39,13 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //アニメーションスタート
+        popupAnime(view);
+    }
 
+    @Override
+    public void onStart(){
+        super.onStart();
         //presenterで保持してるTargetScriptを取得
         ScriptModel targetScript = mScriptPresenter.getTargetScript();
         //ブロック種類を取得
@@ -48,8 +54,6 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         drawScript(spicaBlock);
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getValue());
-        //アニメーションスタート
-        popupAnime(view);
     }
 
     private void popupAnime(View view) {
@@ -151,6 +155,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
     public void close() {
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
+        mBinding.seekValue.setProgress(0);
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
     }
 
@@ -162,6 +167,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         script.setValue(mBinding.seekValue.getProgress());
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
+        mBinding.seekValue.setProgress(0);
         listener.onClickAdd(script);
     }
 
@@ -192,6 +198,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
 
     private void setSeekValue(ScriptModel.SpicaBlock blockId, int seekValue){
         if ((blockId == ScriptModel.SpicaBlock.FRONT || blockId == ScriptModel.SpicaBlock.BACK || blockId == ScriptModel.SpicaBlock.LEFT || blockId == ScriptModel.SpicaBlock.RIGHT)){
+            mBinding.seekValue.setMax(2);
             mBinding.seekValue.setVisibility(View.VISIBLE);
             mBinding.seekValue.setProgress(seekValue);
         }else{
