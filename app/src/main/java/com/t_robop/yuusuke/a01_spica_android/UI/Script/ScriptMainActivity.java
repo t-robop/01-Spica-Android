@@ -1,5 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -7,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.widget.Toast;
 import android.view.View;
 
@@ -29,6 +32,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -157,6 +161,27 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 //todo スクリプト送信処理
                 String sendData = mScriptPresenter.getSendableScripts();
                 Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        /**
+         * fabが1.2秒以上長押しされた時
+         */
+        final long[] then = {0};
+        fab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                    then[0] = (Long) System.currentTimeMillis();
+                }
+                else if(event.getAction() == MotionEvent.ACTION_UP){
+                    if(((Long) System.currentTimeMillis() - then[0]) > 1200){
+                        Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                        startActivity(intent);
+                        return true;
+                    }
+                }
+                return false;
             }
         });
     }
