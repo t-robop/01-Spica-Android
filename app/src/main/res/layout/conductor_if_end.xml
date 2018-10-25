@@ -4,12 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="140dp">
+        android:layout_width="@dimen/block_width"
+        android:layout_height="@dimen/block_height">
 
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 

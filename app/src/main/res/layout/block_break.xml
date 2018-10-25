@@ -25,8 +25,8 @@
     </data>
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="140dp">
+        android:layout_width="@dimen/block_width"
+        android:layout_height="@dimen/block_height">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -91,8 +91,8 @@
 
                 <LinearLayout
                     android:id="@+id/conductor_add"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/conductor_scaele"
+                    android:layout_height="@dimen/conductor_scaele"
                     android:layout_gravity="center"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{(v)->adapter.clickConductor(v,position,ifState)}"
@@ -104,6 +104,8 @@
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
                         android:text="@string/plus"
+                        android:textSize="@dimen/conductor_text_size"
+                        android:includeFontPadding="false"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
