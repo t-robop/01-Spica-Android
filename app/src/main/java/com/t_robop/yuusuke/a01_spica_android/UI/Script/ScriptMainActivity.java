@@ -100,6 +100,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                  */
                 mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
                 ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
+                if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
+                    return;
                 inflateFragment(scriptModel);
             }
         });
