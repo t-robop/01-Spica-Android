@@ -147,6 +147,12 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         return this.mScripts;
     }
 
+    @Override
+    public void setScripts(ArrayList<ScriptModel> scripts) {
+        this.mScripts = scripts;
+        mScriptView.drawScripts(mScripts);
+
+    }
     /**
      * スクリプト一覧を送信可能データにするメソッド
      */
