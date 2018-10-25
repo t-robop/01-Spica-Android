@@ -163,16 +163,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public String getSendableScripts() {
         String sendStringData = "";
         for (ScriptModel script : mScripts) {
-            //FIXME ここでブロックの種類で送信コマンドを整形するのよくない気がする getterの拡張
-            String ifState = "0" + String.valueOf(script.getIfState());
+            String ifState = String.format("%02d", script.getIfState());
             String blockId = String.format("%02d", script.getBlock().getId());
 
-            String leftSpeed = String.format("%03d", script.getLeftSpeed());
+            //速度値は左右同じものを使う
+            String leftSpeed = String.format("%03d", script.getSpeed());
             if(script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
                 leftSpeed = String.format("%03d", 0);
             }
 
-            String rightSpeed = String.format("%03d", script.getRightSpeed());
+            String rightSpeed = String.format("%03d", script.getSpeed());
             if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
                 rightSpeed = String.format("%03d", 0);
             }
