@@ -5,21 +5,24 @@ import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
 
-
     private String id;
     private int pos;
     //if
     private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //右パワー
-    private int rightSpeed = 100;
-    //左パワー
-    private int leftSpeed = 100;
+    //右パワー  //FIXME 百分率で渡すのか、直接値を渡すか
+    private int rightSlowSpeed = 50;
+    private int rightStandardSpeed = 100;
+    private int rightFastSpeed = 150;
+    //左パワー  //FIXME 百分率で渡すのか、直接値を渡すか
+    private int leftSlowSpeed = 50;
+    private int leftStandardSpeed = 100;
+    private int leftFastSpeed = 150;
     //ブロック毎の値
-    private int value = 0;
+    private int seekValue = 0;
     //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
-    private float v = 0;  //TODO valueにrename
+    private float value = 0;  //TODO valueにrename
 
     public ScriptModel() {
     }
@@ -71,46 +74,60 @@ public class ScriptModel extends BaseObservable {
     public int getRightSpeed(int seekValue) {
         switch (seekValue){
             case 0:  //シークバー 小
-                return SpeedValue.SLOW.getSpeed();
+                return rightSlowSpeed;
             case 1:  //シークバー 中
-                return SpeedValue.STANDARD.getSpeed();
+                return rightStandardSpeed;
             case 2:  //シークバー 大
-                return SpeedValue.FAST.getSpeed();
+                return rightFastSpeed;
         }
 
-        return SpeedValue.STANDARD.getSpeed();
-        //return this.rightSpeed;
+        return rightStandardSpeed;
     }
 
-    public void setRightSpeed(int rightSpeed) {
-        this.rightSpeed = rightSpeed;
+    public void setRightSlowSpeed(int rightSlowSpeed) {
+        this.rightSlowSpeed = rightSlowSpeed;
+    }
+
+    public void setRightStandardSpeed(int rightStandardSpeed) {
+        this.rightStandardSpeed = rightStandardSpeed;
+    }
+
+    public void setRightFastSpeed(int rightFastSpeed) {
+        this.rightFastSpeed = rightFastSpeed;
     }
 
     public int getLeftSpeed(int seekValue) {
         switch (seekValue){
             case 0:  //シークバー 小
-                return SpeedValue.SLOW.getSpeed();
+                return leftSlowSpeed;
             case 1:  //シークバー 中
-                return SpeedValue.STANDARD.getSpeed();
+                return leftStandardSpeed;
             case 2:  //シークバー 大
-                return SpeedValue.FAST.getSpeed();
+                return leftFastSpeed;
         }
 
-        return SpeedValue.STANDARD.getSpeed();
-        //return this.leftSpeed;
+        return leftStandardSpeed;
     }
 
-    public void setLeftSpeed(int leftSpeed) {
-        this.leftSpeed = leftSpeed;
+    public void setLeftSlowSpeed(int leftSlowSpeed) {
+        this.leftSlowSpeed = leftSlowSpeed;
+    }
+
+    public void setLeftStandardSpeed(int leftStandardSpeed) {
+        this.leftStandardSpeed = leftStandardSpeed;
+    }
+
+    public void setLeftFastSpeed(int leftFastSpeed) {
+        this.leftFastSpeed = leftFastSpeed;
     }
 
     @Bindable
-    public int getValue() {
-        return this.value;
+    public int getSeekValue() {
+        return this.seekValue;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setSeekValue(int value) {
+        this.seekValue = value;
     }
 
     public enum SpicaBlock {
@@ -127,29 +144,12 @@ public class ScriptModel extends BaseObservable {
         END(11);
 
         private final int id;
-        private SpicaBlock(final int id) {
+        SpicaBlock(final int id) {
             this.id = id;
         }
 
         public int getId() {
             return this.id;
         }
-
-    }
-
-    public enum SpeedValue {
-        SLOW(50),
-        STANDARD(100),
-        FAST(150);
-
-        private final int speed;
-        SpeedValue(final int speed){
-            this.speed = speed;
-        }
-
-        public int getSpeed(){
-            return this.speed;
-        }
-
     }
 }

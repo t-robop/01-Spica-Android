@@ -53,7 +53,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         //描画
         drawScript(spicaBlock);
         //シークバー描画
-        setSeekValue(spicaBlock, targetScript.getValue());
+        setSeekValue(spicaBlock, targetScript.getSeekValue());
     }
 
     private void popupAnime(View view) {
@@ -164,7 +164,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
      */
     public void confirm() {
         ScriptModel script = mScriptPresenter.getTargetScript();
-        script.setValue(mBinding.seekValue.getProgress());
+        script.setSeekValue(mBinding.seekValue.getProgress());
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
         mBinding.seekValue.setProgress(0);
