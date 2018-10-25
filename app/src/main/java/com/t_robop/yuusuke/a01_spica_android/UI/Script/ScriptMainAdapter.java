@@ -240,9 +240,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
-                if(script.getIfOperator() == 1){  //FIXME 通常のleftSpeedではなくifの比較演算子を見ているので、専用のgetterを定義して使う
+                if(script.getIfOperator() == script.getIfUpperNum()){
                     bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_bigger));
-                }else if(script.getIfOperator() == 2){
+                }else if(script.getIfOperator() == script.getIfLowerNum()){
                     bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_smaller));
                 }
                 bindingIfStart.setIfState(script.getIfState());

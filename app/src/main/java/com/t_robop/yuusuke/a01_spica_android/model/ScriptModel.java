@@ -19,8 +19,6 @@ public class ScriptModel extends BaseObservable {
     private float value = 1;
     private boolean isInLoop=false;
 
-
-
     public ScriptModel() {
     }
 
@@ -88,16 +86,16 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getSeekValue() {
+    public int getSeekValue() {  //シークバーの3段階(0~2)の取得
         return this.leftSpeed;
     }
 
-    public void setSeekValue(int leftSpeed) {
+    public void setSeekValue(int leftSpeed) {  //シークバーの3段階(0~2)のセット
         this.leftSpeed = leftSpeed;
     }
 
     @Bindable
-    public int getIfOperator() {
+    public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
         return this.leftSpeed;
     }
 
@@ -119,6 +117,14 @@ public class ScriptModel extends BaseObservable {
     }
     public void setInLoop(boolean isInLoop){
         this.isInLoop=isInLoop;
+    }
+
+    public int getIfUpperNum() {
+        return 1;  //センサー値より大きい を表す
+    }
+
+    public int getIfLowerNum() {
+        return 2;  //センサー値より小さい を表す
     }
 
     public enum SpicaBlock {
