@@ -65,14 +65,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:src="@drawable/ic_block_right" />
+                        android:src="@drawable/ic_block_left" />
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_right_name"
+                        android:text="@string/block_left_name"
                         android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 

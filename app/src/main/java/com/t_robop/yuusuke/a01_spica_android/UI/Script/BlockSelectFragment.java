@@ -58,7 +58,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         mBinding.magaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.RIGHT);
+                mListener.onClickButton(ScriptModel.SpicaBlock.LEFT);
             }
         });
         mBinding.sagaru.setOnClickListener(new View.OnClickListener() {

@@ -105,20 +105,20 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
-                            app:layout_constraintStart_toStartOf="parent"
-                            >
+                            app:layout_constraintStart_toStartOf="parent">
+
                             <RadioButton android:id="@+id/radiobutton_left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/default_text_color"
-                                android:text="左回転"
-                                />
+                                android:text="@string/error_text" />
+
                             <RadioButton android:id="@+id/radiobutton_right"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:textColor="@color/default_text_color"
-                                android:text="右回転"
-                                />
+                                android:text="@string/error_text" />
+
                         </RadioGroup>
 
                     </android.support.constraint.ConstraintLayout>

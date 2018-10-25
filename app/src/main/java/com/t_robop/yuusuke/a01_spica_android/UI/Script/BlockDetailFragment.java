@@ -69,11 +69,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化 TODO 初期値が0.0になっている
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
-
-        if (spicaBlock == ScriptModel.SpicaBlock.FOR_START) {
-            mBinding.radiobuttonLeft.setText("以上");
-            mBinding.radiobuttonRight.setText("以下");
-        }
+        mBinding.radiogroup.check(R.id.radiobutton_left);
     }
 
     private void popupAnime(View view) {
@@ -117,6 +113,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_left_name);
                 mBinding.blockDesText.setText(R.string.block_left_description);
                 mBinding.editValue.setHint(R.string.dialog_time);
+                mBinding.radiobuttonLeft.setText(R.string.common_left);
+                mBinding.radiobuttonRight.setText(R.string.common_right);
                 break;
 
             case RIGHT:
@@ -124,6 +122,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_right_name);
                 mBinding.blockDesText.setText(R.string.block_right_description);
                 mBinding.editValue.setHint(R.string.dialog_time);
+                mBinding.radiobuttonLeft.setText(R.string.common_left);
+                mBinding.radiobuttonRight.setText(R.string.common_right);
                 break;
 
             case IF_START:
@@ -131,6 +131,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_if_start_description);
                 mBinding.editValue.setHint(R.string.dialog_sensor_num);
+                mBinding.radiobuttonLeft.setText(R.string.dialog_sensor_bigger);
+                mBinding.radiobuttonRight.setText(R.string.dialog_sensor_smaller);
                 break;
 
             case FOR_START:
@@ -150,7 +152,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
         if (blockId == ScriptModel.SpicaBlock.RIGHT ||
                 blockId == ScriptModel.SpicaBlock.LEFT ||
-                blockId == ScriptModel.SpicaBlock.FOR_START) {
+                blockId == ScriptModel.SpicaBlock.IF_START) {
             mBinding.switchContainerDetail.setVisibility(View.VISIBLE);
         } else {
             mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
@@ -216,11 +218,18 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
      * 回転の逆回転スイッチの処理
      */
     public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (spicaBlock != ScriptModel.SpicaBlock.FOR_START) {
+        if (spicaBlock == ScriptModel.SpicaBlock.LEFT || spicaBlock == ScriptModel.SpicaBlock.RIGHT) {
             if (checkedId == R.id.radiobutton_left) {
                 spicaBlock = ScriptModel.SpicaBlock.LEFT;
             } else if (checkedId == R.id.radiobutton_right) {
                 spicaBlock = ScriptModel.SpicaBlock.RIGHT;
+            }
+            drawScript(spicaBlock);
+        }else if(spicaBlock == ScriptModel.SpicaBlock.FOR_START){
+            if (checkedId == R.id.radiobutton_left) {
+                //TODO センサー値より大きいときの処理
+            } else if (checkedId == R.id.radiobutton_right) {
+                //TODO センサー値より小さいときの処理
             }
             drawScript(spicaBlock);
         }

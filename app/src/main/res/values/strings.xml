@@ -32,6 +32,8 @@
     <string name="dialog_left_speed">左タイヤパワー</string>
     <string name="dialog_time">時間(秒)</string>
     <string name="dialog_sensor_num">距離(cm)</string>
+    <string name="dialog_sensor_bigger">以上</string>
+    <string name="dialog_sensor_smaller">以下</string>
     <string name="dialog_loop_num">ループ数</string>
 
 
