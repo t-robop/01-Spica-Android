@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 import android.view.View;
 
@@ -44,6 +45,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_script_main);
+        hideNavigationBar();
+
 
         mScriptRecyclerView = findViewById(R.id.recycler_script);
         mScriptRecyclerView.setHasFixedSize(true);
@@ -66,6 +69,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
+                hideNavigationBar();
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
                 ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
                 inflateFragment(scriptModel);
@@ -74,6 +78,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
+                hideNavigationBar();
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
                 ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
                 inflateFragment(scriptModel);
@@ -86,6 +91,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnBlockClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
+                hideNavigationBar();
                 if (0 <= pos) {
                     /**
                      * ブロック設定へ
@@ -101,6 +107,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnBlockIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
+                hideNavigationBar();
                 /**
                  * ブロック設定へ
                  */
@@ -331,5 +338,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
         }.getType());
         mScriptPresenter.setScripts(mScripts);
+    }
+    private void hideNavigationBar(){
+        View sysView = getWindow().getDecorView();
+        sysView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
 }
