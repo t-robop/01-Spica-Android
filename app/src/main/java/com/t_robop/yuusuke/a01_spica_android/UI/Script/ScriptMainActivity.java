@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 import android.view.View;
 
@@ -14,6 +15,7 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
@@ -156,6 +158,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             public void onClick(View v) {
                 //todo スクリプト送信処理
                 String sendData = mScriptPresenter.getSendableScripts();
+                Log.d("sendData", sendData);
                 Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
             }
         });

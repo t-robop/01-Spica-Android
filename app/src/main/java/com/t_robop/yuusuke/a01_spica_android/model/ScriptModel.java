@@ -18,7 +18,8 @@ public class ScriptModel extends BaseObservable {
     private int leftSpeed = 100;
     //ブロック毎の値
     private int value = 0;
-
+    //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
+    private float v = 0;  //TODO valueにrename
 
     public ScriptModel() {
     }
@@ -67,18 +68,36 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
-    @Bindable
-    public int getRightSpeed() {
-        return this.rightSpeed;
+    public int getRightSpeed(int seekValue) {
+        switch (seekValue){
+            case 0:  //シークバー 小
+                return SpeedValue.SLOW.getSpeed();
+            case 1:  //シークバー 中
+                return SpeedValue.STANDARD.getSpeed();
+            case 2:  //シークバー 大
+                return SpeedValue.FAST.getSpeed();
+        }
+
+        return SpeedValue.STANDARD.getSpeed();
+        //return this.rightSpeed;
     }
 
     public void setRightSpeed(int rightSpeed) {
         this.rightSpeed = rightSpeed;
     }
 
-    @Bindable
-    public int getLeftSpeed() {
-        return this.leftSpeed;
+    public int getLeftSpeed(int seekValue) {
+        switch (seekValue){
+            case 0:  //シークバー 小
+                return SpeedValue.SLOW.getSpeed();
+            case 1:  //シークバー 中
+                return SpeedValue.STANDARD.getSpeed();
+            case 2:  //シークバー 大
+                return SpeedValue.FAST.getSpeed();
+        }
+
+        return SpeedValue.STANDARD.getSpeed();
+        //return this.leftSpeed;
     }
 
     public void setLeftSpeed(int leftSpeed) {
@@ -116,6 +135,21 @@ public class ScriptModel extends BaseObservable {
             return this.id;
         }
 
+    }
+
+    public enum SpeedValue {
+        SLOW(50),
+        STANDARD(100),
+        FAST(150);
+
+        private final int speed;
+        SpeedValue(final int speed){
+            this.speed = speed;
+        }
+
+        public int getSpeed(){
+            return this.speed;
+        }
 
     }
 }

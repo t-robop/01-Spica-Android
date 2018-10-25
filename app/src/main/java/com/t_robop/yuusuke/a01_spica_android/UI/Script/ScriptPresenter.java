@@ -138,8 +138,8 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         for (ScriptModel script : mScripts) {
             String ifState = "0" + String.valueOf(script.getIfState());
             String blockId = script.getId();
-            String RightSpeed = String.valueOf(script.getRightSpeed());
-            String LeftSpeed = String.valueOf(script.getLeftSpeed());
+            String RightSpeed = String.valueOf(script.getRightSpeed(script.getValue()));
+            String LeftSpeed = String.valueOf(script.getLeftSpeed(script.getValue()));
             String value = String.valueOf(script.getValue());
 
             if (RightSpeed.length() == 1) {
