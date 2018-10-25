@@ -161,12 +161,12 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             String ifState = "0" + String.valueOf(script.getIfState());
             String blockId = String.format("%02d", script.getBlock().getId());
 
-            String leftSpeed = String.format("%03d", script.getLeftSpeed(script.getSeekValue()));
+            String leftSpeed = String.format("%03d", script.getLeftSpeed());
             if(script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
                 leftSpeed = String.format("%03d", 0);
             }
 
-            String rightSpeed = String.format("%03d", script.getRightSpeed(script.getSeekValue()));
+            String rightSpeed = String.format("%03d", script.getRightSpeed());
             if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
                 rightSpeed = String.format("%03d", 0);
             }

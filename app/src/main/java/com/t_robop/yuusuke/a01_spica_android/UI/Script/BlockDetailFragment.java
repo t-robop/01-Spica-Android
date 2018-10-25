@@ -72,7 +72,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
-        mBinding.radiogroup.check(R.id.radiobutton_left);
+        if (targetScript.getIfOperator() == 1) {
+            mBinding.radiogroup.check(R.id.radiobutton_left);
+        }
+        else if (targetScript.getIfOperator() == 2) {
+            mBinding.radiogroup.check(R.id.radiobutton_right);
+        }
+
     }
 
     private void popupAnime(View view) {
@@ -202,9 +208,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         if (spicaBlock == IF_START) {  //ifスタートブロックの条件指定idの設定
             int checkId = mBinding.radiogroup.getCheckedRadioButtonId();
             if (checkId == R.id.radiobutton_left) {
-                script.setLeftStandardSpeed(1);  //trueなら0001
+                script.setSeekValue(1);  //trueなら0001
             } else {
-                script.setLeftStandardSpeed(2);  //falseなら0002
+                script.setSeekValue(2);  //falseなら0002
             }
         }
         listener.onClickAdd(script);

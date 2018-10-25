@@ -8,22 +8,18 @@ public class ScriptModel extends BaseObservable {
     private String id;
     private int pos;
     //if
-    private int ifState = 0;  //1: trueのブロック 2:falseのブロック
+    private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //右パワー  //FIXME 百分率で渡すのか、直接値を渡すか
-    private int rightSlowSpeed = 50;
-    private int rightStandardSpeed = 100;
-    private int rightFastSpeed = 150;
-    //左パワー  //FIXME 百分率で渡すのか、直接値を渡すか
-    private int leftSlowSpeed = 50;
-    private int leftStandardSpeed = 100;
-    private int leftFastSpeed = 150;
-    //シークバーの値 3段階(0~2)
-    private int seekValue = 0;
-    //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
+    //右パワー
+    private int rightSpeed = 100;
+    //左パワー
+    private int leftSpeed = 100;
+    //ブロック毎の値
     private float value = 1;
     private boolean isInLoop=false;
+
+
 
     public ScriptModel() {
     }
@@ -73,63 +69,40 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
-    public int getRightSpeed(int seekValue) {
-        switch (seekValue){
-            case 0:  //シークバー 小
-                return rightSlowSpeed;
-            case 1:  //シークバー 中
-                return rightStandardSpeed;
-            case 2:  //シークバー 大
-                return rightFastSpeed;
-        }
-
-        return rightStandardSpeed;
+    @Bindable
+    public int getRightSpeed() {
+        return this.rightSpeed;
     }
 
-    public void setRightSlowSpeed(int rightSlowSpeed) {
-        this.rightSlowSpeed = rightSlowSpeed;
+    public void setRightSpeed(int rightSpeed) {
+        this.rightSpeed = rightSpeed;
     }
 
-    public void setRightStandardSpeed(int rightStandardSpeed) {
-        this.rightStandardSpeed = rightStandardSpeed;
+    @Bindable
+    public int getLeftSpeed() {
+        return this.leftSpeed;
     }
 
-    public void setRightFastSpeed(int rightFastSpeed) {
-        this.rightFastSpeed = rightFastSpeed;
-    }
-
-    public int getLeftSpeed(int seekValue) {
-        switch (seekValue){
-            case 0:  //シークバー 小
-                return leftSlowSpeed;
-            case 1:  //シークバー 中
-                return leftStandardSpeed;
-            case 2:  //シークバー 大
-                return leftFastSpeed;
-        }
-
-        return leftStandardSpeed;
-    }
-
-    public void setLeftSlowSpeed(int leftSlowSpeed) {
-        this.leftSlowSpeed = leftSlowSpeed;
-    }
-
-    public void setLeftStandardSpeed(int leftStandardSpeed) {
-        this.leftStandardSpeed = leftStandardSpeed;
-    }
-
-    public void setLeftFastSpeed(int leftFastSpeed) {
-        this.leftFastSpeed = leftFastSpeed;
+    public void setLeftSpeed(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
     }
 
     @Bindable
     public int getSeekValue() {
-        return this.seekValue;
+        return this.leftSpeed;
     }
 
-    public void setSeekValue(int value) {
-        this.seekValue = value;
+    public void setSeekValue(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
+    }
+
+    @Bindable
+    public int getIfOperator() {
+        return this.leftSpeed;
+    }
+
+    public void setIfOperator(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
     }
 
     public Float getValue() {
