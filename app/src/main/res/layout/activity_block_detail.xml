@@ -11,14 +11,16 @@
             type="com.t_robop.yuusuke.a01_spica_android.UI.Script.BlockDetailFragment" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/bg_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="#00000000"
         android:onClick="@{()->fragment.close()}">
 
         <LinearLayout
+            android:id="@+id/fg_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginHorizontal="200dp"
@@ -71,9 +73,23 @@
                         android:id="@+id/block_des_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
+                        android:layout_weight="6"
                         android:text="ススム"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
+
+                    <EditText
+                        android:id="@+id/edit_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="6"
+                        android:inputType="number|numberDecimal"
+                        android:maxLength="3"
+                        android:maxLines="1"
+                        android:hint="@string/detail_block_edit_hint"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent"/>
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/switch_container_detail"
@@ -106,8 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="2"
-                        android:progress="1"
-                        android:visibility="visible"/>
+                        android:progress="1" />
 
                 </LinearLayout>
 
@@ -159,6 +174,6 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>

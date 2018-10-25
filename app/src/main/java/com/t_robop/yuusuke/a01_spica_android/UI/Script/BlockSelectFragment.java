@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
@@ -35,6 +36,14 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().remove(BlockSelectFragment.this).commit();
+            }
+        });
+
+        LinearLayout bgSelect=mView.findViewById(R.id.select_dialog_bg);
+        bgSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 

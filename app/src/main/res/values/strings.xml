@@ -50,6 +50,8 @@
     <string name="block_break_name">ブレーク</string>
 
     <!-- BlockDetailFragment -->
+    <!-- common -->
+    <string name="detail_block_edit_hint">実行秒数</string>
     <!-- 前進 -->
     <string name="detail_block_front_title">すすむ</string>
     <string name="detail_block_front_description">まえにすすむ</string>

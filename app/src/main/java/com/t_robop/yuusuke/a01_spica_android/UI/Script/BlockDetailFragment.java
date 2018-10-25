@@ -3,10 +3,11 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
@@ -14,7 +15,7 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
-public class BlockDetailFragment extends Fragment implements ScriptContract.DetailView {
+public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView {
 
     private ScriptContract.Presenter mScriptPresenter;
 
@@ -33,6 +34,17 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_block_detail, container, false);
         View root = mBinding.getRoot();
         mBinding.setFragment(this);
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+
+        mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO キーボードが表示されているときは閉じる
+            }
+        });
+
         return root;
     }
 
@@ -156,6 +168,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
         mBinding.seekValue.setProgress(0);
+        //TODO ソフトウェアキーボードが開いてたら閉じる
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
     }
 
@@ -203,7 +216,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
             mBinding.seekValue.setVisibility(View.VISIBLE);
             mBinding.seekValue.setProgress(seekValue);
         }else{
-            mBinding.seekValue.setVisibility(View.GONE);
+            mBinding.seekValue.setVisibility(View.INVISIBLE);
         }
     }
 
