@@ -22,4 +22,7 @@
 
     <!--blockDetail-->
     <color name="delete_button_color">#dd2222</color>
+
+    <!--backgroundColor-->
+    <color name="default_background_color">#FDFDF8</color>
 </resources>
