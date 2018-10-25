@@ -66,6 +66,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         drawScript(spicaBlock);
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getSeekValue());
+        //editText初期化 TODO 初期値が0.0になっている
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
     }
 
@@ -95,42 +96,49 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
                 mBinding.blockTitleText.setText(R.string.block_front_name);
                 mBinding.blockDesText.setText(R.string.block_front_description);
+                mBinding.editValue.setHint(R.string.dialog_time);
                 break;
 
             case BACK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
                 mBinding.blockTitleText.setText(R.string.block_back_name);
                 mBinding.blockDesText.setText(R.string.block_back_description);
+                mBinding.editValue.setHint(R.string.dialog_time);
                 break;
 
             case LEFT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
                 mBinding.blockTitleText.setText(R.string.block_left_name);
                 mBinding.blockDesText.setText(R.string.block_left_description);
+                mBinding.editValue.setHint(R.string.dialog_time);
                 break;
 
             case RIGHT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
                 mBinding.blockTitleText.setText(R.string.block_right_name);
                 mBinding.blockDesText.setText(R.string.block_right_description);
+                mBinding.editValue.setHint(R.string.dialog_time);
                 break;
 
             case IF_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
                 mBinding.blockTitleText.setText(R.string.block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_if_start_description);
+                mBinding.editValue.setHint(R.string.dialog_sensor_num);
                 break;
 
             case FOR_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
                 mBinding.blockTitleText.setText(R.string.block_for_start_name);
                 mBinding.blockDesText.setText(R.string.block_for_start_description);
+                mBinding.editValue.setHint(R.string.dialog_loop_num);
                 break;
 
             case BREAK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
                 mBinding.blockTitleText.setText(R.string.block_break_name);
                 mBinding.blockDesText.setText(R.string.block_break_description);
+                mBinding.editValue.setVisibility(View.INVISIBLE);
                 break;
         }
 
@@ -180,21 +188,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         ScriptModel script = mScriptPresenter.getTargetScript();
         script.setBlock(spicaBlock);
         script.setSeekValue(mBinding.seekValue.getProgress());
-
-        switch (spicaBlock){
-            case FRONT:
-            case BACK:
-            case LEFT:
-            case RIGHT:
-                script.setValue(getInputText());
-                break;
-
-            case IF_START:
-                break;
-
-            case FOR_START:
-                break;
-        }
+        script.setValue(getInputText());
 
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);

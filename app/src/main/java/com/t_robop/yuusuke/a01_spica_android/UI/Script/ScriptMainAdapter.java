@@ -236,6 +236,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
+                bindingIfStart.setValue((int)Math.floor(script.getValue()));
                 bindingIfStart.setIfState(script.getIfState());
                 lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
                 break;
@@ -252,6 +253,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingForStart.setAdapter(this);
                 bindingForStart.setPosition(position);
                 bindingForStart.setScript(script);
+                bindingForStart.setValue((int)Math.floor(script.getValue()));
                 bindingForStart.setIfState(script.getIfState());
                 lane.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
                 break;
