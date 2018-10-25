@@ -109,7 +109,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
                 break;
 
             case FOR_START:
-                mBinding.blockImage.setImageResource(R.drawable.ic_setting);
+                mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
                 mBinding.blockTitleText.setText(R.string.block_for_start_name);
                 mBinding.blockDesText.setText(R.string.block_for_start_description);
                 break;
