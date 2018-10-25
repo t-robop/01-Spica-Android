@@ -19,7 +19,7 @@ public class ScriptModel extends BaseObservable {
     private int leftSlowSpeed = 50;
     private int leftStandardSpeed = 100;
     private int leftFastSpeed = 150;
-    //ブロック毎の値
+    //シークバーの値 3段階(0~2)
     private int seekValue = 0;
     //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
     private float value = 0;  //TODO valueにrename
@@ -128,6 +128,14 @@ public class ScriptModel extends BaseObservable {
 
     public void setSeekValue(int value) {
         this.seekValue = value;
+    }
+
+    public float getValue() {
+        return value;
+    }
+
+    public void setValue(float value) {
+        this.value = value;
     }
 
     public enum SpicaBlock {
