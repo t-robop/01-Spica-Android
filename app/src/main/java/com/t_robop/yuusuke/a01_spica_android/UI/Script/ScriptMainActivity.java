@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 import android.view.View;
@@ -158,6 +159,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 String sendData = mScriptPresenter.getSendableScripts();
                 UdpSend udp = new UdpSend();
                 udp.UdpSendText(sendData);
+                Log.d("sendData", sendData);
                 Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
             }
         });

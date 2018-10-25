@@ -1,7 +1,6 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
 
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
@@ -157,9 +156,9 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         for (ScriptModel script : mScripts) {
             String ifState = "0" + String.valueOf(script.getIfState());
             @SuppressLint("DefaultLocale") String blockId = String.format("%02d", script.getBlock().getId());
-            @SuppressLint("DefaultLocale") String RightSpeed = String.format("%03d", script.getRightSpeed());
-            @SuppressLint("DefaultLocale") String LeftSpeed = String.format("%03d", script.getLeftSpeed());
-            @SuppressLint("DefaultLocale") String value = String.format("%03d", script.getValue());
+            @SuppressLint("DefaultLocale") String RightSpeed = String.format("%03d", script.getRightSpeed(script.getSeekValue()));
+            @SuppressLint("DefaultLocale") String LeftSpeed = String.format("%03d", script.getLeftSpeed(script.getSeekValue()));
+            @SuppressLint("DefaultLocale") String value = String.format("%03d", (int)Math.round(script.getValue() * 10.0));
 
             sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(RightSpeed) + String.valueOf(LeftSpeed) + String.valueOf(value);
         }

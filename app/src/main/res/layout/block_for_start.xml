@@ -20,6 +20,10 @@
             type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
 
         <variable
+            name="value"
+            type="Integer" />
+
+        <variable
             name="ifState"
             type="Integer" />
     </data>
@@ -75,7 +79,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@string/error_text" />
+                        android:text="@{String.valueOf(value) + `回`}"
+                        tools:text="@string/error_text" />
 
                 </LinearLayout>
 

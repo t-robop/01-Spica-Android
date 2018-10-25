@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
-import android.widget.RelativeLayout;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
@@ -31,8 +30,6 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.activity_block_select, container, false);
-
         mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_block_select, container, false);
         View root = mBinding.getRoot();
 
@@ -45,6 +42,13 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
         ScriptModel script = mScriptPresenter.getTargetScript();
 
+        mBinding.selectDialogBg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
         mBinding.susumu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,7 +58,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         mBinding.magaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.RIGHT);
+                mListener.onClickButton(ScriptModel.SpicaBlock.LEFT);
             }
         });
         mBinding.sagaru.setOnClickListener(new View.OnClickListener() {

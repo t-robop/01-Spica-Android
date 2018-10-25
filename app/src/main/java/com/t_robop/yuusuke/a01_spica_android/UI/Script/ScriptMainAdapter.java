@@ -1,19 +1,12 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
-import android.app.Activity;
 import android.content.Context;
-import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockFrontBinding;
@@ -207,6 +200,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingFront.setAdapter(this);
                 bindingFront.setPosition(position);
                 bindingFront.setScript(script);
+                bindingFront.setValue(script.getValue());
                 bindingFront.setIfState(script.getIfState());
                 lane.addView(bindingFront.getRoot());
                 break;
@@ -215,6 +209,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingBack.setAdapter(this);
                 bindingBack.setPosition(position);
                 bindingBack.setScript(script);
+                bindingBack.setValue(script.getValue());
                 bindingBack.setIfState(script.getIfState());
                 lane.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
                 break;
@@ -223,6 +218,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingLeft.setAdapter(this);
                 bindingLeft.setPosition(position);
                 bindingLeft.setScript(script);
+                bindingLeft.setValue(script.getValue());
                 bindingLeft.setIfState(script.getIfState());
                 lane.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
                 break;
@@ -231,6 +227,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingRight.setAdapter(this);
                 bindingRight.setPosition(position);
                 bindingRight.setScript(script);
+                bindingRight.setValue(script.getValue());
                 bindingRight.setIfState(script.getIfState());
                 lane.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
                 break;
@@ -239,6 +236,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
+                bindingIfStart.setValue((int)Math.floor(script.getValue()));
                 bindingIfStart.setIfState(script.getIfState());
                 lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
                 break;
@@ -255,6 +253,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingForStart.setAdapter(this);
                 bindingForStart.setPosition(position);
                 bindingForStart.setScript(script);
+                bindingForStart.setValue((int)Math.floor(script.getValue()));
                 bindingForStart.setIfState(script.getIfState());
                 lane.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
                 break;

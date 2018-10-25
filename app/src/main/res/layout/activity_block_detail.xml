@@ -11,18 +11,20 @@
             type="com.t_robop.yuusuke.a01_spica_android.UI.Script.BlockDetailFragment" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/bg_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="#00000000"
         android:onClick="@{()->fragment.close()}">
 
         <LinearLayout
+            android:id="@+id/fg_detail"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginHorizontal="200dp"
-            android:layout_marginVertical="100dp"
+            android:layout_marginHorizontal="150dp"
+            android:layout_marginVertical="50dp"
             android:background="@drawable/select_shape_white"
             android:orientation="vertical">
 
@@ -72,10 +74,24 @@
                         android:id="@+id/block_des_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
+                        android:layout_weight="5"
                         android:text="@string/error_text"
                         android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
+
+                    <EditText
+                        android:id="@+id/edit_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="5"
+                        android:inputType="number|numberDecimal"
+                        android:maxLength="4"
+                        android:maxLines="1"
+                        android:hint="@string/error_text"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent"/>
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/switch_container_detail"
@@ -83,24 +99,27 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5">
 
-                        <TextView
+                        <RadioGroup
+                            android:id="@+id/radiogroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/error_text"
-                            android:textAppearance="@style/TextAppearance.block_des_b"
-                            android:textColor="@color/default_text_color"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintLeft_toLeftOf="parent"
-                            app:layout_constraintRight_toLeftOf="@+id/switch_detail"
-                            app:layout_constraintTop_toTopOf="parent" />
+                            android:orientation="horizontal"
+                            android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
+                            app:layout_constraintStart_toStartOf="parent">
 
-                        <Switch
-                            android:id="@+id/switch_detail"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:onCheckedChanged="@{()->fragment.onCheckedChanged()}"
-                            app:layout_constraintRight_toRightOf="parent" />
+                            <RadioButton android:id="@+id/radiobutton_left"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/default_text_color"
+                                android:text="@string/error_text" />
+
+                            <RadioButton android:id="@+id/radiobutton_right"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/default_text_color"
+                                android:text="@string/error_text" />
+
+                        </RadioGroup>
 
                     </android.support.constraint.ConstraintLayout>
 
@@ -109,8 +128,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:max="2"
-                        android:progress="1"
-                        android:visibility="visible"/>
+                        android:progress="1" />
 
                 </LinearLayout>
 
@@ -164,6 +182,6 @@
 
         </LinearLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>
