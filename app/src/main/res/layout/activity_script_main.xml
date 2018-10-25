@@ -55,8 +55,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="16dp"
             android:layout_marginTop="16dp"
-            android:background="#00000000"
-            app:backgroundTint="#00000000" />
+            app:backgroundTint="@color/colorPrimaryDark" />
     </FrameLayout>
 
 
