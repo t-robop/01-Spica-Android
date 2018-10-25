@@ -65,6 +65,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
+                        android:textColor="@color/default_text_color"
                         android:text="@string/block_back_name" />
 
                     <TextView
@@ -73,7 +74,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="0.5s" />
+                        android:textColor="@color/default_text_color"
+                        android:text="@string/error_text" />
 
                 </LinearLayout>
 
@@ -100,7 +102,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="+"
+                        android:text="@string/plus"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>

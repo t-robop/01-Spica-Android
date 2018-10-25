@@ -17,13 +17,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="ipアドレス" />
+            android:textColor="@color/default_text_color"
+            android:text="@string/ip_text" />
 
         <EditText
             android:id="@+id/ip_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:textColor="@color/default_text_color"
             android:text="" />
     </LinearLayout>
     <LinearLayout
@@ -36,13 +38,15 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="port番号" />
+            android:textColor="@color/default_text_color"
+            android:text="@string/port_text" />
 
         <EditText
             android:id="@+id/port_edit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:textColor="@color/default_text_color"
             android:text="" />
     </LinearLayout>
 
@@ -56,14 +60,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="キャンセル" />
+            android:textColor="@color/default_text_color"
+            android:text="@string/button_cancel" />
 
         <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="保存" />
+            android:textColor="@color/default_text_color"
+            android:text="@string/button_ok" />
     </LinearLayout>
 
 </LinearLayout>

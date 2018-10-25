@@ -30,7 +30,9 @@
         <activity
             android:name=".UI.Script.BlockDetailActivity"
             android:theme="@style/Theme.DarkTranslucent" />
-        <activity android:name=".UI.Script.SettingActivity"></activity>
+        <activity android:name=".UI.Script.SettingActivity"
+            android:screenOrientation="landscape">
+        </activity>
     </application>
 
 </manifest>
