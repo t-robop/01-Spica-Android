@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
 
@@ -79,20 +80,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.setOnBlockClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState) {
-                //スタートボタン時
-                if (pos == -1) {
-                    //todo スクリプト送信処理
-                    String sendData = mScriptPresenter.getSendableScripts();
-                    Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
-                } else if (pos == -2) {
-
-                } else {
+                if (0 <= pos) {
                     /**
                      * ブロック設定へ
                      */
                     mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
                     ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
-                    if(scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END) return;
+                    if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
+                        return;
                     inflateFragment(scriptModel);
                 }
             }
@@ -158,8 +153,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //todo スクリプト送信処理
                 String sendData = mScriptPresenter.getSendableScripts();
+                UdpSend udp = new UdpSend();
+                udp.UdpSendText(sendData);
                 Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
             }
         });
@@ -171,11 +167,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     then[0] = (Long) System.currentTimeMillis();
-                }
-                else if(event.getAction() == MotionEvent.ACTION_UP){
-                    if(((Long) System.currentTimeMillis() - then[0]) > 1200){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (((Long) System.currentTimeMillis() - then[0]) > 1200) {
                         Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                         startActivity(intent);
                         return true;
