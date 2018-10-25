@@ -2,6 +2,8 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,11 +16,14 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 import android.view.View;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
@@ -156,6 +161,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                objectSave();
                 String sendData = mScriptPresenter.getSendableScripts();
                 UdpSend udp = new UdpSend();
                 udp.UdpSendText(sendData);
@@ -304,5 +310,26 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     public void setPresenter(ScriptContract.Presenter presenter) {
         this.mScriptPresenter = presenter;
         this.mScriptPresenter.start();
+    }
+
+
+    private void objectSave() {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        // objectをjson文字列へ変換
+        String jsonInstanceString = gson.toJson(mScriptPresenter.getScripts());
+        // 変換後の文字列をputStringで保存
+        pref.edit().putString("dataSave", jsonInstanceString).apply();
+    }
+
+    private void objectLoad() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Gson gson = new Gson();
+        // 保存されているjson文字列を取得
+        String userSettingString = prefs.getString("dataSave", "");
+        // json文字列を 「UserSettingクラス」のインスタンスに変換
+        ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
+        }.getType());
+        mScriptPresenter.setScripts(mScripts);
     }
 }

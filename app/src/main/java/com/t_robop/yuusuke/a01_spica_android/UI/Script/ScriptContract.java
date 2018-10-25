@@ -49,6 +49,8 @@ public interface ScriptContract {
         void setTargetScript(ScriptModel script);
 
         ScriptModel getTargetScript();
+
+        void setScripts(ArrayList<ScriptModel> scripts);
     }
 }
 
