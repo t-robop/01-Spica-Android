@@ -22,7 +22,7 @@ public class ScriptModel extends BaseObservable {
     //シークバーの値 3段階(0~2)
     private int seekValue = 0;
     //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
-    private float value = 0;
+    private float value = 1;
     private boolean isInLoop=false;
 
     public ScriptModel() {

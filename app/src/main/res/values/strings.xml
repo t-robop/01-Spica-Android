@@ -54,6 +54,8 @@
 
     <string name="block_if_start_name">もしも</string>
     <string name="block_if_start_description">もしも</string>
+    <string name="block_if_start_bigger">cmより大きいとき</string>
+    <string name="block_if_start_smaller">cmより小さいとき</string>
 
     <string name="block_if_end_name">おわり</string>
 

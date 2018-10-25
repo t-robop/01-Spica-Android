@@ -78,7 +78,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@{String.valueOf(value) + `cmより大きいとき`}"
+
                         tools:text="@string/error_text" />
 
                 </LinearLayout>

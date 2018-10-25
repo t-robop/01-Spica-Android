@@ -1,5 +1,6 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
@@ -7,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+
+import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockFrontBinding;
@@ -178,6 +181,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
+    @SuppressLint("SetTextI18n")
     public void drawCommandBlock(int position, LinearLayout lane, ScriptModel script) {
         LayoutInflater layoutInflater = LayoutInflater.from(lane.getContext());
         switch (script.getBlock()) {
@@ -236,7 +240,11 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
-                bindingIfStart.setValue((int)Math.floor(script.getValue()));
+                if(script.getLeftSpeed(script.getSeekValue()) == 1){  //FIXME 通常のleftSpeedではなくifの比較演算子を見ているので、専用のgetterを定義して使う
+                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_bigger));
+                }else if(script.getLeftSpeed(script.getSeekValue()) == 2){
+                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_smaller));
+                }
                 bindingIfStart.setIfState(script.getIfState());
                 lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
                 break;

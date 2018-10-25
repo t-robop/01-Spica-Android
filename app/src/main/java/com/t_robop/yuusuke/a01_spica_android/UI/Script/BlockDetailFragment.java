@@ -71,9 +71,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
-        if (targetScript.getValue() != 0){
-            mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
-        }
+        mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
         mBinding.radiogroup.check(R.id.radiobutton_left);
     }
 
