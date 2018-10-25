@@ -1,15 +1,18 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
@@ -42,7 +45,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO キーボードが表示されているときは閉じる
+                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 
@@ -70,6 +74,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         //editText初期化 TODO 初期値が0.0になっている
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
         mBinding.radiogroup.check(R.id.radiobutton_left);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(this.getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
     private void popupAnime(View view) {
