@@ -59,17 +59,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          */
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos, int ifState) {
+            public void onClick(View view, int pos, int ifState, boolean isInLoop) {
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
-                ScriptModel scriptModel = new ScriptModel(pos, ifState);
+                ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
                 inflateFragment(scriptModel);
             }
         });
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos, int ifState) {
+            public void onClick(View view, int pos, int ifState, boolean isInLoop) {
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
-                ScriptModel scriptModel = new ScriptModel(pos, ifState);
+                ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
                 inflateFragment(scriptModel);
             }
         });
@@ -79,7 +79,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          */
         mScriptAdapter.setOnBlockClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos, int ifState) {
+            public void onClick(View view, int pos, int ifState, boolean isInLoop) {
                 if (0 <= pos) {
                     /**
                      * ブロック設定へ
@@ -94,7 +94,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         });
         mScriptAdapter.setOnBlockIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
-            public void onClick(View view, int pos, int ifState) {
+            public void onClick(View view, int pos, int ifState, boolean isInLoop) {
                 /**
                  * ブロック設定へ
                  */
@@ -252,9 +252,18 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         //引数を使ってUIに反映させる
         int ifIndex = -1;
         int laneIndex = 1;
+        boolean isInloop = false;
         for (int i = 0; i < scripts.size(); i++) {
             ScriptModel script = scripts.get(i);
             script.setPos(i);
+            script.setInLoop(isInloop);
+
+            if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+                isInloop = true;
+            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+                isInloop = false;
+            }
+
             if (script.getIfState() == 0) {
                 //通常
                 mScriptAdapter.addDefault(laneIndex, script);
