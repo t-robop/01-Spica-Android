@@ -216,7 +216,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     time[0] = (Long) System.currentTimeMillis();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (((Long) System.currentTimeMillis() - then[0]) > 1200) {
+                    if (((Long) System.currentTimeMillis() - time[0]) > 1200) {
                         objectLoad();
                         return true;
                     }
