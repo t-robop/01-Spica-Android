@@ -1,5 +1,6 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
@@ -137,32 +138,13 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         String sendStringData = "";
         for (ScriptModel script : mScripts) {
             String ifState = "0" + String.valueOf(script.getIfState());
-            String blockId = script.getId();
-            String RightSpeed = String.valueOf(script.getRightSpeed());
-            String LeftSpeed = String.valueOf(script.getLeftSpeed());
-            String value = String.valueOf(script.getValue());
-
-            if (RightSpeed.length() == 1) {
-                RightSpeed = "00" + RightSpeed;
-            } else if (RightSpeed.length() == 2) {
-                RightSpeed = "0" + RightSpeed;
-            }
-
-            if (LeftSpeed.length() == 1) {
-                LeftSpeed = "00" + LeftSpeed;
-            } else if (LeftSpeed.length() == 2) {
-                LeftSpeed = "0" + LeftSpeed;
-            }
-
-            if (value.length() == 1) {
-                value = "00" + value;
-            } else if (value.length() == 2) {
-                value = "0" + value;
-            }
+            @SuppressLint("DefaultLocale") String blockId = String.format("%02d", script.getBlock().getId());
+            @SuppressLint("DefaultLocale") String RightSpeed = String.format("%02d", script.getRightSpeed());
+            @SuppressLint("DefaultLocale") String LeftSpeed = String.format("%02d", script.getLeftSpeed());
+            @SuppressLint("DefaultLocale") String value = String.format("%02d", script.getValue());
 
             sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(RightSpeed) + String.valueOf(LeftSpeed) + String.valueOf(value);
         }
-        Log.d("test", sendStringData);
         return sendStringData;
     }
 
