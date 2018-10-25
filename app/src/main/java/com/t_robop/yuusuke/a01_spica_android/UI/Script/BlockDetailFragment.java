@@ -67,8 +67,10 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         drawScript(spicaBlock);
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getSeekValue());
-        //editText初期化 TODO 初期値が0.0になっている
-        mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
+        //editText初期化
+        if(targetScript.getValue() != 0){
+            mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
+        }
         mBinding.radiogroup.check(R.id.radiobutton_left);
     }
 
