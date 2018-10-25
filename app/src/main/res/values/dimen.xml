@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="block_width">220dp</dimen>
+    <dimen name="block_height">200dp</dimen>
+
+    <dimen name="block_height_x2">400dp</dimen>
+
+    <dimen name="conductor_scaele">36dp</dimen>
+    <dimen name="conductor_text_size">24sp</dimen>
+</resources>
