@@ -203,6 +203,27 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 return false;
             }
         });
+
+
+        /**
+         * fabが1.2秒以上長押しされた時に復元する
+         */
+        FloatingActionButton restoreFab = findViewById(R.id.restore_fab);
+        final long[] time = {0};
+        restoreFab.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    time[0] = (Long) System.currentTimeMillis();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (((Long) System.currentTimeMillis() - then[0]) > 1200) {
+                        objectLoad();
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
     }
 
     /**
@@ -336,7 +357,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         pref.edit().putString("dataSave", jsonInstanceString).apply();
     }
 
-    private void objectLoad() {
+    public void objectLoad() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         // 保存されているjson文字列を取得

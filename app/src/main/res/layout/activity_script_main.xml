@@ -47,6 +47,16 @@
             android:layout_marginRight="16dp"
             android:src="@drawable/ic_block_start"
             app:backgroundTint="@color/FABBGColor" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/restore_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="16dp"
+            android:background="#00000000"
+            app:backgroundTint="#00000000" />
     </FrameLayout>
 
 
