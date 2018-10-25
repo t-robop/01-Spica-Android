@@ -189,6 +189,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 return false;
             }
         });
+
+
+        FloatingActionButton restoreFab = findViewById(R.id.restore_fab);
+        restoreFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                objectLoad();
+            }
+        });
     }
 
     /**
@@ -322,7 +331,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         pref.edit().putString("dataSave", jsonInstanceString).apply();
     }
 
-    private void objectLoad() {
+    public void objectLoad() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
         // 保存されているjson文字列を取得
