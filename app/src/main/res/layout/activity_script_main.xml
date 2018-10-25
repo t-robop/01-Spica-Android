@@ -7,20 +7,22 @@
     <FrameLayout
         android:id="@+id/conductor_fragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/default_background_color">
 
 
         <android.support.constraint.ConstraintLayout
-          android:layout_width="match_parent"
+            android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycler_script"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/default_background_color"
                 android:clipToPadding="false"
                 android:paddingLeft="150dp"
-               android:scrollbars="none"
+                android:scrollbars="none"
                 app:layout_constraintBottom_toTopOf="@id/recycler_block_list"
                 app:layout_constraintTop_toTopOf="parent" />
 
