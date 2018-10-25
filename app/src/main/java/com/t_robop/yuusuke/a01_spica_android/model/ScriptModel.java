@@ -9,7 +9,6 @@ public class ScriptModel extends BaseObservable {
     private int pos;
     //if
     private int ifState = 0;  //1: trueのブロック 2:falseのブロック
-    private int ifComparisonOperator = 1;  //1: センサー値より大きい 2:センサー値より小さい
     //ブロック
     private SpicaBlock block;
     //右パワー  //FIXME 百分率で渡すのか、直接値を渡すか
