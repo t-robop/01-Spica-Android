@@ -45,7 +45,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO キーボードが表示されているときは閉じる
                 InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
