@@ -6,6 +6,8 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.*;
+
 public class ScriptPresenter implements ScriptContract.Presenter {
 
     private ScriptContract.ScriptView mScriptView;
@@ -76,9 +78,9 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     private boolean isInLoop(int beforeIndex) {
         if (beforeIndex == -1) {
             return false;
-        } else if (mScripts.get(beforeIndex).getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+        } else if (mScripts.get(beforeIndex).getBlock() == FOR_END) {
             return false;
-        } else if (mScripts.get(beforeIndex).getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+        } else if (mScripts.get(beforeIndex).getBlock() == FOR_START) {
             return true;
         } else if (mScripts.get(beforeIndex).isInLoop()) {
             return true;
@@ -101,18 +103,18 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void insertScript(ScriptModel script, int beforeIndex) {
         if (beforeIndex == mScripts.size() - 1) {
             addScript(script);
-            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
-                addScript(createEmptyBlock(ScriptModel.SpicaBlock.IF_END, script.getIfState()));
-            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
-                addScript(createEmptyBlock(ScriptModel.SpicaBlock.FOR_END, script.getIfState()));
+            if (script.getBlock() == IF_START) {
+                addScript(createEmptyBlock(IF_END, script.getIfState()));
+            } else if (script.getBlock() == FOR_START) {
+                addScript(createEmptyBlock(FOR_END, script.getIfState()));
             }
         } else if (beforeIndex < mScripts.size() - 1) {
             insert(script, beforeIndex);
-            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
-                insert(createEmptyBlock(ScriptModel.SpicaBlock.IF_END, script.getIfState()),
+            if (script.getBlock() == IF_START) {
+                insert(createEmptyBlock(IF_END, script.getIfState()),
                         beforeIndex + 1);
-            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
-                insert(createEmptyBlock(ScriptModel.SpicaBlock.FOR_END, script.getIfState()),
+            } else if (script.getBlock() == FOR_START) {
+                insert(createEmptyBlock(FOR_END, script.getIfState()),
                         beforeIndex + 1);
             }
         }
@@ -123,16 +125,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     public void removeScript(int index) {
         ScriptModel script = mScripts.get(index);
         int size = mScripts.size();
-        if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+        if (script.getBlock() == IF_START) {
             for (int i = index; i < size; i++) {
-                if (mScripts.get(index).getBlock() == ScriptModel.SpicaBlock.IF_END) {
+                if (mScripts.get(index).getBlock() == IF_END) {
                     break;
                 }
                 mScripts.remove(index);
             }
-        } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+        } else if (script.getBlock() == FOR_START) {
             for (int i = index; i < size; i++) {
-                if (mScripts.get(index).getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+                if (mScripts.get(index).getBlock() == FOR_END) {
                     break;
                 }
                 mScripts.remove(index);
@@ -156,17 +158,33 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      * スクリプト一覧を送信可能データにするメソッド
      */
+    @SuppressLint("DefaultLocale")
     @Override
     public String getSendableScripts() {
         String sendStringData = "";
         for (ScriptModel script : mScripts) {
+            //FIXME ここでブロックの種類で送信コマンドを整形するのよくない気がする getterの拡張
             String ifState = "0" + String.valueOf(script.getIfState());
-            @SuppressLint("DefaultLocale") String blockId = String.format("%02d", script.getBlock().getId());
-            @SuppressLint("DefaultLocale") String RightSpeed = String.format("%03d", script.getRightSpeed(script.getSeekValue()));
-            @SuppressLint("DefaultLocale") String LeftSpeed = String.format("%03d", script.getLeftSpeed(script.getSeekValue()));
-            @SuppressLint("DefaultLocale") String value = String.format("%03d", (int)Math.round(script.getValue() * 10.0));
+            String blockId = String.format("%02d", script.getBlock().getId());
 
-            sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(RightSpeed) + String.valueOf(LeftSpeed) + String.valueOf(value);
+            String leftSpeed = String.format("%03d", script.getLeftSpeed());
+            if(script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
+                leftSpeed = String.format("%03d", 0);
+            }
+
+            String rightSpeed = String.format("%03d", script.getRightSpeed());
+            if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
+                rightSpeed = String.format("%03d", 0);
+            }
+
+            String value = String.format("%03d", (int)Math.round(script.getValue() * 10.0));
+            if (script.getBlock() == IF_START || script.getBlock() == FOR_START){
+                value = String.format("%03d", (int)Math.round(script.getValue()));
+            }else if(script.getBlock() == IF_END || script.getBlock() == FOR_END){
+                value = String.format("%03d", 0);
+            }
+
+            sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(leftSpeed) + String.valueOf(rightSpeed) + String.valueOf(value);
         }
         return sendStringData;
     }

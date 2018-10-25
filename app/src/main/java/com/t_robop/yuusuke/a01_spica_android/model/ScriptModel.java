@@ -11,18 +11,12 @@ public class ScriptModel extends BaseObservable {
     private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //右パワー  //FIXME 百分率で渡すのか、直接値を渡すか
-    private int rightSlowSpeed = 50;
-    private int rightStandardSpeed = 100;
-    private int rightFastSpeed = 150;
-    //左パワー  //FIXME 百分率で渡すのか、直接値を渡すか
-    private int leftSlowSpeed = 50;
-    private int leftStandardSpeed = 100;
-    private int leftFastSpeed = 150;
-    //シークバーの値 3段階(0~2)
-    private int seekValue = 0;
-    //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
-    private float value = 0;
+    //右パワー
+    private int rightSpeed = 100;
+    //左パワー
+    private int leftSpeed = 100;
+    //ブロック毎の値
+    private float value = 1;
     private boolean isInLoop=false;
 
     public ScriptModel() {
@@ -73,63 +67,40 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
-    public int getRightSpeed(int seekValue) {
-        switch (seekValue){
-            case 0:  //シークバー 小
-                return rightSlowSpeed;
-            case 1:  //シークバー 中
-                return rightStandardSpeed;
-            case 2:  //シークバー 大
-                return rightFastSpeed;
-        }
-
-        return rightStandardSpeed;
+    @Bindable
+    public int getRightSpeed() {
+        return this.rightSpeed;
     }
 
-    public void setRightSlowSpeed(int rightSlowSpeed) {
-        this.rightSlowSpeed = rightSlowSpeed;
-    }
-
-    public void setRightStandardSpeed(int rightStandardSpeed) {
-        this.rightStandardSpeed = rightStandardSpeed;
-    }
-
-    public void setRightFastSpeed(int rightFastSpeed) {
-        this.rightFastSpeed = rightFastSpeed;
-    }
-
-    public int getLeftSpeed(int seekValue) {
-        switch (seekValue){
-            case 0:  //シークバー 小
-                return leftSlowSpeed;
-            case 1:  //シークバー 中
-                return leftStandardSpeed;
-            case 2:  //シークバー 大
-                return leftFastSpeed;
-        }
-
-        return leftStandardSpeed;
-    }
-
-    public void setLeftSlowSpeed(int leftSlowSpeed) {
-        this.leftSlowSpeed = leftSlowSpeed;
-    }
-
-    public void setLeftStandardSpeed(int leftStandardSpeed) {
-        this.leftStandardSpeed = leftStandardSpeed;
-    }
-
-    public void setLeftFastSpeed(int leftFastSpeed) {
-        this.leftFastSpeed = leftFastSpeed;
+    public void setRightSpeed(int rightSpeed) {
+        this.rightSpeed = rightSpeed;
     }
 
     @Bindable
-    public int getSeekValue() {
-        return this.seekValue;
+    public int getLeftSpeed() {
+        return this.leftSpeed;
     }
 
-    public void setSeekValue(int value) {
-        this.seekValue = value;
+    public void setLeftSpeed(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
+    }
+
+    @Bindable
+    public int getSeekValue() {  //シークバーの3段階(0~2)の取得
+        return this.leftSpeed;
+    }
+
+    public void setSeekValue(int leftSpeed) {  //シークバーの3段階(0~2)のセット
+        this.leftSpeed = leftSpeed;
+    }
+
+    @Bindable
+    public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
+        return this.leftSpeed;
+    }
+
+    public void setIfOperator(int leftSpeed) {
+        this.leftSpeed = leftSpeed;
     }
 
     public Float getValue() {
@@ -146,6 +117,14 @@ public class ScriptModel extends BaseObservable {
     }
     public void setInLoop(boolean isInLoop){
         this.isInLoop=isInLoop;
+    }
+
+    public int getIfUpperNum() {
+        return 1;  //センサー値より大きい を表す
+    }
+
+    public int getIfLowerNum() {
+        return 2;  //センサー値より小さい を表す
     }
 
     public enum SpicaBlock {
