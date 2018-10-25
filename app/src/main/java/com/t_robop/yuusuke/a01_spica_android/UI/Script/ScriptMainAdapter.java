@@ -396,7 +396,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
 
     public void clickConductor(View view, int position, int ifState) {
         ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
-        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
+        ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
         if (ifState == 1) {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
             if (scriptSpecial != null) {
@@ -418,7 +418,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
 
     public void clickBlock(View view, int position, int ifState) {
         ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
-        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
+        ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
         if (ifState == 1) {
             clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
         } else {
