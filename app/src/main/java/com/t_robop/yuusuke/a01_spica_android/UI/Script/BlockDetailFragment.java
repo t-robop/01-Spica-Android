@@ -164,6 +164,7 @@ public class BlockDetailFragment extends Fragment implements ScriptContract.Deta
      */
     public void confirm() {
         ScriptModel script = mScriptPresenter.getTargetScript();
+        script.setBlock(spicaBlock);
         script.setValue(mBinding.seekValue.getProgress());
         //スイッチをoffに
         mBinding.switchDetail.setChecked(false);
