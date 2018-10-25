@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
@@ -39,11 +40,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
 
+    private UdpReceive udpReceive;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_script_main);
+        udpReceive = new UdpReceive(this);
 
         mScriptRecyclerView = findViewById(R.id.recycler_script);
         mScriptRecyclerView.setHasFixedSize(true);
@@ -52,6 +56,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
+
+
 
         /**
          * Presenterの初期化
@@ -162,6 +168,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             @Override
             public void onClick(View v) {
                 objectSave();
+                udpReceive.UdpReceiveStandby();
                 String sendData = mScriptPresenter.getSendableScripts();
                 UdpSend udp = new UdpSend();
                 udp.UdpSendText(sendData);
