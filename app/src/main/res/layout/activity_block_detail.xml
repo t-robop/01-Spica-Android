@@ -66,26 +66,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
-                        android:text="ススム"
+                        android:text="@string/error_text"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                     <TextView
                         android:id="@+id/block_des_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
-                        android:text="ススム"
+                        android:layout_weight="5"
+                        android:text="@string/error_text"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                     <EditText
                         android:id="@+id/edit_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
+                        android:layout_weight="5"
                         android:inputType="number|numberDecimal"
-                        android:maxLength="3"
+                        android:maxLength="4"
                         android:maxLines="1"
-                        android:hint="@string/detail_block_edit_hint"
+                        android:hint="@string/dialog_time"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toEndOf="parent"
@@ -100,8 +102,9 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="逆回転"
+                            android:text="@string/error_text"
                             android:textAppearance="@style/TextAppearance.block_des_b"
+                            android:textColor="@color/default_text_color"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintLeft_toLeftOf="parent"
                             app:layout_constraintRight_toLeftOf="@+id/switch_detail"
@@ -142,9 +145,9 @@
                     android:layout_weight="1"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.delete()}"
-                    android:text="削除"
+                    android:text="@string/button_delete"
                     android:textAppearance="@style/TextAppearance.block_title_b"
-                    android:textColor="#dd2222"
+                    android:textColor="@color/delete_button_color"
                     android:visibility="invisible" />
 
                 <Button
@@ -155,7 +158,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.close()}"
-                    android:text="キャンセル"
+                    android:text="@string/button_cancel"
+                    android:textColor="@color/default_text_color"
                     android:textAppearance="@style/TextAppearance.block_title_b" />
 
 
@@ -167,7 +171,8 @@
                     android:layout_weight="1"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.confirm()}"
-                    android:text="決定"
+                    android:text="@string/button_ok"
+                    android:textColor="@color/default_text_color"
                     android:textAppearance="@style/TextAppearance.block_title_b" />
 
             </LinearLayout>

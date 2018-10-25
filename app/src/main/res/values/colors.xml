@@ -15,6 +15,11 @@
     <color name="colorStartBlock">#ffffff</color>
     <color name="colorEndBlock">#ffffff</color>
 
+    <color name="default_text_color">#000000</color>
+
     <!--FAB -->
     <color name="FABBGColor">#FF4081</color>
+
+    <!--blockDetail-->
+    <color name="delete_button_color">#dd2222</color>
 </resources>

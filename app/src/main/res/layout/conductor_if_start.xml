@@ -91,7 +91,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="+"
+                    android:textColor="@color/default_text_color"
+                    android:text="@string/plus"
                     android:textAppearance="@style/TextAppearance.block_title_b" />
 
             </LinearLayout>
