@@ -185,7 +185,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case BACK:
             case LEFT:
             case RIGHT:
-                script.setValue(getExecTime());
+                script.setValue(getInputText());
                 break;
 
             case IF_START:
@@ -236,19 +236,10 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         }
     }
 
-    private float getExecTime(){
+    private float getInputText(){
         String editValueText = mBinding.editValue.getText().toString();
+        if(editValueText.isEmpty()) editValueText = "0";
         return Float.valueOf(editValueText);
-    }
-
-    private int getSensorJudgeValue(){
-        String editValueText = mBinding.editValue.getText().toString();
-        return Integer.valueOf(editValueText);
-    }
-
-    private int getLoopCount(){
-        String editValueText = mBinding.editValue.getText().toString();
-        return Integer.valueOf(editValueText);
     }
 
 }

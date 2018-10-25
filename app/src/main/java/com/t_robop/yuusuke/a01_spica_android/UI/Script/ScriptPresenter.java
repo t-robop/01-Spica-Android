@@ -140,7 +140,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             @SuppressLint("DefaultLocale") String blockId = String.format("%02d", script.getBlock().getId());
             @SuppressLint("DefaultLocale") String RightSpeed = String.format("%03d", script.getRightSpeed(script.getSeekValue()));
             @SuppressLint("DefaultLocale") String LeftSpeed = String.format("%03d", script.getLeftSpeed(script.getSeekValue()));
-            @SuppressLint("DefaultLocale") String value = String.format("%03d", script.getSeekValue());
+            @SuppressLint("DefaultLocale") String value = String.format("%03d", (int)Math.round(script.getValue() * 10.0));
 
             sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(RightSpeed) + String.valueOf(LeftSpeed) + String.valueOf(value);
         }
