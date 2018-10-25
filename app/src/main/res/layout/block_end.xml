@@ -56,6 +56,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
+                        android:textColor="@color/default_text_color"
                         android:text="@string/block_end_name" />
 
                     <TextView
@@ -64,7 +65,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="0.5s" />
+                        android:textColor="@color/default_text_color"
+                        android:text="" />
 
                 </LinearLayout>
 

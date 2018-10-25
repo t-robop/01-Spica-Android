@@ -47,7 +47,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="ススム"
+                        android:text="@string/block_front_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
@@ -71,7 +72,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="マガル"
+                        android:text="@string/block_right_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
@@ -95,7 +97,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="サガル"
+                        android:text="@string/block_back_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
@@ -127,7 +130,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="モシモ"
+                        android:text="@string/block_if_start_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
@@ -151,7 +155,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="ループ"
+                        android:text="@string/block_for_start_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>
@@ -175,7 +180,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="ヌケル"
+                        android:text="@string/block_break_name"
+                        android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 
                 </LinearLayout>

@@ -36,42 +36,48 @@
 
     <string name="app_name">Spica</string>
 
-    <!--BlockName-->
-    <string name="block_front_name">まえ</string>
-    <string name="block_back_name">うしろ</string>
-    <string name="block_left_name">ひだり</string>
-    <string name="block_right_name">みぎ</string>
+    <!--Blockの情報-->
+    <string name="block_front_name">すすむ</string>
+    <string name="block_front_description">まえにすすむ</string>
+
+    <string name="block_back_name">さがる</string>
+    <string name="block_back_description">うしろにさがる</string>
+
+    <string name="block_left_name">ひだりにまわる</string>
+    <string name="block_left_description">ひだりにまわる</string>
+
+    <string name="block_right_name">みぎにまわる</string>
+    <string name="block_right_description">みぎにまわる</string>
+
     <string name="block_if_start_name">もしも</string>
+    <string name="block_if_start_description">もしも</string>
+
     <string name="block_if_end_name">おわり</string>
-    <string name="block_for_start_name">くりかえし</string>
-    <string name="block_for_end_name">k_おわり</string>
+
+    <string name="block_for_start_name">ループ</string>
+    <string name="block_for_start_description">ループ</string>
+    <string name="block_for_end_name">ループ_おわり</string>
+
     <string name="block_start_name">スタート</string>
     <string name="block_end_name">エンド</string>
-    <string name="block_break_name">ブレーク</string>
 
-    <!-- BlockDetailFragment -->
-    <!-- 前進 -->
-    <string name="detail_block_front_title">すすむ</string>
-    <string name="detail_block_front_description">まえにすすむ</string>
-    <!-- 後退 -->
-    <string name="detail_block_back_title">さがる</string>
-    <string name="detail_block_back_description">うしろにさがる</string>
-    <!-- 左回転 -->
-    <string name="detail_block_left_title">ひだりにまわる</string>
-    <string name="detail_block_left_description">ひだりにまわる</string>
-    <!-- 右回転 -->
-    <string name="detail_block_right_title">みぎにまわる</string>
-    <string name="detail_block_right_description">みぎにまわる</string>
-    <!-- ifスタート -->
-    <string name="detail_if_start_title">もしも</string>
-    <string name="detail_if_start_description">もしも</string>
-    <!-- ifエンド -->
-    <!-- ループ -->
-    <string name="detail_loop_title">ループ</string>
-    <string name="detail_loop_description">ループ</string>
-    <!-- break -->
-    <string name="detail_break_title">ぬける</string>
-    <string name="detail_break_description">ぬける</string>
+    <string name="block_break_name">ぬける</string>
+    <string name="block_break_description">ぬける</string>
 
+
+    <!--button-->
+    <string name="button_ok">保存</string>
+    <string name="button_cancel">キャンセル</string>
+    <string name="button_delete">削除</string>
+
+    <!-- Error系 -->
+    <string name="error_text">何らかのError</string>
+
+    <!--config系-->
+    <string name="port_text">port番号</string>
+    <string name="ip_text">ipアドレス</string>
+
+
+    <string name="plus">+</string>
 
 </resources>
