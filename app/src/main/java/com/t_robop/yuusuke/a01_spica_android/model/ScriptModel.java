@@ -23,6 +23,7 @@ public class ScriptModel extends BaseObservable {
     private int seekValue = 0;
     //ブロック毎の値 (基本ブロックなら実行時間 ifブロックならセンサーを判断する距離 forブロックならループ回数)
     private float value = 0;
+    private boolean isInLoop=false;
 
     public ScriptModel() {
     }
@@ -31,9 +32,10 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
-    public ScriptModel(int pos, int ifState) {
+    public ScriptModel(int pos, int ifState,boolean isInLoop) {
         this.pos = pos;
         this.ifState = ifState;
+        this.isInLoop=isInLoop;
     }
 
     @Bindable
@@ -138,6 +140,14 @@ public class ScriptModel extends BaseObservable {
         this.value = value;
     }
 
+    @Bindable
+    public boolean isInLoop(){
+        return this.isInLoop;
+    }
+    public void setInLoop(boolean isInLoop){
+        this.isInLoop=isInLoop;
+    }
+
     public enum SpicaBlock {
         FRONT(1),
         BACK(2),
@@ -152,6 +162,7 @@ public class ScriptModel extends BaseObservable {
         END(11);
 
         private final int id;
+
         SpicaBlock(final int id) {
             this.id = id;
         }

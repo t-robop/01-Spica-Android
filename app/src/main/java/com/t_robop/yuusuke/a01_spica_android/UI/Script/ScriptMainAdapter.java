@@ -274,24 +274,37 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         }
     }
 
+    private boolean isInLoop(ScriptModel script) {
+        if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+            return false;
+        } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+            return true;
+        } else if (script.isInLoop()) {
+            return true;
+        } else if (!script.isInLoop()) {
+            return false;
+        }
+        return false;
+    }
+
     public void clickConductor(View view, int position, int ifState) {
         ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
         ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
         if (ifState == 1) {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
             if (scriptSpecial != null) {
-                clickConductorIf.onClick(view, scriptSpecial.getPos(), 1);
+                clickConductorIf.onClick(view, scriptSpecial.getPos(), 1, isInLoop(scriptSpecial));
             } else {
                 //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
-                clickConductorIf.onClick(view, scriptDefault.getPos(), 1);
+                clickConductorIf.onClick(view, scriptDefault.getPos(), 1, isInLoop(scriptDefault));
             }
         } else {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
             if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
                 //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
-                clickConductor.onClick(view, getTrueEndIndex(position), 2);
+                clickConductor.onClick(view, getTrueEndIndex(position), 2, isInLoop(scriptDefault));
             } else {
-                clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+                clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState(), isInLoop(scriptDefault));
             }
         }
     }
@@ -300,14 +313,14 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
         ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
         if (ifState == 1) {
-            clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState());
+            clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState(), scriptSpecial.isInLoop());
         } else {
             if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
-                clickBlock.onClick(view, -1, 0);
+                clickBlock.onClick(view, -1, 0, scriptDefault.isInLoop());
             } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
-                clickBlock.onClick(view, -2, 0);
+                clickBlock.onClick(view, -2, 0, scriptDefault.isInLoop());
             } else {
-                clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState());
+                clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState(), scriptDefault.isInLoop());
             }
         }
     }
@@ -323,7 +336,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     public interface onItemClickListener {
-        void onClick(View view, int pos, int ifState);
+        void onClick(View view, int pos, int ifState, boolean isInLoop);
     }
 
     public interface onItemLongClickListener {

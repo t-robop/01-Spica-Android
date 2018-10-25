@@ -49,7 +49,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      * 指定したindexの次にスクリプトを挿入するメソッド
      */
-    public void insert(ScriptModel script, int beforeIndex) {
+    private void insert(ScriptModel script, int beforeIndex) {
         mScripts.add(mScripts.get(mScripts.size() - 1));
         for (int i = mScripts.size() - 2; i > beforeIndex; i--) {
             if (i - 1 < 0) {
@@ -64,10 +64,28 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      *
      */
-    public ScriptModel createEmptyBlock(ScriptModel.SpicaBlock spicaBlock, int ifState) {
+    private ScriptModel createEmptyBlock(ScriptModel.SpicaBlock spicaBlock, int ifState) {
         ScriptModel scriptOther = new ScriptModel(spicaBlock);
         scriptOther.setIfState(ifState);
         return scriptOther;
+    }
+
+    /**
+     * indexから、それがfor文内か判別するメソッド
+     */
+    private boolean isInLoop(int beforeIndex) {
+        if (beforeIndex == -1) {
+            return false;
+        } else if (mScripts.get(beforeIndex).getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+            return false;
+        } else if (mScripts.get(beforeIndex).getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+            return true;
+        } else if (mScripts.get(beforeIndex).isInLoop()) {
+            return true;
+        } else if (!mScripts.get(beforeIndex).isInLoop()) {
+            return false;
+        }
+        return false;
     }
 
     @Override

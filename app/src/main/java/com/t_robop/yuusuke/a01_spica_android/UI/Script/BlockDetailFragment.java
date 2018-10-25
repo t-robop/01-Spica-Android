@@ -66,6 +66,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         drawScript(spicaBlock);
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getSeekValue());
+        mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
     }
 
     private void popupAnime(View view) {
