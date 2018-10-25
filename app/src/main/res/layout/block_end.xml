@@ -17,12 +17,12 @@
     </data>
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="140dp">
+        android:layout_width="@dimen/block_width"
+        android:layout_height="@dimen/block_height">
 
         <LinearLayout
-            android:layout_width="150dp"
-            android:layout_height="140dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
 
@@ -46,27 +46,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="5"
+                    android:layout_weight="8"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="@string/block_end_name" />
-
-                    <TextView
-                        android:id="@+id/id_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="" />
+                        android:text="@string/block_end_name"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
