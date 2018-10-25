@@ -196,12 +196,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         script.setBlock(spicaBlock);
         script.setSeekValue(mBinding.seekValue.getProgress());
         script.setValue(getInputText());
-        if (spicaBlock == ScriptModel.SpicaBlock.IF_START) {
+        if (spicaBlock == ScriptModel.SpicaBlock.IF_START) {  //ifスタートブロックの条件指定idの設定
             int checkId = mBinding.radiogroup.getCheckedRadioButtonId();
             if (checkId == R.id.radiobutton_left) {
-                script.setLeftStandardSpeed(1);
+                script.setLeftStandardSpeed(1);  //trueなら0001
             } else {
-                script.setLeftStandardSpeed(2);
+                script.setLeftStandardSpeed(2);  //falseなら0002
             }
         }
         listener.onClickAdd(script);
@@ -223,13 +223,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 spicaBlock = ScriptModel.SpicaBlock.LEFT;
             } else if (checkedId == R.id.radiobutton_right) {
                 spicaBlock = ScriptModel.SpicaBlock.RIGHT;
-            }
-            drawScript(spicaBlock);
-        }else if(spicaBlock == ScriptModel.SpicaBlock.FOR_START){
-            if (checkedId == R.id.radiobutton_left) {
-                //TODO センサー値より大きいときの処理
-            } else if (checkedId == R.id.radiobutton_right) {
-                //TODO センサー値より小さいときの処理
             }
             drawScript(spicaBlock);
         }
