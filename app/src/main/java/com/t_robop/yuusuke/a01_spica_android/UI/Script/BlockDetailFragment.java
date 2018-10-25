@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
+import android.widget.RadioGroup;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
@@ -56,7 +57,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         //presenterで保持してるTargetScriptを取得
         ScriptModel targetScript = mScriptPresenter.getTargetScript();
@@ -68,6 +69,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化 TODO 初期値が0.0になっている
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
+
+        if (spicaBlock == ScriptModel.SpicaBlock.FOR_START) {
+            mBinding.radiobuttonLeft.setText("以上");
+            mBinding.radiobuttonRight.setText("以下");
+        }
     }
 
     private void popupAnime(View view) {
@@ -142,7 +148,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 break;
         }
 
-        if (blockId == ScriptModel.SpicaBlock.RIGHT || blockId == ScriptModel.SpicaBlock.LEFT) {
+        if (blockId == ScriptModel.SpicaBlock.RIGHT ||
+                blockId == ScriptModel.SpicaBlock.LEFT ||
+                blockId == ScriptModel.SpicaBlock.FOR_START) {
             mBinding.switchContainerDetail.setVisibility(View.VISIBLE);
         } else {
             mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
@@ -174,9 +182,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
      * fragmentとじる
      */
     public void close() {
-        //スイッチをoffに
-        mBinding.switchDetail.setChecked(false);
-        mBinding.seekValue.setProgress(0);
         //TODO ソフトウェアキーボードが開いてたら閉じる
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
     }
@@ -189,10 +194,14 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         script.setBlock(spicaBlock);
         script.setSeekValue(mBinding.seekValue.getProgress());
         script.setValue(getInputText());
-
-        //スイッチをoffに
-        mBinding.switchDetail.setChecked(false);
-        mBinding.seekValue.setProgress(0);
+        if (spicaBlock == ScriptModel.SpicaBlock.IF_START) {
+            int checkId = mBinding.radiogroup.getCheckedRadioButtonId();
+            if (checkId == R.id.radiobutton_left) {
+                script.setLeftStandardSpeed(1);
+            } else {
+                script.setLeftStandardSpeed(2);
+            }
+        }
         listener.onClickAdd(script);
     }
 
@@ -206,34 +215,30 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     /**
      * 回転の逆回転スイッチの処理
      */
-    public void onCheckedChanged() {
-        boolean b = mBinding.switchDetail.isChecked();
-        ScriptModel.SpicaBlock defaultBlock = mScriptPresenter.getTargetScript().getBlock();
-        if (b) {
-            if (defaultBlock == ScriptModel.SpicaBlock.LEFT) {
-                spicaBlock = ScriptModel.SpicaBlock.RIGHT;
-            } else {
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if (spicaBlock != ScriptModel.SpicaBlock.FOR_START) {
+            if (checkedId == R.id.radiobutton_left) {
                 spicaBlock = ScriptModel.SpicaBlock.LEFT;
+            } else if (checkedId == R.id.radiobutton_right) {
+                spicaBlock = ScriptModel.SpicaBlock.RIGHT;
             }
-        } else {
-            spicaBlock = defaultBlock;
+            drawScript(spicaBlock);
         }
-        drawScript(spicaBlock);
     }
 
-    private void setSeekValue(ScriptModel.SpicaBlock blockId, int seekValue){
-        if ((blockId == ScriptModel.SpicaBlock.FRONT || blockId == ScriptModel.SpicaBlock.BACK || blockId == ScriptModel.SpicaBlock.LEFT || blockId == ScriptModel.SpicaBlock.RIGHT)){
+    private void setSeekValue(ScriptModel.SpicaBlock blockId, int seekValue) {
+        if ((blockId == ScriptModel.SpicaBlock.FRONT || blockId == ScriptModel.SpicaBlock.BACK || blockId == ScriptModel.SpicaBlock.LEFT || blockId == ScriptModel.SpicaBlock.RIGHT)) {
             mBinding.seekValue.setMax(2);
             mBinding.seekValue.setVisibility(View.VISIBLE);
             mBinding.seekValue.setProgress(seekValue);
-        }else{
+        } else {
             mBinding.seekValue.setVisibility(View.INVISIBLE);
         }
     }
 
-    private float getInputText(){
+    private float getInputText() {
         String editValueText = mBinding.editValue.getText().toString();
-        if(editValueText.isEmpty()) editValueText = "0";
+        if (editValueText.isEmpty()) editValueText = "0";
         return Float.valueOf(editValueText);
     }
 
