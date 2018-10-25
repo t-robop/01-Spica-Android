@@ -12,9 +12,7 @@ public class ScriptModel extends BaseObservable {
     //ブロック
     private SpicaBlock block;
     //右パワー
-    private int rightSpeed = 100;
-    //左パワー
-    private int leftSpeed = 100;
+    private int speed = 0;
     //ブロック毎の値
     private float value = 1;
     private boolean isInLoop=false;
@@ -68,39 +66,30 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getRightSpeed() {
-        return this.rightSpeed;
+    public int getSpeed() {
+        return this.speed;
     }
 
-    public void setRightSpeed(int rightSpeed) {
-        this.rightSpeed = rightSpeed;
-    }
-
-    @Bindable
-    public int getLeftSpeed() {
-        return this.leftSpeed;
-    }
-
-    public void setLeftSpeed(int leftSpeed) {
-        this.leftSpeed = leftSpeed;
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 
     @Bindable
     public int getSeekValue() {  //シークバーの3段階(0~2)の取得
-        return this.leftSpeed;
+        return this.speed;
     }
 
-    public void setSeekValue(int leftSpeed) {  //シークバーの3段階(0~2)のセット
-        this.leftSpeed = leftSpeed;
+    public void setSeekValue(int speed) {  //シークバーの3段階(0~2)のセット
+        this.speed = speed;
     }
 
     @Bindable
     public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
-        return this.leftSpeed;
+        return this.speed;
     }
 
-    public void setIfOperator(int leftSpeed) {
-        this.leftSpeed = leftSpeed;
+    public void setIfOperator(int speed) {
+        this.speed = speed;
     }
 
     public Float getValue() {
