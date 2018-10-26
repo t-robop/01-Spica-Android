@@ -88,4 +88,6 @@
     <string name="receive_dialog_button_text">キャンセルする</string>
     <string name="esp_reboot_command">reboot-now</string>
 
+    <string name="text_true">Yes</string>
+    <string name="text_false">No</string>
 </resources>
