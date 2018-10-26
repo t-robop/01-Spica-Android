@@ -75,12 +75,12 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getSeekValue() {  //シークバーの3段階(0~2)の取得
-        return this.speed;
+    public int getSeekValue() {  //シークバーの3段階(1~3)のセット アプリ上では0~2を使いたいので-1してる
+        return this.speed - 1;
     }
 
-    public void setSeekValue(int speed) {  //シークバーの3段階(0~2)のセット
-        this.speed = speed;
+    public void setSeekValue(int speed) {  //シークバーの3段階(1~3)のセット 送信コマンド上では0を使いたくないので+1してる
+        this.speed = speed + 1;
     }
 
     @Bindable
