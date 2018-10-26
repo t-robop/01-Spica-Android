@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
 
@@ -48,7 +49,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_script_main);
-      
+
         hideNavigationBar();
         udpReceive = new UdpReceive(this);
 
@@ -59,7 +60,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
-
 
 
         /**
@@ -206,13 +206,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
 
         /**
-         * fabが1.2秒以上長押しされた時に復元する
+         * 透明ボタンが押されたときの処理
          */
-        FloatingActionButton restoreFab = findViewById(R.id.restore_fab);
-        restoreFab.setOnClickListener(new View.OnClickListener() {
+        Button restoreButton = findViewById(R.id.restore_btn);
+        restoreButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 objectLoad();
+                return false;
             }
         });
     }
@@ -351,14 +352,20 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     public void objectLoad() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
-        // 保存されているjson文字列を取得
-        String userSettingString = prefs.getString("dataSave", "");
-        // json文字列を 「UserSettingクラス」のインスタンスに変換
-        ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
-        }.getType());
-        mScriptPresenter.setScripts(mScripts);
+        try {
+            // 保存されているjson文字列を取得
+            String userSettingString = prefs.getString("dataSave", "");
+            // json文字列を 「UserSettingクラス」のインスタンスに変換
+            ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
+            }.getType());
+            mScriptPresenter.setScripts(mScripts);
+        } catch (Exception e) {
+            Toast.makeText(this, "データがありません", Toast.LENGTH_SHORT).show();
+        }
+
     }
-    private void hideNavigationBar(){
+
+    private void hideNavigationBar() {
         View sysView = getWindow().getDecorView();
         sysView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
