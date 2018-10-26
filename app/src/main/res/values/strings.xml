@@ -46,6 +46,7 @@
     <string name="block_back_name">さがる</string>
     <string name="block_back_description">うしろにさがる</string>
 
+    <string name="block_rotate_name">まわる</string>
     <string name="block_left_name">ひだりにまわる</string>
     <string name="block_left_description">ひだりにまわる</string>
 
