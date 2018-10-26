@@ -72,7 +72,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_left_name"
+                        android:text="@string/block_rotate_name"
                         android:textColor="@color/default_text_color"
                         android:textAppearance="@style/TextAppearance.block_title_b" />
 

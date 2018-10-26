@@ -11,8 +11,8 @@ public class ScriptModel extends BaseObservable {
     private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //右パワー
-    private int speed = 0;
+    //スピードの三段階値
+    private int speed = 2;
     //ブロック毎の値
     private float value = 1;
     private boolean isInLoop=false;
@@ -121,10 +121,10 @@ public class ScriptModel extends BaseObservable {
         BACK(2),
         LEFT(3),
         RIGHT(4),
-        IF_START(5),
-        IF_END(6),
-        FOR_START(7),
-        FOR_END(8),
+        FOR_START(5),
+        FOR_END(6),
+        IF_START(7),
+        IF_END(8),
         BREAK(9),
         START(10),
         END(11);
