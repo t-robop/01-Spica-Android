@@ -34,7 +34,21 @@ public class UdpReceive extends Thread{
     public void UdpReceiveStandby(){
 
         //ダイアログの設定
-        dialog = dialogSettings(dialog);
+        dialog = new Dialog(context);
+        dialog.setContentView(R.layout.receive_udp_dialog);
+        dialog.setCancelable(false);
+        Button cancelButton = dialog.findViewById(R.id.receive_udp_cancel_button);
+        cancelButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        UdpSend udp = new UdpSend();
+                        udp.UdpSendText(context.getString(R.string.esp_reboot_command));
+                        dialog.dismiss();
+                    }
+                }
+        );
+        dialog.show();
 
         checkReceive = new Thread(new Runnable() {
             @Override
@@ -81,24 +95,5 @@ public class UdpReceive extends Thread{
 
         //スレッドの実行
         checkReceive.start();
-    }
-
-    private Dialog dialogSettings(Dialog executionDialog){
-        executionDialog = new Dialog(context);
-        executionDialog.setContentView(R.layout.receive_udp_dialog);
-        executionDialog.setCancelable(false);
-        Button cancelButton = executionDialog.findViewById(R.id.receive_udp_cancel_button);
-        cancelButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        UdpSend udp = new UdpSend();
-                        udp.UdpSendText(context.getString(R.string.esp_reboot_command));
-                        dialog.dismiss();
-                    }
-                }
-        );
-        executionDialog.show();
-        return executionDialog;
     }
 }
