@@ -91,4 +91,8 @@
 
     <string name="text_true">Yes</string>
     <string name="text_false">No</string>
+
+    <string name="text_power_0">おそい</string>
+    <string name="text_power_1">ふつう</string>
+    <string name="text_power_2">はやい</string>
 </resources>

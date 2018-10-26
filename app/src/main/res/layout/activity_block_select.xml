@@ -11,7 +11,7 @@
             android:id="@+id/bg_select"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/default_background_color" />
+            android:background="#00000000" />
 
         <LinearLayout
             android:id="@+id/select_dialog_bg"
