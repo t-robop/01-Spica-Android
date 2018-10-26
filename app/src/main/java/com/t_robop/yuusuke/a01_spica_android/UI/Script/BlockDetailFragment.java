@@ -5,7 +5,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +18,12 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.*;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.*;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.BACK;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FRONT;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
 
 public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView {
 
@@ -48,7 +51,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
@@ -77,15 +80,17 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         //editText初期化
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
 
-        if(spicaBlock==IF_START){
-            if(targetScript.getIfOperator()==targetScript.getIfUpperNum()){
+        if (spicaBlock == IF_START) {
+            if (targetScript.getIfOperator() == targetScript.getIfUpperNum()) {
                 mBinding.radiogroup.check(R.id.radiobutton_left);
-            }else{
+            } else if (targetScript.getIfOperator() == targetScript.getIfLowerNum()) {
                 mBinding.radiogroup.check(R.id.radiobutton_right);
+            } else {
+                mBinding.radiogroup.check(R.id.radiobutton_left);
             }
-        }else if(spicaBlock==LEFT){
+        } else if (spicaBlock == LEFT) {
             mBinding.radiogroup.check(R.id.radiobutton_left);
-        }else if(spicaBlock==RIGHT){
+        } else if (spicaBlock == RIGHT) {
             mBinding.radiogroup.check(R.id.radiobutton_right);
         }
     }
@@ -93,7 +98,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     @Override
     public void onStop() {
         super.onStop();
-        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(this.getView().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
