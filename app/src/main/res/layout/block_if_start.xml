@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -68,8 +69,8 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="@string/block_if_start_name" />
+                        android:text="@string/block_if_start_name"
+                        android:textColor="@color/default_text_color" />
 
                     <TextView
                         android:id="@+id/id_text"
@@ -86,7 +87,7 @@
 
             </LinearLayout>
 
-            <FrameLayout
+            <android.support.constraint.ConstraintLayout
                 android:id="@+id/conductor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -100,21 +101,39 @@
                     android:layout_gravity="center"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{(v)->adapter.clickConductor(v,position,ifState)}"
-                    android:transitionName="trans_block_list">
+                    android:transitionName="trans_block_list"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="@string/plus"
-                        android:textSize="@dimen/conductor_text_size"
                         android:includeFontPadding="false"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:text="@string/plus"
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color"
+                        android:textSize="@dimen/conductor_text_size" />
 
                 </LinearLayout>
-            </FrameLayout>
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:includeFontPadding="false"
+                    android:text="@string/text_false"
+                    android:textAppearance="@style/TextAppearance.block_title_b"
+                    android:textColor="@color/white_text_color"
+                    android:background="@color/color_blue"
+                    android:layout_marginLeft="8dp"
+                    app:layout_constraintBottom_toTopOf="@id/conductor_add"
+                    app:layout_constraintEnd_toEndOf="@id/conductor_add"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+            </android.support.constraint.ConstraintLayout>
 
         </LinearLayout>
     </LinearLayout>
