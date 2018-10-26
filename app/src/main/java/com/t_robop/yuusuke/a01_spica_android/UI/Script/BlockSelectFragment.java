@@ -68,16 +68,16 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             }
         });
 
-        if (script.getIfState() != 0) {
-            mBinding.mosimo.setVisibility(View.INVISIBLE);
-        } else {
-            mBinding.mosimo.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.IF_START);
-                }
-            });
-        }
+//        if (script.getIfState() != 0) {
+//            mBinding.mosimo.setVisibility(View.INVISIBLE);
+//        } else {
+//            mBinding.mosimo.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    mListener.onClickButton(ScriptModel.SpicaBlock.IF_START);
+//                }
+//            });
+//        }
         if (script.isInLoop()) {
             mBinding.kurikaesu.setVisibility(View.INVISIBLE);
         } else {
