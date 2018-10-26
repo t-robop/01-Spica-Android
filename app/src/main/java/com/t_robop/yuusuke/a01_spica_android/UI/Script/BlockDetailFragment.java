@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
+import android.widget.SeekBar;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
@@ -93,6 +94,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         } else if (spicaBlock == RIGHT) {
             mBinding.radiogroup.check(R.id.radiobutton_right);
         }
+
+        progressChanged();
     }
 
     @Override
@@ -272,6 +275,16 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         String editValueText = mBinding.editValue.getText().toString();
         if (editValueText.isEmpty()) editValueText = "0";
         return Float.valueOf(editValueText);
+    }
+
+    public void progressChanged(){
+        if(mBinding.seekValue.getProgress()==0){
+            mBinding.textPower.setText(R.string.text_power_0);
+        }else if(mBinding.seekValue.getProgress()==1){
+            mBinding.textPower.setText(R.string.text_power_1);
+        }else if(mBinding.seekValue.getProgress()==2){
+            mBinding.textPower.setText(R.string.text_power_2);
+        }
     }
 
 }

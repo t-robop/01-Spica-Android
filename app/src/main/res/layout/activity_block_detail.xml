@@ -15,9 +15,9 @@
         android:id="@+id/bg_detail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:background="#00000000"
-        android:onClick="@{()->fragment.close()}">
+        android:onClick="@{()->fragment.close()}"
+        android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/fg_detail"
@@ -45,12 +45,12 @@
                     <ImageView
                         android:id="@+id/block_image"
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="wrap_content"
                         android:src="@drawable/ic_block_front"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent"
                         app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </android.support.constraint.ConstraintLayout>
 
@@ -67,8 +67,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:text="@string/error_text"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                     <TextView
                         android:id="@+id/block_des_text"
@@ -76,22 +76,22 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:text="@string/error_text"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                     <EditText
                         android:id="@+id/edit_value"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="5"
+                        android:hint="@string/error_text"
                         android:inputType="number|numberDecimal"
                         android:maxLength="4"
                         android:maxLines="1"
-                        android:hint="@string/error_text"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toStartOf="parent"
                         app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent"/>
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/switch_container_detail"
@@ -103,32 +103,53 @@
                             android:id="@+id/radiogroup"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
                             android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
+                            android:orientation="horizontal"
                             app:layout_constraintStart_toStartOf="parent">
 
-                            <RadioButton android:id="@+id/radiobutton_left"
+                            <RadioButton
+                                android:id="@+id/radiobutton_left"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/default_text_color"
-                                android:text="@string/error_text" />
+                                android:text="@string/error_text"
+                                android:textColor="@color/default_text_color" />
 
-                            <RadioButton android:id="@+id/radiobutton_right"
+                            <RadioButton
+                                android:id="@+id/radiobutton_right"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/default_text_color"
-                                android:text="@string/error_text" />
+                                android:text="@string/error_text"
+                                android:textColor="@color/default_text_color" />
 
                         </RadioGroup>
 
                     </android.support.constraint.ConstraintLayout>
 
-                    <SeekBar
-                        android:id="@+id/seek_value"
+                    <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:max="2"
-                        android:progress="1" />
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/text_power"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/text_power_0"
+                            android:textColor="@color/default_text_color"
+                            android:textSize="14dp"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/seek_value"/>
+
+                        <SeekBar
+                            android:id="@+id/seek_value"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:max="2"
+                            android:progress="1"
+                            android:onProgressChanged="@{(s,p,f)->fragment.progressChanged()}"
+                            app:layout_constraintStart_toEndOf="@id/text_power"
+                            app:layout_constraintEnd_toEndOf="parent"/>
+
+                    </android.support.constraint.ConstraintLayout>
 
                 </LinearLayout>
 
@@ -162,8 +183,8 @@
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.close()}"
                     android:text="@string/button_cancel"
-                    android:textColor="@color/default_text_color"
-                    android:textAppearance="@style/TextAppearance.block_title_b" />
+                    android:textAppearance="@style/TextAppearance.block_title_b"
+                    android:textColor="@color/default_text_color" />
 
 
                 <Button
@@ -175,8 +196,8 @@
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.confirm()}"
                     android:text="@string/button_ok"
-                    android:textColor="@color/default_text_color"
-                    android:textAppearance="@style/TextAppearance.block_title_b" />
+                    android:textAppearance="@style/TextAppearance.block_title_b"
+                    android:textColor="@color/default_text_color" />
 
             </LinearLayout>
 
