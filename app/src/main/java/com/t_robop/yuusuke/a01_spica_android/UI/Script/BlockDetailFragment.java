@@ -76,13 +76,17 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
         mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
-        if (targetScript.getIfOperator() == targetScript.getIfUpperNum()) {
+
+        if(spicaBlock==IF_START){
+            if(targetScript.getIfOperator()==targetScript.getIfUpperNum()){
+                mBinding.radiogroup.check(R.id.radiobutton_left);
+            }else{
+                mBinding.radiogroup.check(R.id.radiobutton_right);
+            }
+        }else if(spicaBlock==LEFT){
             mBinding.radiogroup.check(R.id.radiobutton_left);
-        }
-        else if (targetScript.getIfOperator() == targetScript.getIfLowerNum()) {
+        }else if(spicaBlock==RIGHT){
             mBinding.radiogroup.check(R.id.radiobutton_right);
-        }else{
-            mBinding.radiogroup.check(R.id.radiobutton_left);
         }
     }
 
