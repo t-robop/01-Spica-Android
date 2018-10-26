@@ -5,6 +5,10 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +17,6 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.RadioGroup;
-import android.widget.SeekBar;
 
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
@@ -26,7 +29,7 @@ import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
 
-public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView {
+public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView, TextWatcher {
 
     private ScriptContract.Presenter mScriptPresenter;
 
@@ -57,6 +60,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             }
         });
 
+        mBinding.editValue.addTextChangedListener(this);
+
         return root;
     }
 
@@ -79,20 +84,34 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         //シークバー描画
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
-        mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
+        switch (spicaBlock) {
+            case IF_START:
+            case FOR_START:
+                //IF_STARTとFOR_STARTは小数
+                mBinding.editValue.setText(String.valueOf((int)targetScript.getValue()));
+                break;
+            default:
+                mBinding.editValue.setText(String.valueOf(targetScript.getValue()));
+                break;
+        }
+        //チェックボックス
+        switch (spicaBlock) {
+            case LEFT:
+                mBinding.radiogroup.check(R.id.radiobutton_left);
+                break;
 
-        if (spicaBlock == IF_START) {
-            if (targetScript.getIfOperator() == targetScript.getIfUpperNum()) {
-                mBinding.radiogroup.check(R.id.radiobutton_left);
-            } else if (targetScript.getIfOperator() == targetScript.getIfLowerNum()) {
+            case RIGHT:
                 mBinding.radiogroup.check(R.id.radiobutton_right);
-            } else {
-                mBinding.radiogroup.check(R.id.radiobutton_left);
-            }
-        } else if (spicaBlock == LEFT) {
-            mBinding.radiogroup.check(R.id.radiobutton_left);
-        } else if (spicaBlock == RIGHT) {
-            mBinding.radiogroup.check(R.id.radiobutton_right);
+                break;
+
+            case IF_START:
+                if (targetScript.getIfOperator() == targetScript.getIfUpperNum()) {
+                    mBinding.radiogroup.check(R.id.radiobutton_left);
+                } else if (targetScript.getIfOperator() == targetScript.getIfLowerNum()) {
+                    mBinding.radiogroup.check(R.id.radiobutton_right);
+                } else {
+                    mBinding.radiogroup.check(R.id.radiobutton_left);
+                }
         }
 
         progressChanged();
@@ -163,6 +182,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
                 mBinding.blockTitleText.setText(R.string.block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_if_start_description);
+                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.editValue.setHint(R.string.dialog_sensor_num);
                 mBinding.radiobuttonLeft.setText(R.string.dialog_sensor_bigger);
                 mBinding.radiobuttonRight.setText(R.string.dialog_sensor_smaller);
@@ -171,6 +191,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case FOR_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
                 mBinding.blockTitleText.setText(R.string.block_for_start_name);
+                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.blockDesText.setText(R.string.block_for_start_description);
                 mBinding.editValue.setHint(R.string.dialog_loop_num);
                 break;
@@ -178,6 +199,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case BREAK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
                 mBinding.blockTitleText.setText(R.string.block_break_name);
+                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.blockDesText.setText(R.string.block_break_description);
                 mBinding.editValue.setVisibility(View.INVISIBLE);
                 break;
@@ -201,6 +223,39 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     @Override
     public void setPresenter(ScriptContract.Presenter presenter) {
         this.mScriptPresenter = presenter;
+    }
+
+    @Override
+    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        SpicaBlock blockId = mScriptPresenter.getTargetScript().getBlock();
+        double value = mScriptPresenter.getTargetScript().getValue();
+
+        switch (blockId) {
+            case FRONT:
+            case BACK:
+            case LEFT:
+            case RIGHT:
+                //TODO 整数部: maxLength:2, 小数部: maxLength: 1
+                //TODO inputType: number, dec
+
+                break;
+
+            case IF_START:
+            case FOR_START:
+                mBinding.editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+                mBinding.editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+                break;
+        }
+    }
+
+    @Override
+    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable editable) {
+
     }
 
     public interface DetailListener {
@@ -277,12 +332,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         return Float.valueOf(editValueText);
     }
 
-    public void progressChanged(){
-        if(mBinding.seekValue.getProgress()==0){
+    public void progressChanged() {
+        if (mBinding.seekValue.getProgress() == 0) {
             mBinding.textPower.setText(R.string.text_power_0);
-        }else if(mBinding.seekValue.getProgress()==1){
+        } else if (mBinding.seekValue.getProgress() == 1) {
             mBinding.textPower.setText(R.string.text_power_1);
-        }else if(mBinding.seekValue.getProgress()==2){
+        } else if (mBinding.seekValue.getProgress() == 2) {
             mBinding.textPower.setText(R.string.text_power_2);
         }
     }
