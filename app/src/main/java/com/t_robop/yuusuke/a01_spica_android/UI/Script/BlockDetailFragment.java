@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spannable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,9 +86,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
         switch (spicaBlock) {
+            //IF_STARTとFOR_STARTは小数
             case IF_START:
+                mBinding.editValue.setText(String.valueOf((int)targetScript.getValue()));
+                break;
             case FOR_START:
-                //IF_STARTとFOR_STARTは小数
                 mBinding.editValue.setText(String.valueOf((int)targetScript.getValue()));
                 break;
             default:
@@ -226,36 +229,45 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     }
 
     @Override
-    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-        SpicaBlock blockId = mScriptPresenter.getTargetScript().getBlock();
-        double value = mScriptPresenter.getTargetScript().getValue();
-
+    public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
+        ScriptModel scriptModel = mScriptPresenter.getTargetScript();
+        SpicaBlock blockId = scriptModel.getBlock();
         switch (blockId) {
             case FRONT:
             case BACK:
             case LEFT:
             case RIGHT:
-                //TODO 整数部: maxLength:2, 小数部: maxLength: 1
-                //TODO inputType: number, dec
-
+                mBinding.editValue.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                 break;
 
             case IF_START:
             case FOR_START:
                 mBinding.editValue.setInputType(InputType.TYPE_CLASS_NUMBER);
-                mBinding.editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});
+                mBinding.editValue.setFilters(new InputFilter[]{new InputFilter.LengthFilter(2)});  //EditText maxLength = "2"
                 break;
         }
     }
 
     @Override
-    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+    public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+        //TODO 整数部: maxLength:2, 小数部: maxLength: 1
+        if (charSequence.toString().length() > 3 && charSequence.toString().contains(".")) {
+            if (charSequence.toString().length() - charSequence.toString().indexOf(".") > 2) {
+                mBinding.editValue.setText(charSequence.toString().substring(0, charSequence.length() - 1));
+                mBinding.editValue.setSelection(mBinding.editValue.getText().length());
+            }
+        }
 
+        if(charSequence.toString().length() > 2){
+            if(!charSequence.toString().contains(".")){
+                mBinding.editValue.setText(charSequence.toString().substring(0, charSequence.length() - 1));
+            }
+            mBinding.editValue.setSelection(mBinding.editValue.getText().length());
+        }
     }
 
     @Override
     public void afterTextChanged(Editable editable) {
-
     }
 
     public interface DetailListener {
