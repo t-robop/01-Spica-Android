@@ -85,8 +85,6 @@
                         android:layout_height="match_parent"
                         android:layout_weight="5"
                         android:hint="@string/error_text"
-                        android:inputType="number|numberDecimal"
-                        android:maxLength="4"
                         android:maxLines="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="parent"
