@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-25-alpha
+      - image: circleci/android:api-26-alpha
     environment:
       JVM_OPTS: -Xmx3200m
     steps:
@@ -20,13 +20,9 @@ jobs:
       - run:
           name: build Debug Apk
           command: ./gradlew assembleDebug
-      #- run:
-          #name: copy apk
-          #command: |
-              #sudo mkdir -p /apks;
-              #sudo cp app/build/outputs/apk/app-debug.apk /apks
       - store_artifacts:
-          path: /apks
+          path: app/build/outputs/apk
+          destination: apk
       - run:
           name: Run Tests
           command: ./gradlew lint test
