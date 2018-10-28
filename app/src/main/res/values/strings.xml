@@ -85,6 +85,8 @@
 
 
     <string name="plus">+</string>
+    <string name="send_success_text">ロボットに送信完了</string>
+    <string name="send_failed_text">ブロックがないよ！</string>
     <string name="receive_dialog_text">実行中......</string>
     <string name="receive_dialog_button_text">キャンセルする</string>
     <string name="esp_reboot_command">reboot-now</string>
