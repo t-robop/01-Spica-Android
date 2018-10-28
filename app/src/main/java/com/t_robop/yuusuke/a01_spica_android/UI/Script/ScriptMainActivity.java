@@ -3,19 +3,19 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.view.View;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -173,12 +173,16 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             @Override
             public void onClick(View v) {
                 objectSave();
-                udpReceive.UdpReceiveStandby();
                 String sendData = mScriptPresenter.getSendableScripts();
-                UdpSend udp = new UdpSend();
-                udp.UdpSendText(sendData);
-                Log.d("sendData", sendData);
-                Toast.makeText(ScriptMainActivity.this, "ロボットに送信完了", Toast.LENGTH_SHORT).show();
+                if (sendData.length() > 0) {
+                    udpReceive.UdpReceiveStandby();
+                    UdpSend udp = new UdpSend();
+                    udp.UdpSendText(sendData);
+                    Log.d("sendData", sendData);
+                    Toast.makeText(ScriptMainActivity.this, R.string.send_success_text, Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ScriptMainActivity.this, R.string.send_failed_text, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
