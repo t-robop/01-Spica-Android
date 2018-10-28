@@ -240,9 +240,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
-                if(script.getIfOperator() == script.getIfUpperNum()){
+                if(script.getIfOperator() == script.getSensorAboveNum()){
                     bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_bigger));
-                }else if(script.getIfOperator() == script.getIfLowerNum()){
+                }else if(script.getIfOperator() == script.getSensorBelowNum()){
                     bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_smaller));
                 }
                 bindingIfStart.setIfState(script.getIfState());

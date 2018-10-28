@@ -236,18 +236,18 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             /**
              * ブロック追加用の選択画面へ
              */
-            fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
+            fragmentTransaction.replace(R.id.conductor_fragment, blockSelectFragment);
         } else if (state == ScriptPresenter.ViewState.EDIT) {
             /**
              * ブロック設定用の詳細画面へ
              */
-            fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
+            fragmentTransaction.replace(R.id.conductor_fragment, blockDetailFragment);
         } else if (state == ScriptPresenter.ViewState.ADD) {
             /**
              * ブロック追加用の詳細画面へ
              * todo 上記EDITと同じなのは一旦分かりやすさのため
              */
-            fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
+            fragmentTransaction.replace(R.id.conductor_fragment, blockDetailFragment);
         }
         fragmentTransaction.commit();
     }

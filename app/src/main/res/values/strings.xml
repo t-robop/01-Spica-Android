@@ -35,6 +35,9 @@
     <string name="dialog_sensor_bigger">センサー値より大きい</string>
     <string name="dialog_sensor_smaller">センサー値より小さい</string>
     <string name="dialog_loop_num">ループ数</string>
+    <string name="dialog_speed_low">おそい</string>
+    <string name="dialog_speed_middle">ふつう</string>
+    <string name="dialog_speed_high">はやい</string>
 
 
     <string name="app_name">Spica</string>

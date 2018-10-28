@@ -124,30 +124,40 @@
                     </android.support.constraint.ConstraintLayout>
 
                     <android.support.constraint.ConstraintLayout
+                        android:id="@+id/speed_container"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="3">
+                        android:layout_weight="5">
 
-                        <TextView
-                            android:id="@+id/text_power"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/text_power_0"
-                            android:textColor="@color/default_text_color"
-                            android:textSize="14dp"
-                            app:layout_constraintEnd_toStartOf="@id/seek_value"
-                            app:layout_constraintStart_toStartOf="parent" />
-
-                        <SeekBar
-                            android:id="@+id/seek_value"
-                            android:layout_width="0dp"
+                        <RadioGroup
+                            android:id="@+id/speed_radio_group"
+                            android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:maxHeight="80dp"
-                            android:max="2"
-                            android:onProgressChanged="@{(s,p,f)->fragment.progressChanged()}"
-                            android:progress="1"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toEndOf="@id/text_power" />
+                            android:orientation="horizontal"
+                            app:layout_constraintStart_toStartOf="parent">
+
+                            <RadioButton
+                                android:id="@+id/speed_low_radio_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dialog_speed_low"
+                                android:textColor="@color/default_text_color"/>
+
+                            <RadioButton
+                                android:id="@+id/speed_middle_radio_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dialog_speed_middle"
+                                android:textColor="@color/default_text_color"/>
+
+                            <RadioButton
+                                android:id="@+id/speed_high_radio_button"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/dialog_speed_high"
+                                android:textColor="@color/default_text_color"/>
+
+                        </RadioGroup>
 
                     </android.support.constraint.ConstraintLayout>
 
