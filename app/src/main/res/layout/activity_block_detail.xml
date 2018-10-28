@@ -86,6 +86,7 @@
                         android:layout_weight="5"
                         android:hint="@string/error_text"
                         android:maxLines="1"
+                        android:imeOptions="actionDone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="parent"
                         app:layout_constraintStart_toEndOf="parent"
