@@ -23,8 +23,6 @@ import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBind
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.BACK;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FRONT;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
@@ -81,8 +79,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
-        //シークバー描画
-        setSeekValue(spicaBlock, targetScript.getSeekValue());
         //editText初期化
         switch (spicaBlock) {
             //IF_STARTとFOR_STARTは小数
@@ -98,25 +94,29 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         }
         //チェックボックス
         switch (spicaBlock) {
+            case FRONT:
+            case BACK:
+                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
+                break;
             case LEFT:
+                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
                 mBinding.radiogroup.check(R.id.radiobutton_left);
                 break;
 
             case RIGHT:
+                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
                 mBinding.radiogroup.check(R.id.radiobutton_right);
                 break;
 
             case IF_START:
-                if (targetScript.getIfOperator() == targetScript.getIfUpperNum()) {
+                if (targetScript.getIfOperator() == targetScript.getSensorAboveNum()) {
                     mBinding.radiogroup.check(R.id.radiobutton_left);
-                } else if (targetScript.getIfOperator() == targetScript.getIfLowerNum()) {
+                } else if (targetScript.getIfOperator() == targetScript.getSensorBelowNum()) {
                     mBinding.radiogroup.check(R.id.radiobutton_right);
                 } else {
                     mBinding.radiogroup.check(R.id.radiobutton_left);
                 }
         }
-
-        progressChanged();
     }
 
     @Override
@@ -153,6 +153,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_front_name);
                 mBinding.blockDesText.setText(R.string.block_front_description);
                 mBinding.editValue.setHint(R.string.dialog_time);
+                mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
                 break;
 
             case BACK:
@@ -160,6 +161,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_back_name);
                 mBinding.blockDesText.setText(R.string.block_back_description);
                 mBinding.editValue.setHint(R.string.dialog_time);
+                mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
                 break;
 
             case LEFT:
@@ -184,35 +186,31 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
                 mBinding.blockTitleText.setText(R.string.block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_if_start_description);
-                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.editValue.setHint(R.string.dialog_sensor_num);
                 mBinding.radiobuttonLeft.setText(R.string.dialog_sensor_bigger);
                 mBinding.radiobuttonRight.setText(R.string.dialog_sensor_smaller);
+                mBinding.speedContainer.setVisibility(View.INVISIBLE);
                 break;
 
             case FOR_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
                 mBinding.blockTitleText.setText(R.string.block_for_start_name);
-                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.blockDesText.setText(R.string.block_for_start_description);
                 mBinding.editValue.setHint(R.string.dialog_loop_num);
+                mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
+                mBinding.speedContainer.setVisibility(View.INVISIBLE);
+                mBinding.speedContainer.setVisibility(View.INVISIBLE);
                 break;
 
             case BREAK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
                 mBinding.blockTitleText.setText(R.string.block_break_name);
-                mBinding.textPower.setVisibility(View.INVISIBLE);
                 mBinding.blockDesText.setText(R.string.block_break_description);
                 mBinding.editValue.setVisibility(View.INVISIBLE);
+                mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
+                mBinding.speedContainer.setVisibility(View.INVISIBLE);
+                mBinding.speedContainer.setVisibility(View.INVISIBLE);
                 break;
-        }
-
-        if (blockId == RIGHT ||
-                blockId == LEFT ||
-                blockId == IF_START) {
-            mBinding.switchContainerDetail.setVisibility(View.VISIBLE);
-        } else {
-            mBinding.switchContainerDetail.setVisibility(View.INVISIBLE);
         }
 
         if (mScriptPresenter.getState() == ScriptPresenter.ViewState.EDIT) {
@@ -283,7 +281,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
      * fragmentとじる
      */
     public void close() {
-        //TODO ソフトウェアキーボードが開いてたら閉じる
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
     }
 
@@ -293,16 +290,36 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     public void confirm() {
         ScriptModel script = mScriptPresenter.getTargetScript();
         script.setBlock(spicaBlock);
-        script.setSeekValue(mBinding.seekValue.getProgress());
         script.setValue(getInputText());
-        if (spicaBlock == IF_START) {  //ifスタートブロックの条件指定idの設定
-            int checkId = mBinding.radiogroup.getCheckedRadioButtonId();
-            if (checkId == R.id.radiobutton_left) {
-                script.setIfOperator(script.getIfUpperNum());
-            } else {
-                script.setIfOperator(script.getIfLowerNum());
-            }
+
+
+        switch (spicaBlock){
+            case FRONT:
+            case BACK:
+            case LEFT:
+            case RIGHT:
+                //スピード値の設定
+                int speedCheckId = mBinding.speedRadioGroup.getCheckedRadioButtonId();
+                if (speedCheckId == R.id.speed_low_radio_button){
+                    script.setSpeed(script.getLowSpeedValue());
+                }else if (speedCheckId == R.id.speed_middle_radio_button){
+                    script.setSpeed(script.getMiddleSpeedValue());
+                }else{
+                    script.setSpeed(script.getHighSpeedValue());
+                }
+                break;
+
+            case IF_START:
+                ////ifスタートブロックの条件指定
+                int checkId = mBinding.radiogroup.getCheckedRadioButtonId();
+                if (checkId == R.id.radiobutton_left) {
+                    script.setIfOperator(script.getSensorAboveNum());
+                } else {
+                    script.setIfOperator(script.getSensorBelowNum());
+                }
+                break;
         }
+
         listener.onClickAdd(script);
     }
 
@@ -327,30 +344,10 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         }
     }
 
-    private void setSeekValue(SpicaBlock blockId, int seekValue) {
-        if ((blockId == FRONT || blockId == BACK || blockId == LEFT || blockId == RIGHT)) {
-            mBinding.seekValue.setMax(2);
-            mBinding.seekValue.setVisibility(View.VISIBLE);
-            mBinding.seekValue.setProgress(seekValue);
-        } else {
-            mBinding.seekValue.setVisibility(View.INVISIBLE);
-        }
-    }
-
     private float getInputText() {
         String editValueText = mBinding.editValue.getText().toString();
         if (editValueText.isEmpty()) editValueText = "0";
         return Float.valueOf(editValueText);
-    }
-
-    public void progressChanged() {
-        if (mBinding.seekValue.getProgress() == 0) {
-            mBinding.textPower.setText(R.string.text_power_0);
-        } else if (mBinding.seekValue.getProgress() == 1) {
-            mBinding.textPower.setText(R.string.text_power_1);
-        } else if (mBinding.seekValue.getProgress() == 2) {
-            mBinding.textPower.setText(R.string.text_power_2);
-        }
     }
 
 }
