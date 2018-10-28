@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.t_robop.yuusuke.a01_spica_android.R;
 
 import java.io.IOException;
@@ -32,7 +33,7 @@ public class UdpReceive extends Thread{
     }
 
     public void UdpReceiveStandby(){
-
+        Crashlytics.log("UdpReceiveStandby");
         //ダイアログの設定
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.receive_udp_dialog);
@@ -49,7 +50,7 @@ public class UdpReceive extends Thread{
                 }
         );
         dialog.show();
-
+        Crashlytics.log("UdpReceiveStandby: dialog show");
         checkReceive = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -59,6 +60,7 @@ public class UdpReceive extends Thread{
                         // UDPパケット待ち受け
                         DatagramSocket recvUdpSocket = new DatagramSocket(port);
                         recvUdpSocket.setReuseAddress(true);
+                        Crashlytics.log("UdpReceiveStandby: packet 待機");
 
                         buffer = new byte[2048];
                         DatagramPacket packet = new DatagramPacket(buffer, buffer.length);
@@ -70,6 +72,7 @@ public class UdpReceive extends Thread{
                         handler.post(new Runnable() {
                             public void run() {
                                 try {
+                                    Crashlytics.log("UdpReceiveStandby: データを受信");
                                     String result = new String(buffer, "UTF-8");
 
                                     //結果をトースト表示
@@ -77,12 +80,12 @@ public class UdpReceive extends Thread{
 
                                     //ダイアログを消す
                                     dialog.dismiss();
-
+                                    Crashlytics.log("UdpReceiveStandby: ダイアログを消す");
                                     //監視しているスレッドを止める
                                     checkReceive.interrupt();
-
+                                    Crashlytics.log("UdpReceiveStandby: スレッドを停止");
                                 } catch(IOException e) {
-
+                                    Crashlytics.log("UdpReceiveStandby: 受信後にキャッチ");
                                 }
                             }
                         });
