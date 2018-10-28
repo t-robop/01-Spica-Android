@@ -25,7 +25,8 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
     public BlockSelectFragment() {
     }
 
-    private MyListener mListener;
+    private BlockClickListener mListener;
+    private OutSideClickListener outSideClickListener;
 
     @Nullable
     @Override
@@ -37,6 +38,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             @Override
             public void onClick(View view) {
                 getFragmentManager().beginTransaction().remove(BlockSelectFragment.this).commit();
+                outSideClickListener.onClickOutSide();
             }
         });
 
@@ -118,8 +120,12 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
     }
 
 
-    public interface MyListener {
+    public interface BlockClickListener {
         void onClickButton(ScriptModel.SpicaBlock block);
+    }
+
+    public interface OutSideClickListener{
+        void onClickOutSide();
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド
@@ -129,9 +135,10 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
         // contextクラスがMyListenerを実装しているかをチェックする
         super.onAttach(context);
-        if (context instanceof MyListener) {
+        if (context instanceof BlockClickListener) {
             // リスナーをここでセットするようにします
-            mListener = (MyListener) context;
+            mListener = (BlockClickListener) context;
+            outSideClickListener = (OutSideClickListener) context;
         }
     }
 
@@ -141,6 +148,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         super.onDetach();
         // 画面からFragmentが離れたあとに処理が呼ばれることを避けるためにNullで初期化しておく
         mListener = null;
+        outSideClickListener = null;
     }
 
     @Override

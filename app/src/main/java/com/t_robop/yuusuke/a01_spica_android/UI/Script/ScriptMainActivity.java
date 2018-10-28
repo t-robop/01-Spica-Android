@@ -13,7 +13,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 import android.view.View;
@@ -26,18 +25,18 @@ import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
 
-public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.MyListener {
+public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.BlockClickListener, BlockSelectFragment.OutSideClickListener {
 
     private ScriptContract.Presenter mScriptPresenter;
 
     private RecyclerView mScriptRecyclerView;
     private ScriptMainAdapter mScriptAdapter;
     private LinearLayoutManager mScriptLayoutManager;
+    FloatingActionButton fab;
 
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
@@ -60,7 +59,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
-
+        fab = findViewById(R.id.fab);
 
         /**
          * Presenterの初期化
@@ -170,7 +169,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         /**
          * fabがクリックされた時
          */
-        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,6 +220,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
      * Fragment生成メソッド
      */
     public void inflateFragment(ScriptModel scriptModel) {
+        fab.setVisibility(View.INVISIBLE);
+        fab.setEnabled(false);
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -256,6 +257,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fragmentTransaction.remove(blockDetailFragment);
         fragmentTransaction.remove(blockSelectFragment);
         fragmentTransaction.commit();
+
+        fab.setVisibility(View.VISIBLE);
+        fab.setEnabled(true);
     }
 
 
@@ -268,6 +272,12 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         ScriptModel scriptModel = mScriptPresenter.getTargetScript();
         scriptModel.setBlock(block);
         inflateFragment(scriptModel);
+    }
+
+    @Override
+    public void onClickOutSide() {
+        fab.setVisibility(View.VISIBLE);
+        fab.setEnabled(true);
     }
 
     /**
