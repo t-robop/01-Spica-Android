@@ -15,8 +15,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
@@ -208,6 +210,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
 
         /**
+         *
          * 透明ボタンが押されたときの処理
          */
         Button restoreButton = findViewById(R.id.restore_btn);
@@ -218,6 +221,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 return false;
             }
         });
+
     }
 
     /**
