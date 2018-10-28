@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,9 +47,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_block_detail, container, false);
         View root = mBinding.getRoot();
         mBinding.setFragment(this);
-
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 
         mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
             @Override
