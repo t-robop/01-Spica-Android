@@ -14,7 +14,7 @@ public class ScriptModel extends BaseObservable {
     //スピードの三段階値
     private int speed = 2;
     //ブロック毎の値
-    private double value = 2;
+    private float value = 2;
     private boolean isInLoop=false;
 
     public ScriptModel() {
@@ -92,7 +92,7 @@ public class ScriptModel extends BaseObservable {
         this.speed = speed;
     }
 
-    public double getValue() {
+    public float getValue() {
         return value;
     }
 
