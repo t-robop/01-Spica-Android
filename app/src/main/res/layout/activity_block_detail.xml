@@ -64,7 +64,7 @@
                     <TextView
                         android:id="@+id/block_title_text"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="5"
                         android:text="@string/error_text"
                         android:textAppearance="@style/TextAppearance.block_title_b"
@@ -73,7 +73,7 @@
                     <TextView
                         android:id="@+id/block_des_text"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="5"
                         android:text="@string/error_text"
                         android:textAppearance="@style/TextAppearance.block_title_b"
@@ -82,11 +82,9 @@
                     <EditText
                         android:id="@+id/edit_value"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="5"
                         android:hint="@string/error_text"
-                        android:inputType="number|numberDecimal"
-                        android:maxLength="4"
                         android:maxLines="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="parent"
@@ -96,7 +94,7 @@
                     <android.support.constraint.ConstraintLayout
                         android:id="@+id/switch_container_detail"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="5">
 
                         <RadioGroup
@@ -127,7 +125,8 @@
 
                     <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="0dp"
+                        android:layout_weight="3">
 
                         <TextView
                             android:id="@+id/text_power"
@@ -136,18 +135,19 @@
                             android:text="@string/text_power_0"
                             android:textColor="@color/default_text_color"
                             android:textSize="14dp"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintEnd_toStartOf="@id/seek_value"/>
+                            app:layout_constraintEnd_toStartOf="@id/seek_value"
+                            app:layout_constraintStart_toStartOf="parent" />
 
                         <SeekBar
                             android:id="@+id/seek_value"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
+                            android:maxHeight="80dp"
                             android:max="2"
-                            android:progress="1"
                             android:onProgressChanged="@{(s,p,f)->fragment.progressChanged()}"
-                            app:layout_constraintStart_toEndOf="@id/text_power"
-                            app:layout_constraintEnd_toEndOf="parent"/>
+                            android:progress="1"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/text_power" />
 
                     </android.support.constraint.ConstraintLayout>
 
