@@ -75,9 +75,9 @@
 
 
     <!--button-->
-    <string name="button_ok">保存</string>
-    <string name="button_cancel">キャンセル</string>
-    <string name="button_delete">削除</string>
+    <string name="button_ok">OK</string>
+    <string name="button_cancel">×</string>
+    <string name="button_delete">すてる</string>
 
     <!-- Error系 -->
     <string name="error_text">何らかのError</string>
@@ -100,4 +100,12 @@
     <string name="text_power_0">おそい</string>
     <string name="text_power_1">ふつう</string>
     <string name="text_power_2">はやい</string>
+
+    <string name="text_value_des_front">びょう、すすむ</string>
+    <string name="text_value_des_right">びょう、みぎかいてん</string>
+    <string name="text_value_des_left">びょう、ひだりかいてん</string>
+    <string name="text_value_des_back">びょう、さがる</string>
+    <string name="text_value_des_if_fast">よりとおいなら、Yesへ</string>
+    <string name="text_value_des_if_near">よりちかいなら、Yesへ</string>
+    <string name="text_value_des_for">かい、くりかえす</string>
 </resources>

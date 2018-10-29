@@ -16,201 +16,314 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000"
+        android:gravity="center"
         android:onClick="@{()->fragment.close()}"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/fg_detail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="150dp"
-            android:layout_marginVertical="50dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="200dp"
             android:background="@drawable/select_shape_white"
             android:orientation="vertical">
 
-            <LinearLayout
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/bg_detail_block_view"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                tools:background="@color/color_blue">
 
+                <ImageView
+                    android:id="@+id/block_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_block_front"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <android.support.constraint.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="2"
-                    android:paddingVertical="16dp">
+                <TextView
+                    android:id="@+id/block_title_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/error_text"
+                    android:textAppearance="@style/TextAppearance.block_title_b"
+                    android:textColor="@color/white_text_color"
+                    app:layout_constraintBottom_toTopOf="@id/block_des_text"
+                    app:layout_constraintStart_toEndOf="@id/block_image"
+                    app:layout_constraintTop_toTopOf="@id/block_image"
+                    app:layout_constraintVertical_chainStyle="packed" />
 
-                    <ImageView
-                        android:id="@+id/block_image"
+                <TextView
+                    android:id="@+id/block_des_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/error_text"
+                    android:textColor="@color/white_text_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/block_image"
+                    app:layout_constraintTop_toBottomOf="@id/block_title_text" />
+
+                <Button
+                    android:id="@+id/detail_cancel_btn"
+                    android:layout_width="@dimen/conductor_scaele"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="#00000000"
+                    android:includeFontPadding="false"
+                    android:onClick="@{()->fragment.close()}"
+                    android:text="@string/button_cancel"
+                    android:textColor="@color/white_text_color"
+                    android:textSize="40sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/bg_detail_edit_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="3">
+
+                <TextView
+                    android:id="@+id/text_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:maxLength="3"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/detail_value_text"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/text_value_des"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintStart_toStartOf="@id/seek_value"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="1.4" />
+
+                <TextView
+                    android:id="@+id/text_value_des"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/detail_value_text_des"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/text_value"
+                    app:layout_constraintEnd_toEndOf="@id/seek_value"
+                    app:layout_constraintStart_toEndOf="@id/text_value"
+                    app:layout_constraintTop_toTopOf="@id/text_value"
+                    app:layout_constraintVertical_bias="0.8"
+                    tools:text="びょう、すすむ" />
+
+                <SeekBar
+                    android:id="@+id/seek_value"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:layout_marginRight="8dp"
+                    android:onProgressChanged="@{(s,p,f)->fragment.onProgressChanged()}"
+                    app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_value" />
+
+                <RadioGroup
+                    android:id="@+id/speed_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toTopOf="@id/setting_radio_group"
+                    app:layout_constraintEnd_toEndOf="@id/seek_value"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/seek_value">
+
+                    <RadioButton
+                        android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:src="@drawable/ic_block_front"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </android.support.constraint.ConstraintLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/block_title_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5"
-                        android:text="@string/error_text"
-                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:text="@string/dialog_speed_low"
                         android:textColor="@color/default_text_color" />
 
-                    <TextView
-                        android:id="@+id/block_des_text"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5"
-                        android:text="@string/error_text"
-                        android:textAppearance="@style/TextAppearance.block_title_b"
+                    <RadioButton
+                        android:id="@+id/speed_middle_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_speed_middle"
                         android:textColor="@color/default_text_color" />
 
-                    <EditText
-                        android:id="@+id/edit_value"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5"
-                        android:hint="@string/error_text"
-                        android:maxLines="1"
-                        android:imeOptions="actionDone"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="parent"
-                        app:layout_constraintStart_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                    <RadioButton
+                        android:id="@+id/speed_high_radio_button"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/dialog_speed_high"
+                        android:textColor="@color/default_text_color" />
 
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/switch_container_detail"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5">
+                </RadioGroup>
 
-                        <RadioGroup
-                            android:id="@+id/radiogroup"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
-                            android:orientation="horizontal"
-                            app:layout_constraintStart_toStartOf="parent">
+                <RadioGroup
+                    android:id="@+id/setting_radio_group"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
+                    android:orientation="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/seek_value"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/speed_radio_group">
 
-                            <RadioButton
-                                android:id="@+id/radiobutton_left"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/error_text"
-                                android:textColor="@color/default_text_color" />
+                    <RadioButton
+                        android:id="@+id/radiobutton_left"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/error_text"
+                        android:textColor="@color/default_text_color" />
 
-                            <RadioButton
-                                android:id="@+id/radiobutton_right"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/error_text"
-                                android:textColor="@color/default_text_color" />
+                    <RadioButton
+                        android:id="@+id/radiobutton_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/error_text"
+                        android:textColor="@color/default_text_color" />
 
-                        </RadioGroup>
-
-                    </android.support.constraint.ConstraintLayout>
-
-                    <android.support.constraint.ConstraintLayout
-                        android:id="@+id/speed_container"
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="5">
-
-                        <RadioGroup
-                            android:id="@+id/speed_radio_group"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            app:layout_constraintStart_toStartOf="parent">
-
-                            <RadioButton
-                                android:id="@+id/speed_low_radio_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/dialog_speed_low"
-                                android:textColor="@color/default_text_color"/>
-
-                            <RadioButton
-                                android:id="@+id/speed_middle_radio_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/dialog_speed_middle"
-                                android:textColor="@color/default_text_color"/>
-
-                            <RadioButton
-                                android:id="@+id/speed_high_radio_button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/dialog_speed_high"
-                                android:textColor="@color/default_text_color"/>
-
-                        </RadioGroup>
-
-                    </android.support.constraint.ConstraintLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="5"
-                android:orientation="horizontal">
+                </RadioGroup>
 
                 <Button
                     android:id="@+id/detail_delete_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.delete()}"
                     android:text="@string/button_delete"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/delete_button_color"
-                    android:visibility="invisible" />
-
-                <Button
-                    android:id="@+id/detail_cancel_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/block_script_item"
-                    android:onClick="@{()->fragment.close()}"
-                    android:text="@string/button_cancel"
-                    android:textAppearance="@style/TextAppearance.block_title_b"
-                    android:textColor="@color/default_text_color" />
+                    android:visibility="invisible"
+                    app:layout_constraintBottom_toTopOf="@id/detail_add_btn"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:visibility="visible" />
 
 
                 <Button
                     android:id="@+id/detail_add_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.confirm()}"
                     android:text="@string/button_ok"
                     android:textAppearance="@style/TextAppearance.block_title_b"
-                    android:textColor="@color/default_text_color" />
+                    android:textColor="@color/default_text_color"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
 
-            </LinearLayout>
+            </android.support.constraint.ConstraintLayout>
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="horizontal">-->
+
+
+            <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:layout_weight="2"-->
+            <!--android:paddingVertical="16dp">-->
+
+
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_margin="8dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:orientation="vertical">-->
+
+
+            <!--<EditText-->
+            <!--android:id="@+id/edit_value"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="5"-->
+            <!--android:hint="@string/error_text"-->
+            <!--android:imeOptions="actionDone"-->
+            <!--android:maxLines="1"-->
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toStartOf="parent"-->
+            <!--app:layout_constraintStart_toEndOf="parent"-->
+            <!--app:layout_constraintTop_toTopOf="parent" />-->
+
+            <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:id="@+id/switch_container_detail"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="5">-->
+
+
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+            <!--<android.support.constraint.ConstraintLayout-->
+            <!--android:id="@+id/speed_container"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="5">-->
+
+            <!--<RadioGroup-->
+            <!--android:id="@+id/speed_radio_group"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:orientation="horizontal"-->
+            <!--app:layout_constraintStart_toStartOf="parent">-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/speed_low_radio_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/dialog_speed_low"-->
+            <!--android:textColor="@color/default_text_color" />-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/speed_middle_radio_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/dialog_speed_middle"-->
+            <!--android:textColor="@color/default_text_color" />-->
+
+            <!--<RadioButton-->
+            <!--android:id="@+id/speed_high_radio_button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@string/dialog_speed_high"-->
+            <!--android:textColor="@color/default_text_color" />-->
+
+            <!--</RadioGroup>-->
+
+            <!--</android.support.constraint.ConstraintLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="5"-->
+            <!--android:orientation="horizontal">-->
+
+
+            <!--</LinearLayout>-->
 
         </LinearLayout>
 
