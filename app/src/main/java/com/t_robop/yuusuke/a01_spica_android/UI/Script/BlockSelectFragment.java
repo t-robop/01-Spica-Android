@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockSelectBinding;
@@ -70,8 +71,9 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             }
         });
 
+        int colorFilterInt = MyApplication.getInstance().getResources().getColor(R.color.filter_color);
         if (script.getIfState() != 0) {
-            mBinding.mosimo.setVisibility(View.INVISIBLE);
+            mBinding.mosimoImageview.setColorFilter(colorFilterInt);
         } else {
             mBinding.mosimo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -81,7 +83,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             });
         }
         if (script.isInLoop()) {
-            mBinding.kurikaesu.setVisibility(View.INVISIBLE);
+            mBinding.kurikaesuImageview.setColorFilter(colorFilterInt);
         } else {
             mBinding.kurikaesu.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -91,7 +93,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             });
         }
         if (!(script.getIfState() != 0 && script.isInLoop())) {
-            mBinding.nukeru.setVisibility(View.INVISIBLE);
+            mBinding.nukeruImageview.setColorFilter(colorFilterInt);
         } else {
             mBinding.nukeru.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -124,7 +126,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         void onClickButton(ScriptModel.SpicaBlock block);
     }
 
-    public interface OutSideClickListener{
+    public interface OutSideClickListener {
         void onClickOutSide();
     }
 
