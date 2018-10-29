@@ -3,15 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".UI.Script.BlockSelectActivity">
 
-    <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <RelativeLayout
-            android:id="@+id/bg_select"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#00000000" />
+    <RelativeLayout
+        android:id="@+id/bg_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#00000000">
 
         <LinearLayout
             android:id="@+id/select_dialog_bg"
@@ -48,8 +44,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_front_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -73,8 +69,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_rotate_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -98,8 +94,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_back_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -131,8 +127,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_if_start_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -156,8 +152,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_for_start_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -181,8 +177,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:text="@string/block_break_name"
-                        android:textColor="@color/default_text_color"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
 
@@ -190,6 +186,6 @@
 
         </LinearLayout>
 
-    </FrameLayout>
+    </RelativeLayout>
 
 </layout>

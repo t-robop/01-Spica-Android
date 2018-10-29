@@ -85,8 +85,8 @@
                         android:layout_height="0dp"
                         android:layout_weight="5"
                         android:hint="@string/error_text"
-                        android:maxLines="1"
                         android:imeOptions="actionDone"
+                        android:maxLines="1"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="parent"
                         app:layout_constraintStart_toEndOf="parent"
@@ -142,21 +142,21 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dialog_speed_low"
-                                android:textColor="@color/default_text_color"/>
+                                android:textColor="@color/default_text_color" />
 
                             <RadioButton
                                 android:id="@+id/speed_middle_radio_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dialog_speed_middle"
-                                android:textColor="@color/default_text_color"/>
+                                android:textColor="@color/default_text_color" />
 
                             <RadioButton
                                 android:id="@+id/speed_high_radio_button"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/dialog_speed_high"
-                                android:textColor="@color/default_text_color"/>
+                                android:textColor="@color/default_text_color" />
 
                         </RadioGroup>
 
