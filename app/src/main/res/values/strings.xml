@@ -34,8 +34,8 @@
     <string name="dialog_left_speed">左タイヤパワー</string>
     <string name="dialog_time">時間(秒)</string>
     <string name="dialog_sensor_num">距離(cm)</string>
-    <string name="dialog_sensor_bigger">センサー値より大きい</string>
-    <string name="dialog_sensor_smaller">センサー値より小さい</string>
+    <string name="dialog_sensor_bigger">値よりとおい</string>
+    <string name="dialog_sensor_smaller">値よりちかい</string>
     <string name="dialog_loop_num">ループ数</string>
     <string name="dialog_speed_low">おそい</string>
     <string name="dialog_speed_middle">ふつう</string>
@@ -73,7 +73,7 @@
     <string name="block_end_name">エンド</string>
 
     <string name="block_break_name">ぬける</string>
-    <string name="block_break_description">ループブロックのループからぬけることができます。</string>
+    <string name="block_break_description">ループブロックのループからぬける</string>
 
 
     <!--button-->
