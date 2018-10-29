@@ -61,10 +61,12 @@
                     android:id="@+id/block_des_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@string/error_text"
                     android:textColor="@color/white_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/detail_cancel_btn"
                     app:layout_constraintStart_toEndOf="@id/block_image"
                     app:layout_constraintTop_toBottomOf="@id/block_title_text" />
 

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
 
@@ -40,31 +38,48 @@
                 android:layout_height="match_parent"
                 android:layout_marginVertical="8dp"
                 android:layout_weight="1"
-                android:background="@drawable/block_script_item"
                 android:onClick="@{(v)->adapter.clickBlock(v,position,ifState)}"
                 android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/block_image"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="4"
-                    android:src="@drawable/ic_block_start" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="8"
+                    android:background="@drawable/block_script_item"
+                    android:layout_weight="4">
+
+                    <ImageView
+                        android:id="@+id/block_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:layout_weight="4"
+                        android:src="@drawable/ic_block_start" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/title_text"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/block_script_item"
+                        android:layout_weight="4"
+                        android:background="@drawable/block_script_item_no_top"
                         android:gravity="center"
                         android:text="@string/block_start_name"
+                        android:textColor="@color/default_text_color" />
+
+                    <TextView
+                        android:id="@+id/id_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text=""
                         android:textColor="@color/default_text_color" />
 
                 </LinearLayout>
@@ -92,11 +107,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="@string/plus"
-                        android:textSize="@dimen/conductor_text_size"
                         android:includeFontPadding="false"
+                        android:text="@string/plus"
                         android:textAppearance="@style/TextAppearance.block_title_b"
-                        android:textColor="@color/default_text_color" />
+                        android:textColor="@color/default_text_color"
+                        android:textSize="@dimen/conductor_text_size" />
 
                 </LinearLayout>
             </FrameLayout>

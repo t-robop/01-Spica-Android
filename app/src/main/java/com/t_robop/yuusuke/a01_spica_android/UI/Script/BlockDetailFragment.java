@@ -16,6 +16,7 @@ import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBind
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
 
@@ -298,6 +299,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 spicaBlock = RIGHT;
             }
             drawScript(spicaBlock);
+        }else if(spicaBlock == IF_START){
+            if (checkedId == R.id.radiobutton_left) {
+                mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
+            } else if (checkedId == R.id.radiobutton_right) {
+                mBinding.textValueDes.setText(R.string.text_value_des_if_near);
+            }
         }
     }
 

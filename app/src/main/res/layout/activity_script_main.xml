@@ -23,38 +23,31 @@
                 android:clipToPadding="false"
                 android:paddingLeft="150dp"
                 android:scrollbars="none"
-                app:layout_constraintBottom_toTopOf="@id/recycler_block_list"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_block_list"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:scrollbars="none"
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="@dimen/fab_scale"
+                android:layout_height="@dimen/fab_scale"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="@dimen/fab_margin"
+                android:layout_marginRight="@dimen/fab_margin"
+                android:src="@drawable/ic_block_start"
+                app:backgroundTint="@color/FABBGColor"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintVertical_weight="1" />
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/restore_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#00000000"
+                app:layout_constraintEnd_toEndOf="parent" />
 
         </android.support.constraint.ConstraintLayout>
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="bottom|right"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="16dp"
-            android:src="@drawable/ic_block_start"
-            app:backgroundTint="@color/FABBGColor" />
-
-        <Button
-            android:id="@+id/restore_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:background="#00000000"/>
     </FrameLayout>
-
 
 </layout>
