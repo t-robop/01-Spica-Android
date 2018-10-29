@@ -78,7 +78,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@{String.valueOf(value) + `秒`}"
+                        android:text="@{String.valueOf(value).substring(0,3) + `びょう`}"
                         tools:text="@string/error_text" />
 
                 </LinearLayout>
