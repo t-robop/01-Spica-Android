@@ -7,4 +7,7 @@
 
     <dimen name="conductor_scaele">36dp</dimen>
     <dimen name="conductor_text_size">24sp</dimen>
+
+    <dimen name="detail_value_text">48sp</dimen>
+    <dimen name="detail_value_text_des">16sp</dimen>
 </resources>
