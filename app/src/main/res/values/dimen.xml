@@ -10,4 +10,7 @@
 
     <dimen name="detail_value_text">48sp</dimen>
     <dimen name="detail_value_text_des">16sp</dimen>
+
+    <dimen name="fab_scale">64dp</dimen>
+    <dimen name="fab_margin">36dp</dimen>
 </resources>

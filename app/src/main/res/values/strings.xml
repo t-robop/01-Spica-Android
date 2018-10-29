@@ -10,8 +10,10 @@
     <string name="back_description">パワーと時間を設定して、ロボットを後ろに動かします。</string>
     <string name="left_description">パワーと時間を設定して、ロボットを左に回転させます。</string>
     <string name="right_description">パワーと時間を設定して、ロボットを右に回転させます。</string>
-    <string name="loop_start_description">ループの始まり</string>
+    <string name="loop_start_description">ループの中のブロックは、ループ回数だけくりかえされます。</string>
     <string name="loop_end_description">ループの終わり</string>
+    <string name="if_start_description">もしもブロックに書かれていることが起こったら、Yesにすすみます。</string>
+    <string name="if_end_description">もしもの終わり</string>
 
 
     <string name="error_no_brock">ブロックがありません</string>
@@ -44,34 +46,34 @@
 
     <!--Blockの情報-->
     <string name="block_front_name">すすむ</string>
-    <string name="block_front_description">まえにすすむ</string>
+    <string name="block_front_description">パワーと時間を設定して、ロボットを前に動かします。</string>
 
     <string name="block_back_name">さがる</string>
-    <string name="block_back_description">うしろにさがる</string>
+    <string name="block_back_description">パワーと時間を設定して、ロボットを後ろに動かします。</string>
 
     <string name="block_rotate_name">まわる</string>
     <string name="block_left_name">ひだりにまわる</string>
-    <string name="block_left_description">ひだりにまわる</string>
+    <string name="block_left_description">パワーと時間を設定して、ロボットを左に回転させます。</string>
 
     <string name="block_right_name">みぎにまわる</string>
-    <string name="block_right_description">みぎにまわる</string>
+    <string name="block_right_description">パワーと時間を設定して、ロボットを右に回転させます。</string>
 
     <string name="block_if_start_name">もしも</string>
-    <string name="block_if_start_description">もしも</string>
-    <string name="block_if_start_bigger">cmより大きいとき</string>
-    <string name="block_if_start_smaller">cmより小さいとき</string>
+    <string name="block_if_start_description">もしもブロックに書かれていることが起こったら、Yesにすすみます。</string>
+    <string name="block_if_start_bigger">cmよりとおいとき</string>
+    <string name="block_if_start_smaller">cmよりちかいとき</string>
 
-    <string name="block_if_end_name">おわり</string>
+    <string name="block_if_end_name">もしも - おわり</string>
 
     <string name="block_for_start_name">ループ</string>
-    <string name="block_for_start_description">ループ</string>
-    <string name="block_for_end_name">ループ_おわり</string>
+    <string name="block_for_start_description">ループの中のブロックは、ループ回数だけくりかえされます。</string>
+    <string name="block_for_end_name">ループ - おわり</string>
 
     <string name="block_start_name">スタート</string>
     <string name="block_end_name">エンド</string>
 
     <string name="block_break_name">ぬける</string>
-    <string name="block_break_description">ぬける</string>
+    <string name="block_break_description">ループブロックのループからぬけることができます。</string>
 
 
     <!--button-->
@@ -105,7 +107,7 @@
     <string name="text_value_des_right">びょう、みぎかいてん</string>
     <string name="text_value_des_left">びょう、ひだりかいてん</string>
     <string name="text_value_des_back">びょう、さがる</string>
-    <string name="text_value_des_if_fast">よりとおいなら、Yesへ</string>
-    <string name="text_value_des_if_near">よりちかいなら、Yesへ</string>
+    <string name="text_value_des_if_fast">cmよりとおいなら、Yesへ</string>
+    <string name="text_value_des_if_near">cmよりちかいなら、Yesへ</string>
     <string name="text_value_des_for">かい、くりかえす</string>
 </resources>
