@@ -68,16 +68,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
-                mBinding.textValueDes.setText(R.string.text_value_des_front);
             case BACK:
-                mBinding.textValueDes.setText(R.string.text_value_des_back);
                 break;
             case LEFT:
                 mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
-                mBinding.textValueDes.setText(R.string.text_value_des_left);
                 break;
 
             case RIGHT:
@@ -85,7 +82,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
-                mBinding.textValueDes.setText(R.string.text_value_des_right);
                 break;
 
             case IF_START:
@@ -140,6 +136,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockDesText.setText(R.string.block_front_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
+                mBinding.textValueDes.setText(R.string.text_value_des_front);
                 break;
 
             case BACK:
@@ -148,6 +145,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockDesText.setText(R.string.block_back_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
+                mBinding.textValueDes.setText(R.string.text_value_des_back);
                 break;
 
             case LEFT:
@@ -157,6 +155,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.radiobuttonLeft.setText(R.string.common_left);
                 mBinding.radiobuttonRight.setText(R.string.common_right);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
+                mBinding.textValueDes.setText(R.string.text_value_des_left);
                 break;
 
             case RIGHT:
@@ -166,6 +165,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.radiobuttonLeft.setText(R.string.common_left);
                 mBinding.radiobuttonRight.setText(R.string.common_right);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
+                mBinding.textValueDes.setText(R.string.text_value_des_right);
                 break;
 
             case IF_START:
@@ -194,6 +194,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_red);
+                mBinding.seekValue.setVisibility(View.INVISIBLE);
                 break;
         }
 
