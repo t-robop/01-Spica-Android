@@ -64,22 +64,34 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
+        int res=R.id.speed_middle_radio_button;;
+        if(targetScript.getSpeed()==1){
+            res=R.id.speed_low_radio_button;
+        }else if(targetScript.getSpeed()==2){
+            res=R.id.speed_middle_radio_button;
+        }else if(targetScript.getSpeed()==3){
+            res=R.id.speed_high_radio_button;
+        }
         switch (spicaBlock) {
             case FRONT:
-                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
+                mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
+                break;
             case BACK:
+                mBinding.speedRadioGroup.check(res);
+                mBinding.seekValue.setMax(300);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
             case LEFT:
-                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
+                mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
 
             case RIGHT:
-                mBinding.speedRadioGroup.check(R.id.speed_middle_radio_button);
+                mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(300);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));

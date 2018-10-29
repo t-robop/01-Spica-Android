@@ -110,4 +110,6 @@
     <string name="text_value_des_if_fast">cmよりとおいなら、Yesへ</string>
     <string name="text_value_des_if_near">cmよりちかいなら、Yesへ</string>
     <string name="text_value_des_for">かい、くりかえす</string>
+
+    <string name="text_value_time">%sびょう</string>
 </resources>
