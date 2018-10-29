@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +23,10 @@ public class ScriptMainActivity extends AppCompatActivity {
     private CanvasView mCanvasView;
     private TextView textView;
 
+    private boolean canvasViewScrolling = false;
+
     int overallXScroll = 0;
+    int sizeX = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,7 @@ public class ScriptMainActivity extends AppCompatActivity {
         mScriptAdapter = new ScriptMainAdapter(this);
         mScriptRecyclerView.setAdapter(mScriptAdapter);
 
-        for(int i=0;i<20;i++) {
+        for(int i=0;i<10;i++) {
             ScriptModel scriptModel = new ScriptModel();
             BlockModel blockModel = new BlockModel();
             blockModel.setBlockId(0101+i);
@@ -49,21 +53,17 @@ public class ScriptMainActivity extends AppCompatActivity {
             mScriptAdapter.add(scriptModel);
 
             mCanvasView.setCommandBlockNum(mScriptAdapter.getItemCount() + 2);
-            mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());
+            mCanvasView.windowSizeChange(sizeX, (float) mScriptAdapter.getItemCount());
         }
 
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ScriptModel scriptModel = new ScriptModel();
-                BlockModel blockModel = new BlockModel();
-                blockModel.setBlockId(0101);
-                scriptModel.setBlock(blockModel);
-                mScriptAdapter.add(scriptModel);
-
                 mCanvasView.setCommandBlockNum(mScriptAdapter.getItemCount() + 2);
-                mCanvasView.windowSizeChange(7, (float) mScriptAdapter.getItemCount());            }
-        });
+                mCanvasView.windowSizeChange(sizeX, mScriptRecyclerView.computeHorizontalScrollRange() + 150);
+            }
+
+    });
 
         mScriptAdapter.notifyDataSetChanged();
 
@@ -95,8 +95,19 @@ public class ScriptMainActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                overallXScroll = overallXScroll + dx;
-                mCanvasView.setPositon(overallXScroll);
+                if(!canvasViewScrolling) {
+                    overallXScroll = overallXScroll + dx;
+                    mCanvasView.setPositon(overallXScroll);
+                    Log.d("overscroll","" + overallXScroll);
+                    Log.d("windowSize","" + sizeX);
+                    Log.d("sumNumber","" + (overallXScroll + sizeX));
+                    Log.d("maxScroll","" + mScriptRecyclerView.computeHorizontalScrollRange());
+
+
+                }else {
+
+                }
+                //mScriptLayoutManager.scrollToPositionWithOffset(0,-100);
             }
         });
 
@@ -104,21 +115,15 @@ public class ScriptMainActivity extends AppCompatActivity {
         mCanvasView.setClass(scriptMainActivity);
     }
 
-//    public void setScroll(float pos){
-//        float itemPos =  (mScriptAdapter.getItemCount() * pos);
-//        itemPos = itemPos;
-//         mScriptLayoutManager.computeHorizontalScrollOffset();
-//
-//        mScriptLayoutManager.scrollToPositionWithOffset((int)itemPos,100);
-//    }
-
-
+    public void setScroll(float pos){
+        canvasViewScrolling = true;
+        overallXScroll = (int)(pos * (mScriptRecyclerView.computeHorizontalScrollRange() + 150 - sizeX));
+        mScriptLayoutManager.scrollToPositionWithOffset(0, -overallXScroll);
+        canvasViewScrolling = false;
+    }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-//        int num  = mScriptRecyclerView.computeVerticalScrollRange();
-//        num = mScriptRecyclerView.computeHorizontalScrollRange();
-//        mCanvasView.windowSizeChange(mScriptRecyclerView.getWidth(),mScriptRecyclerView.computeHorizontalScrollRange(), false);
-//        temp = true;
+        sizeX = mScriptRecyclerView.getWidth();
     }
 }

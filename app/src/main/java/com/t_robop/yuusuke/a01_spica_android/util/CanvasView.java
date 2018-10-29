@@ -149,6 +149,10 @@ public class CanvasView extends View {
                     canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
                     break;
+                case 2://ifブロック無し(ifルート内)
+                    canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
+                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
+                    break;
                 case 10://ifの初め
                     canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
@@ -194,18 +198,18 @@ public class CanvasView extends View {
             case MotionEvent.ACTION_DOWN:                             //- 画面をタッチしたとき
                 nowPositionX = event.getX();
                 y = event.getY();
-      //          scriptMainActivity.setScroll(nowPositionX / canvasWidth);
+                scriptMainActivity.setScroll(getPosition());
                 break;
             case MotionEvent.ACTION_UP:                               //- 画面から指を離したとき
                 nowPositionX = event.getX();
                 y = event.getY();
-       //         scriptMainActivity.setScroll(nowPositionX / canvasWidth);
+                scriptMainActivity.setScroll(getPosition());
 
                 break;
             case MotionEvent.ACTION_MOVE:                             //- タッチしながら指をスライドさせたとき
                 nowPositionX = event.getX();
                 y = event.getY();
-         //       scriptMainActivity.setScroll(nowPositionX / canvasWidth);
+                scriptMainActivity.setScroll(getPosition());
 
                 break;
         }
@@ -226,7 +230,7 @@ public class CanvasView extends View {
 
         for (int i = 0; i < commandBlockNum - 2; i++) {
             commandBlocks[0][i] = 1;
-            switch (i % 5) {
+            switch (i % 7) {
                 case 0:
                     commandBlocks[1][i] = 0;
                     break;
@@ -237,9 +241,17 @@ public class CanvasView extends View {
                     commandBlocks[1][i] = 1;
                     break;
                 case 3:
-                    commandBlocks[1][i] = 1;
+                    commandBlocks[1][i] = 2;
                     break;
                 case 4:
+                    commandBlocks[1][i] = 2;
+                    commandBlocks[0][i] = 1;
+
+                case 5:
+                    commandBlocks[1][i] = 2;
+                    commandBlocks[0][i] = 1;
+                    break;
+                case 6:
                     commandBlocks[1][i] = 20;
                     break;
             }
@@ -257,12 +269,16 @@ public class CanvasView extends View {
         if (nowPositionX >= canvasWidth - windowWidth / 2) {
             nowPositionX = canvasWidth - windowWidth / 2;
         }
-        //比率を求めて、mainViewの数値とかける。カーソルは左よりではなく中央に来るので、WindowSizeの半分を引く
-        return nowPositionX / canvasWidth * mainViewMaxWidth - mainViewWindowWidth / 2;
+        //比率を求める
+        return (nowPositionX - windowWidth / 2) / (canvasWidth - windowWidth);
     }
 
-    public void setPositon(float positon) {
-        nowPositionX =  positon * mainViewWindowWidth / mainViewMaxWidth + windowWidth / 2;
+    public void setPositon(float position) {
+        if (mainViewMaxWidth != mainViewWindowWidth){
+            nowPositionX =  position / (mainViewMaxWidth - mainViewWindowWidth)*(canvasWidth - windowWidth) + windowWidth / 2;
+        }else {
+            nowPositionX = 0;
+        }
     }
 
     public void setClass(ScriptMainActivity SMA){

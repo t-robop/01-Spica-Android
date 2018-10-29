@@ -32,5 +32,4 @@
             android:name=".UI.Script.BlockDetailActivity"
             android:theme="@style/Theme.DarkTranslucent" />
     </application>
-
 </manifest>
