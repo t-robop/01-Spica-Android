@@ -23,6 +23,7 @@ public class UdpReceive extends Thread{
     private int port;
     private Context context;
     private Handler handler = new Handler();
+    private Handler handlerDismiss = new Handler();
     private Dialog dialog;
     private byte[] buffer;
     private Thread checkReceive;
@@ -38,14 +39,30 @@ public class UdpReceive extends Thread{
         dialog = new Dialog(context);
         dialog.setContentView(R.layout.receive_udp_dialog);
         dialog.setCancelable(false);
-        Button cancelButton = dialog.findViewById(R.id.receive_udp_cancel_button);
+        final Button cancelButton = dialog.findViewById(R.id.receive_udp_cancel_button);
+        final TextView text = dialog.findViewById(R.id.receive_udp_text);
         cancelButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        Runnable dismiss = new Runnable() {
+                            public void run() {
+                                dialog.dismiss();
+                            }
+                        };
+
+                        text.setText("キャンセル中...");
+                        cancelButton.setVisibility(View.GONE);
+
                         UdpSend udp = new UdpSend();
                         udp.UdpSendText(context.getString(R.string.esp_reboot_command));
-                        dialog.dismiss();
+
+                        //監視しているスレッドを止める
+                        checkReceive.interrupt();
+
+                        //2.5秒間待つ
+                        handlerDismiss.postDelayed(dismiss, 5000);
                     }
                 }
         );
@@ -76,7 +93,7 @@ public class UdpReceive extends Thread{
                                     String result = new String(buffer, "UTF-8");
 
                                     //結果をトースト表示
-                                    Toast.makeText(context, result, Toast.LENGTH_LONG).show();
+                                    Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
                                     //ダイアログを消す
                                     dialog.dismiss();

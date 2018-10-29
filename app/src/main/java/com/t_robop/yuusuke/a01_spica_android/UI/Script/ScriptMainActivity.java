@@ -227,8 +227,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
      * Fragment生成メソッド
      */
     public void inflateFragment(ScriptModel scriptModel) {
-        fab.setVisibility(View.INVISIBLE);
-        fab.setEnabled(false);
+        //fab.setVisibility(View.INVISIBLE);
+        //fab.setEnabled(false);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -265,8 +265,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fragmentTransaction.remove(blockSelectFragment);
         fragmentTransaction.commit();
 
-        fab.setVisibility(View.VISIBLE);
-        fab.setEnabled(true);
+        //fab.setVisibility(View.VISIBLE);
+        //fab.setEnabled(true);
     }
 
 
@@ -283,8 +283,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     @Override
     public void onClickOutSide() {
-        fab.setVisibility(View.VISIBLE);
-        fab.setEnabled(true);
+        //fab.setVisibility(View.VISIBLE);
+        //fab.setEnabled(true);
     }
 
     /**

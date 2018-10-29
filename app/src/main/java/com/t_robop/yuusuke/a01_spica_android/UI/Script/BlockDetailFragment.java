@@ -217,6 +217,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
     public void setAddClickListener(BlockDetailFragment.DetailListener listener) {
         this.listener = listener;
+
     }
 
     /**
@@ -224,6 +225,16 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
      */
     public void close() {
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
+
+    }
+
+    /**
+     * fragmentの外をタップしたとき
+     */
+    public void cancel() {
+        confirm();
+        getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
+
     }
 
     /**
