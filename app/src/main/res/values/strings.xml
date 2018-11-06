@@ -112,4 +112,5 @@
     <string name="text_value_des_for">かい、くりかえす</string>
 
     <string name="text_value_time">%sびょう</string>
+    <string name="qr_str">QR読み込み</string>
 </resources>
