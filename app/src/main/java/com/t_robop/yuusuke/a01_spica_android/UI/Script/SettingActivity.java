@@ -1,13 +1,17 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
 import com.t_robop.yuusuke.a01_spica_android.R;
 
 public class SettingActivity extends AppCompatActivity {
@@ -17,6 +21,7 @@ public class SettingActivity extends AppCompatActivity {
 
     Button saveButton;
     Button cancelButton;
+    Button qrButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +58,30 @@ public class SettingActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        qrButton = findViewById(R.id.qr);
+        qrButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new IntentIntegrator(SettingActivity.this).initiateScan();
+                    }
+                }
+        );
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if(result != null) {
+            String resultData = result.getContents();
+            String[] Datas = resultData.split(";", 0);
+            String ipString = (Datas[0].split(":")[1]);
+            String portString = (Datas[1].split(":")[1]);
+            ipEditText.setText(ipString);
+            portEditText.setText(String.valueOf(portString));
+
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }
