@@ -1,6 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -54,7 +55,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         super.onViewCreated(view, savedInstanceState);
         //アニメーションスタート
         popupAnime(mBinding.fgDetail);
-        alphaAnime(mBinding.bgDetail);
+        if (mScriptPresenter.getState() == ScriptPresenter.ViewState.EDIT) {
+            alphaAnime(mBinding.bgDetail);
+        } else {
+            mBinding.bgDetail.setBackgroundResource(R.color.alpha_clear);
+        }
     }
 
     @Override

@@ -35,5 +35,6 @@
 
     <color name="filter_color">#aa808080</color>
 
+    <color name="alpha_clear">#00000000</color>
 
 </resources>
