@@ -1,12 +1,14 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.databinding.DataBindingUtil;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RadioGroup;
@@ -52,7 +54,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //アニメーションスタート
-        popupAnime(view);
+        popupAnime(mBinding.fgDetail);
+        if (mScriptPresenter.getState() == ScriptPresenter.ViewState.EDIT) {
+            alphaAnime(mBinding.bgDetail);
+        } else {
+            mBinding.bgDetail.setBackgroundResource(R.color.alpha_clear);
+        }
     }
 
     @Override
@@ -64,13 +71,14 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         spicaBlock = targetScript.getBlock();
         //描画
         drawScript(spicaBlock);
-        int res=R.id.speed_middle_radio_button;;
-        if(targetScript.getSpeed()==1){
-            res=R.id.speed_low_radio_button;
-        }else if(targetScript.getSpeed()==2){
-            res=R.id.speed_middle_radio_button;
-        }else if(targetScript.getSpeed()==3){
-            res=R.id.speed_high_radio_button;
+        int res = R.id.speed_middle_radio_button;
+        ;
+        if (targetScript.getSpeed() == 1) {
+            res = R.id.speed_low_radio_button;
+        } else if (targetScript.getSpeed() == 2) {
+            res = R.id.speed_middle_radio_button;
+        } else if (targetScript.getSpeed() == 3) {
+            res = R.id.speed_high_radio_button;
         }
         switch (spicaBlock) {
             case FRONT:
@@ -135,6 +143,18 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         scaleAnimation.setFillAfter(true);
         //アニメーションの開始
         view.startAnimation(scaleAnimation);
+    }
+
+    private void alphaAnime(View view) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 0.5f);
+        // animation時間 msec
+        alphaAnimation.setDuration(200);
+        // 繰り返し回数
+        alphaAnimation.setRepeatCount(0);
+        // animationが終わったそのまま表示にする
+        alphaAnimation.setFillAfter(true);
+        //アニメーションの開始
+        view.startAnimation(alphaAnimation);
     }
 
     /**
@@ -311,7 +331,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 spicaBlock = RIGHT;
             }
             drawScript(spicaBlock);
-        }else if(spicaBlock == IF_START){
+        } else if (spicaBlock == IF_START) {
             if (checkedId == R.id.radiobutton_left) {
                 mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
             } else if (checkedId == R.id.radiobutton_right) {

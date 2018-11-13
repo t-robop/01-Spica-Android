@@ -11,14 +11,21 @@
             type="com.t_robop.yuusuke.a01_spica_android.UI.Script.BlockDetailFragment" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/bg_detail"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#00000000"
         android:gravity="center"
-        android:onClick="@{()->fragment.cancel()}"
-        android:orientation="vertical">
+        android:onClick="@{()->fragment.cancel()}">
+
+        <RelativeLayout
+            android:id="@+id/bg_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:gravity="center">
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/fg_detail"
@@ -26,7 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="200dp"
             android:background="@drawable/select_shape_white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <android.support.constraint.ConstraintLayout
                 android:id="@+id/bg_detail_block_view"
@@ -231,6 +240,6 @@
 
         </LinearLayout>
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </layout>

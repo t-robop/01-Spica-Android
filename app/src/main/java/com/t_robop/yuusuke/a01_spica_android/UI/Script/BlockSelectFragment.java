@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
@@ -109,7 +110,8 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        popupAnime(view);
+        popupAnime(mBinding.selectDialogBg);
+        alphaAnime(mBinding.bgSelect);
     }
 
     public void drawArrangeableBlocks() {
@@ -173,5 +175,17 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         scaleAnimation.setFillAfter(true);
         //アニメーションの開始
         view.startAnimation(scaleAnimation);
+    }
+
+    private void alphaAnime(View view) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 0.5f);
+        // animation時間 msec
+        alphaAnimation.setDuration(200);
+        // 繰り返し回数
+        alphaAnimation.setRepeatCount(0);
+        // animationが終わったそのまま表示にする
+        alphaAnimation.setFillAfter(true);
+        //アニメーションの開始
+        view.startAnimation(alphaAnimation);
     }
 }
