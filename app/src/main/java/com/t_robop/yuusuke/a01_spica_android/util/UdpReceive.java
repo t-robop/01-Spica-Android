@@ -52,7 +52,7 @@ public class UdpReceive extends Thread{
                             }
                         };
 
-                        text.setText("キャンセル中...");
+                        text.setText(R.string.cancel_dialog_text);
                         cancelButton.setVisibility(View.GONE);
 
                         UdpSend udp = new UdpSend();

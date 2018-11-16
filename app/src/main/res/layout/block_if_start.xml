@@ -129,8 +129,9 @@
                     android:textColor="@color/white_text_color"
                     android:background="@color/color_blue"
                     android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
                     app:layout_constraintBottom_toTopOf="@id/conductor_add"
-                    app:layout_constraintEnd_toEndOf="@id/conductor_add"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
 
             </android.support.constraint.ConstraintLayout>

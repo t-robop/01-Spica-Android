@@ -34,8 +34,8 @@
     <string name="dialog_left_speed">左タイヤパワー</string>
     <string name="dialog_time">時間(秒)</string>
     <string name="dialog_sensor_num">距離(cm)</string>
-    <string name="dialog_sensor_bigger">値よりとおい</string>
-    <string name="dialog_sensor_smaller">値よりちかい</string>
+    <string name="dialog_sensor_bigger">とおい</string>
+    <string name="dialog_sensor_smaller">ちかい</string>
     <string name="dialog_loop_num">ループ数</string>
     <string name="dialog_speed_low">おそい</string>
     <string name="dialog_speed_middle">ふつう</string>
@@ -59,25 +59,25 @@
     <string name="block_right_description">パワーと時間を設定して、ロボットを右に回転させます。</string>
 
     <string name="block_if_start_name">もしも</string>
-    <string name="block_if_start_description">もしもブロックに書かれていることが起こったら、Yesにすすみます。</string>
-    <string name="block_if_start_bigger">cmよりとおいとき</string>
-    <string name="block_if_start_smaller">cmよりちかいとき</string>
+    <string name="block_if_start_description">もしもブロックに書かれていることが起こったら、「はい」の方向にすすみます。\nそうでなければ「いいえ」の方向にすすみます。</string>
+    <string name="block_if_start_bigger">cmよりとおい？</string>
+    <string name="block_if_start_smaller">cmよりちかい？</string>
 
     <string name="block_if_end_name">もしも - おわり</string>
 
     <string name="block_for_start_name">ループ</string>
-    <string name="block_for_start_description">ループの中のブロックは、ループ回数だけくりかえされます。</string>
+    <string name="block_for_start_description">ループの中のブロックが、ループ回数だけくりかえされます。</string>
     <string name="block_for_end_name">ループ - おわり</string>
 
-    <string name="block_start_name">スタート</string>
-    <string name="block_end_name">エンド</string>
+    <string name="block_start_name">はじまり</string>
+    <string name="block_end_name">おわり</string>
 
     <string name="block_break_name">ぬける</string>
     <string name="block_break_description">ループブロックのループからぬける</string>
 
 
     <!--button-->
-    <string name="button_ok">OK</string>
+    <string name="button_ok">ほぞん</string>
     <string name="button_cancel">×</string>
     <string name="button_delete">すてる</string>
 
@@ -90,25 +90,26 @@
 
 
     <string name="plus">+</string>
-    <string name="send_success_text">ロボットに送信完了</string>
+    <string name="send_success_text">ロボットにめいれいをおくったよ！</string>
     <string name="send_failed_text">ブロックがないよ！</string>
-    <string name="receive_dialog_text">実行中......</string>
-    <string name="receive_dialog_button_text">キャンセルする</string>
+    <string name="receive_dialog_text">ロボットがうごいています....</string>
+    <string name="receive_dialog_button_text">とめる</string>
+    <string name="cancel_dialog_text">とめています....</string>
     <string name="esp_reboot_command">reboot-now</string>
 
-    <string name="text_true">Yes</string>
-    <string name="text_false">No</string>
+    <string name="text_true">はい</string>
+    <string name="text_false">いいえ</string>
 
     <string name="text_power_0">おそい</string>
     <string name="text_power_1">ふつう</string>
     <string name="text_power_2">はやい</string>
 
     <string name="text_value_des_front">びょう、すすむ</string>
-    <string name="text_value_des_right">びょう、みぎかいてん</string>
-    <string name="text_value_des_left">びょう、ひだりかいてん</string>
+    <string name="text_value_des_right">びょう、みぎにまわる</string>
+    <string name="text_value_des_left">びょう、ひだりにまわる</string>
     <string name="text_value_des_back">びょう、さがる</string>
-    <string name="text_value_des_if_fast">cmよりとおいなら、Yesへ</string>
-    <string name="text_value_des_if_near">cmよりちかいなら、Yesへ</string>
+    <string name="text_value_des_if_fast">cmよりとおいなら、「はい」へ</string>
+    <string name="text_value_des_if_near">cmよりちかいなら、「はい」へ</string>
     <string name="text_value_des_for">かい、くりかえす</string>
 
     <string name="text_value_time">%sびょう</string>
