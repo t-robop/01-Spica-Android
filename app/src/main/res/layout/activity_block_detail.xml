@@ -160,21 +160,21 @@
                         android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_low"
+                        android:text="@string/text_power_0"
                         android:textColor="@color/default_text_color" />
 
                     <RadioButton
                         android:id="@+id/speed_middle_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_middle"
+                        android:text="@string/text_power_1"
                         android:textColor="@color/default_text_color" />
 
                     <RadioButton
                         android:id="@+id/speed_high_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_high"
+                        android:text="@string/text_power_2"
                         android:textColor="@color/default_text_color" />
 
                 </RadioGroup>

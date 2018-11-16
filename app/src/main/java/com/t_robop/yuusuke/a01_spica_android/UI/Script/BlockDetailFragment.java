@@ -205,8 +205,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
                 mBinding.blockTitleText.setText(R.string.block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_if_start_description);
-                mBinding.radiobuttonLeft.setText(R.string.dialog_sensor_bigger);
-                mBinding.radiobuttonRight.setText(R.string.dialog_sensor_smaller);
+                mBinding.radiobuttonLeft.setText(R.string.text_sensor_bigger);
+                mBinding.radiobuttonRight.setText(R.string.text_sensor_smaller);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_purple);
                 break;
