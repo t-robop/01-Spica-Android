@@ -28,6 +28,8 @@ public class UdpReceive extends Thread{
     private byte[] buffer;
     private Thread checkReceive;
 
+    final int KILL_DIALOG_TIME = 2000;
+
     public UdpReceive(Context context){
         port = 10000;
         this.context = context;
@@ -61,8 +63,7 @@ public class UdpReceive extends Thread{
                         //監視しているスレッドを止める
                         checkReceive.interrupt();
 
-                        //2.5秒間待つ
-                        handlerDismiss.postDelayed(dismiss, 5000);
+                        handlerDismiss.postDelayed(dismiss, KILL_DIALOG_TIME);
                     }
                 }
         );
