@@ -28,6 +28,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
     ActivityBlockDetailBinding mBinding;
 
+    final int IF_BLOCK_MAX_PROGRESS = 20;
+    final int IF_BLOCK_GAP_PROGRESS = 10;
+
     public BlockDetailFragment() {
     }
 
@@ -116,8 +119,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                     mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
                 }
-                mBinding.seekValue.setProgress((int) targetScript.getValue() - 10);
-                mBinding.seekValue.setMax(20);
+                mBinding.seekValue.setProgress((int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
                 break;
             case FOR_START:
                 mBinding.seekValue.setProgress((int) targetScript.getValue());
@@ -353,9 +356,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         if (mBinding.seekValue.getMax() == 300) {
             float p = mBinding.seekValue.getProgress();
             mBinding.textValue.setText(String.valueOf(p / 100));
-        } else if (mBinding.seekValue.getMax() == 20) {
+        } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
-            p += 10;
+            p += IF_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
         }else if (mBinding.seekValue.getMax() == 10) {
             int p = mBinding.seekValue.getProgress();
