@@ -69,7 +69,7 @@
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@string/block_front_name" />
+                        android:text="@string/block_forward_block_name" />
 
                     <TextView
                         android:id="@+id/id_text"
@@ -78,8 +78,8 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@{String.valueOf(value).substring(0,3) + `びょう`}"
-                        tools:text="@string/error_text" />
+                        android:text="@{@string/block_forward_block_time_text(String.valueOf(value).substring(0,3))}"
+                        tools:text="@string/block_forward_block_time_tools_text" />
 
                 </LinearLayout>
 
@@ -107,7 +107,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@string/plus"
+                        android:text="@string/block_forward_blocK_add"
                         android:textSize="@dimen/conductor_text_size"
                         android:includeFontPadding="false"
                         android:textAppearance="@style/TextAppearance.block_title_b" />

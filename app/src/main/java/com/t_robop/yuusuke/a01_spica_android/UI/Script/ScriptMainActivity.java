@@ -183,9 +183,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                     UdpSend udp = new UdpSend();
                     udp.UdpSendText(sendData);
                     Log.d("sendData", sendData);
-                    Toast.makeText(ScriptMainActivity.this, R.string.send_success_text, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_send_success, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(ScriptMainActivity.this, R.string.send_failed_text, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_send_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });

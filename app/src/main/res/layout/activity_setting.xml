@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
-            android:text="@string/ip_text" />
+            android:text="@string/activity_setting_ip_name" />
 
         <EditText
             android:id="@+id/ip_edit"
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
-            android:text="@string/port_text" />
+            android:text="@string/activity_setting_port_name" />
 
         <EditText
             android:id="@+id/port_edit"
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
-            android:text="@string/button_cancel" />
+            android:text="@string/activity_setting_button_view_finish_text" />
 
         <Button
             android:id="@+id/save_btn"
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
-            android:text="@string/button_ok" />
+            android:text="@string/activity_setting_button_ok_text" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
-            android:text="@string/qr_str" />
+            android:text="@string/activity_setting_button_qr_text" />
     </LinearLayout>
 
 </LinearLayout>

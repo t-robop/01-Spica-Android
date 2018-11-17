@@ -1,7 +1,6 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.databinding.DataBindingUtil;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -116,13 +115,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case IF_START:
                 if (targetScript.getIfOperator() == targetScript.getSensorAboveNum()) {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
-                    mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
+                    mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
                 } else if (targetScript.getIfOperator() == targetScript.getSensorBelowNum()) {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_right);
-                    mBinding.textValueDes.setText(R.string.text_value_des_if_near);
+                    mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_below_text);
                 } else {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
-                    mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
+                    mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
                 }
                 mBinding.seekValue.setProgress((int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS);
                 mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
@@ -130,7 +129,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case FOR_START:
                 mBinding.seekValue.setProgress((int) targetScript.getValue());
                 mBinding.seekValue.setMax(FOR_BLOCK_MAX_PROGRESS);
-                mBinding.textValueDes.setText(R.string.text_value_des_for);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_loop_unit_text);
                 break;
         }
         //シークバーのテキストに反映
@@ -173,56 +172,56 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         switch (blockId) {
             case FRONT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
-                mBinding.blockTitleText.setText(R.string.block_front_name);
-                mBinding.blockDesText.setText(R.string.block_front_description);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_forward_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_forward_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
-                mBinding.textValueDes.setText(R.string.text_value_des_front);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_forward_unit_text);
                 break;
 
             case BACK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
-                mBinding.blockTitleText.setText(R.string.block_back_name);
-                mBinding.blockDesText.setText(R.string.block_back_description);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_back_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_back_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
-                mBinding.textValueDes.setText(R.string.text_value_des_back);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_back_unit_text);
                 break;
 
             case LEFT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
-                mBinding.blockTitleText.setText(R.string.block_left_name);
-                mBinding.blockDesText.setText(R.string.block_left_description);
-                mBinding.radiobuttonLeft.setText(R.string.common_left);
-                mBinding.radiobuttonRight.setText(R.string.common_right);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_left_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_left_description);
+                mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_left_rotate);
+                mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_right_rotate);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
-                mBinding.textValueDes.setText(R.string.text_value_des_left);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_left_unit_text);
                 break;
 
             case RIGHT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
-                mBinding.blockTitleText.setText(R.string.block_right_name);
-                mBinding.blockDesText.setText(R.string.block_right_description);
-                mBinding.radiobuttonLeft.setText(R.string.common_left);
-                mBinding.radiobuttonRight.setText(R.string.common_right);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_right_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_right_description);
+                mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_left_rotate);
+                mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_right_rotate);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
-                mBinding.textValueDes.setText(R.string.text_value_des_right);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_right_unit_text);
                 break;
 
             case IF_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
-                mBinding.blockTitleText.setText(R.string.block_if_start_name);
-                mBinding.blockDesText.setText(R.string.block_if_start_description);
-                mBinding.radiobuttonLeft.setText(R.string.dialog_sensor_bigger);
-                mBinding.radiobuttonRight.setText(R.string.dialog_sensor_smaller);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_if_start_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_if_start_description);
+                mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_above);
+                mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_below);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_purple);
                 break;
 
             case FOR_START:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
-                mBinding.blockTitleText.setText(R.string.block_for_start_name);
-                mBinding.blockDesText.setText(R.string.block_for_start_description);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_for_start_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_for_start_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_yellow_2);
@@ -230,8 +229,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
             case BREAK:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
-                mBinding.blockTitleText.setText(R.string.block_break_name);
-                mBinding.blockDesText.setText(R.string.block_break_description);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_break_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_break_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_red);
@@ -344,9 +343,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             drawScript(spicaBlock);
         } else if (spicaBlock == IF_START) {
             if (checkedId == R.id.radiobutton_left) {
-                mBinding.textValueDes.setText(R.string.text_value_des_if_fast);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
             } else if (checkedId == R.id.radiobutton_right) {
-                mBinding.textValueDes.setText(R.string.text_value_des_if_near);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_below_text);
             }
         }
     }

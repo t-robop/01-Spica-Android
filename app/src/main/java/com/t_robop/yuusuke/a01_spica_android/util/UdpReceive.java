@@ -3,12 +3,8 @@ package com.t_robop.yuusuke.a01_spica_android.util;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,11 +50,11 @@ public class UdpReceive extends Thread{
                             }
                         };
 
-                        text.setText("キャンセル中...");
+                        text.setText(R.string.udp_receive_cancel_dialog);
                         cancelButton.setVisibility(View.GONE);
 
                         UdpSend udp = new UdpSend();
-                        udp.UdpSendText(context.getString(R.string.esp_reboot_command));
+                        udp.UdpSendText(context.getString(R.string.udp_receive_esp_reboot_command));
 
                         //監視しているスレッドを止める
                         checkReceive.interrupt();

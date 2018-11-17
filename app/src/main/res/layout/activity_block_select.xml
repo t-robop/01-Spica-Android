@@ -54,7 +54,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_front_name"
+                        android:text="@string/activity_block_select_block_forward_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_rotate_name"
+                        android:text="@string/activity_block_select_block_rotate_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 
@@ -104,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_back_name"
+                        android:text="@string/activity_block_select_block_back_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 
@@ -138,7 +138,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_if_start_name"
+                        android:text="@string/activity_block_select_block_if_start_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 
@@ -164,7 +164,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_for_start_name"
+                        android:text="@string/activity_block_select_block_for_start_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 
@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:text="@string/block_break_name"
+                        android:text="@string/activity_block_select_block_break_name"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color" />
 

@@ -58,7 +58,7 @@
                     android:id="@+id/block_title_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="@string/error_text"
+                    android:text="@string/activity_block_detail_block_title"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/white_text_color"
                     app:layout_constraintBottom_toTopOf="@id/block_des_text"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
-                    android:text="@string/error_text"
+                    android:text="@string/activity_block_detail_block_description"
                     android:textColor="@color/white_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/detail_cancel_btn"
@@ -87,7 +87,7 @@
                     android:background="#00000000"
                     android:includeFontPadding="false"
                     android:onClick="@{()->fragment.close()}"
-                    android:text="@string/button_cancel"
+                    android:text="@string/activity_block_detail_view_finish"
                     android:textColor="@color/white_text_color"
                     android:textSize="40sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -160,21 +160,21 @@
                         android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_low"
+                        android:text="@string/activity_block_detail_block_speed_low"
                         android:textColor="@color/default_text_color" />
 
                     <RadioButton
                         android:id="@+id/speed_middle_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_middle"
+                        android:text="@string/activity_block_detail_block_speed_middle"
                         android:textColor="@color/default_text_color" />
 
                     <RadioButton
                         android:id="@+id/speed_high_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/dialog_speed_high"
+                        android:text="@string/activity_block_detail_block_speed_high"
                         android:textColor="@color/default_text_color" />
 
                 </RadioGroup>
@@ -196,14 +196,14 @@
                         android:id="@+id/radiobutton_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/error_text"
+                        android:text="@string/activity_block_detail_block_state_left"
                         android:textColor="@color/default_text_color" />
 
                     <RadioButton
                         android:id="@+id/radiobutton_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/error_text"
+                        android:text="@string/activity_block_detail_block_state_right"
                         android:textColor="@color/default_text_color" />
 
                 </RadioGroup>
@@ -215,7 +215,7 @@
                     android:layout_marginBottom="4dp"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.delete()}"
-                    android:text="@string/button_delete"
+                    android:text="@string/activity_block_detail_button_delete_text"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/delete_button_color"
                     android:visibility="invisible"
@@ -230,7 +230,7 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.confirm()}"
-                    android:text="@string/button_ok"
+                    android:text="@string/activity_block_detail_button_ok_text"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/default_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"

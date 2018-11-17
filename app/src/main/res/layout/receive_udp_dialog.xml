@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
-        android:text="@string/receive_dialog_text"
+        android:text="@string/receive_udp_dialog_description"
         android:textSize="24sp" />
 
     <Button
@@ -23,5 +23,5 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:background="@drawable/select_shape_white"
-        android:text="@string/receive_dialog_button_text" />
+        android:text="@string/receive_udp_dialog_button_stop_text" />
 </LinearLayout>

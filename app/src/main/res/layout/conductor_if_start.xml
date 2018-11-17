@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:includeFontPadding="false"
-                android:text="@string/text_true"
+                android:text="@string/conductor_if_start_compare_sensor_true_text"
                 android:textAppearance="@style/TextAppearance.block_title_b"
                 android:textColor="@color/white_text_color"
                 android:background="@color/color_red"
@@ -117,7 +117,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/plus"
+                    android:text="@string/conductor_if_start_block_add"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/default_text_color"
                     android:textSize="@dimen/conductor_text_size" />
