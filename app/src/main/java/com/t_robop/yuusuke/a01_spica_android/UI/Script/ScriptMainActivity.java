@@ -45,6 +45,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private UdpReceive udpReceive;
 
+    float sizeX;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -351,6 +353,12 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.notifyDataSetChanged();
 
         mBinding.canvasView.setCommandBlocks(mScriptAdapter);
+        mBinding.canvasView.windowSizeChange(sizeX, (float) mScriptAdapter.getItemCount());
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        sizeX=mBinding.recyclerScript.getWidth();
     }
 
     @Override

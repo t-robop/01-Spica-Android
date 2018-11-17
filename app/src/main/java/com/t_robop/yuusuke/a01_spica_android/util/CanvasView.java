@@ -29,7 +29,6 @@ public class CanvasView extends View {
     private float canvasWidth;
     private float canvasHeight;
 
-
     //四角を描画する部分
     private float windowWidth;
     private float windowHeight;
@@ -165,31 +164,6 @@ public class CanvasView extends View {
                 }
                 canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, 1, commandBlockPaint);
             }
-
-//            switch (commandBlocks[1][i - 1]) {
-//                case 0://何もなし
-//                    break;
-//                case 1://ifブロック有り
-//                    canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, 1, commandBlockPaint);
-//                    canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
-//                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
-//                    break;
-//                case 2://ifブロック無し(ifルート内)
-//                    canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
-//                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
-//                    break;
-//                case 10://ifの初め
-//                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
-//                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
-//                    break;
-//                case 20://ifの終わり
-//                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
-//                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
-//                    canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
-//                            commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
-//                    break;
-//            }
-
 
             //canvas.drawCircle(commandBlockMargin + i*(commandBlockLineLength / (commandBlockNum - 1))  , canvasHeight / 2, 1, commandBlockPaint);
         }
