@@ -172,11 +172,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         switch (blockId) {
             case FRONT:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_front_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_front_description);
+                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_forward_name);
+                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_forward_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
-                mBinding.textValueDes.setText(R.string.block_detail_fragment_front_unit_text);
+                mBinding.textValueDes.setText(R.string.block_detail_fragment_forward_unit_text);
                 break;
 
             case BACK:

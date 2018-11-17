@@ -2,7 +2,7 @@
     <string name="app_name">Spica</string>
     
     <!-- common block -->
-    <string name="common_front_name">すすむ</string>
+    <string name="common_forward_name">すすむ</string>
     <string name="common_back_name">さがる</string>
     <string name="common_rotate_name">まわる</string>
     <string name="common_left_name">ひだりにまわる</string>
@@ -18,14 +18,13 @@
     <string name="common_speed_low">おそい</string>
     <string name="common_speed_middle">ふつう</string>
     <string name="common_speed_high">はやい</string>
+
+    <string name="common_time_unit">%sびょう</string>
+    <string name="common_count_unit">%sかい</string>
     
     <string name="common_block_add">+</string>
 
     <!-- common button-->
-    <string name="button_ok">ほぞん</string>
-    <string name="button_cancel">×</string>
-    <string name="button_delete">すてる</string>
-    
     <string name="common_button_ok">ほぞん</string>
     <string name="common_button_cancel">×</string>
     <string name="common_button_delete">すてる</string>
@@ -43,23 +42,23 @@
     <string name="block_detail_fragment_compare_below_text">cmよりちかいなら、「はい」へ</string>
     <string name="block_detail_fragment_loop_unit_text">かい、くりかえす</string>
     
-    <string name="block_detail_fragment_block_front_name">@string/common_front_name</string>
-    <string name="block_detail_fragment_block_front_description">パワーと時間を設定して、ロボットを前に動かします。</string>
-    <string name="block_detail_fragment_front_unit_text">びょう、すすむ</string>
+    <string name="block_detail_fragment_block_forward_name">@string/common_forward_name</string>
+    <string name="block_detail_fragment_block_forward_description">速度と時間を設定して、ロボットを前に動かします。</string>
+    <string name="block_detail_fragment_forward_unit_text">びょう、すすむ</string>
 
     <string name="block_detail_fragment_block_back_name">@string/common_back_name</string>
-    <string name="block_detail_fragment_block_back_description">パワーと時間を設定して、ロボットを後ろに動かします。</string>
+    <string name="block_detail_fragment_block_back_description">速度と時間を設定して、ロボットを後ろに動かします。</string>
     <string name="block_detail_fragment_back_unit_text">びょう、さがる</string>
 
     <string name="block_detail_fragment_block_state_left_rotate">@string/common_left_name</string>
     <string name="block_detail_fragment_block_state_right_rotate">@string/common_right_name</string>
 
     <string name="block_detail_fragment_block_left_name">@string/common_left_name</string>
-    <string name="block_detail_fragment_block_left_description">パワーと時間を設定して、ロボットを左に回転させます。</string>
+    <string name="block_detail_fragment_block_left_description">速度と時間を設定して、ロボットを左に回転させます。</string>
     <string name="block_detail_fragment_left_unit_text">びょう、ひだりにまわる</string>
 
     <string name="block_detail_fragment_block_right_name">@string/common_right_name</string>
-    <string name="block_detail_fragment_block_right_description">パワーと時間を設定して、ロボットを右に回転させます。</string>
+    <string name="block_detail_fragment_block_right_description">速度と時間を設定して、ロボットを右に回転させます。</string>
     <string name="block_detail_fragment_right_unit_text">びょう、みぎにまわる</string>
 
     <string name="block_detail_fragment_block_if_start_name">@string/common_if_start_name</string>
@@ -72,7 +71,7 @@
 
     <string name="block_detail_fragment_block_for_start_name">@string/common_for_start_name</string>
     <string name="block_detail_fragment_block_for_end_name">@string/common_for_end_name</string>
-    <string name="block_detail_fragment_block_for_start_description">ループの中のブロックが、ループ回数だけくりかえされます。</string>
+    <string name="block_detail_fragment_block_for_start_description">ループブロックに囲まれたブロックが、指定した回数だけ繰り返し実行されます。</string>
 
     <string name="block_detail_fragment_block_break_name">@string/common_break_name</string>
     <string name="block_detail_fragment_block_break_description">ループブロックのループからぬける</string>
@@ -105,7 +104,7 @@
     <string name="activity_block_detail_button_ok_text">@string/common_button_ok</string>
 
     <!-- activity_block_select -->
-    <string name="activity_block_select_block_front_name">@string/common_front_name</string>
+    <string name="activity_block_select_block_forward_name">@string/common_forward_name</string>
     <string name="activity_block_select_block_rotate_name">@string/common_rotate_name</string>
     <string name="activity_block_select_block_back_name">@string/common_back_name</string>
     <string name="activity_block_select_block_if_start_name">@string/common_if_start_name</string>
@@ -121,6 +120,7 @@
 
     <!-- block_back -->
     <string name="block_back_block_name">@string/common_back_name</string>
+    <string name="block_back_block_time_text">@string/common_time_unit</string>
     <string name="block_back_block_time_tools_text">@string/common_error_text</string>
     <string name="block_back_block_add">@string/common_block_add</string>
 
@@ -137,13 +137,15 @@
 
     <!-- block_for_start -->
     <string name="block_for_start_block_name">@string/common_for_start_name</string>
-    <string name="block_for_start_loop_count">@string/common_error_text</string>
+    <string name="block_for_start_loop_count_text">@string/common_count_unit</string>
+    <string name="block_for_start_loop_count_tools_text">@string/common_error_text</string>
     <string name="block_for_start_block_add">@string/common_block_add</string>
 
     <!-- block_front -->
-    <string name="block_front_block_name">@string/common_front_name</string>
-    <string name="block_front_block_time_tools_text">@string/common_error_text</string>
-    <string name="block_front_blocK_add">@string/common_block_add</string>
+    <string name="block_forward_block_name">@string/common_forward_name</string>
+    <string name="block_forward_block_time_text">@string/common_time_unit</string>
+    <string name="block_forward_block_time_tools_text">@string/common_error_text</string>
+    <string name="block_forward_blocK_add">@string/common_block_add</string>
 
     <!-- block_if_end -->
     <string name="block_if_end_block_name">@string/common_if_end_name</string>
@@ -157,11 +159,13 @@
 
     <!-- block_left -->
     <string name="block_left_block_name">@string/common_left_name</string>
+    <string name="block_left_block_time_text">@string/common_time_unit</string>
     <string name="block_left_block_time_tools_text">@string/common_error_text</string>
     <string name="block_left_block_add">@string/common_block_add</string>
 
     <!-- block_right -->
     <string name="block_right_block_name">@string/common_right_name</string>
+    <string name="block_right_block_time_text">@string/common_time_unit</string>
     <string name="block_right_block_time_tools_text">@string/common_error_text</string>
     <string name="block_right_block_add">@string/common_block_add</string>
 

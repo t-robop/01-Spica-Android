@@ -78,7 +78,7 @@
                         android:layout_weight="3"
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
-                        android:text="@{String.valueOf(value).substring(0,3) + `びょう`}"
+                        android:text="@{@string/block_back_block_time_text(String.valueOf(value).substring(0,3))}"
                         tools:text="@string/block_back_block_time_tools_text" />
 
                 </LinearLayout>
