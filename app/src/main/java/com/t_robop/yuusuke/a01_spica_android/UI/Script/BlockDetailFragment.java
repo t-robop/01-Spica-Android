@@ -27,6 +27,14 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
     ActivityBlockDetailBinding mBinding;
 
+    final int STANDARD_BLOCK_MAX_PROGRESS = 500;
+
+    // IF_BLOCK_MAX_PROGRESS > IF_BLOCK_GAP_PROGRESS
+    final int IF_BLOCK_MAX_PROGRESS = 20;
+    final int IF_BLOCK_GAP_PROGRESS = 10;
+
+    final int FOR_BLOCK_MAX_PROGRESS = 10;
+
     public BlockDetailFragment() {
     }
 
@@ -82,25 +90,25 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         switch (spicaBlock) {
             case FRONT:
                 mBinding.speedRadioGroup.check(res);
-                mBinding.seekValue.setMax(300);
+                mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
             case BACK:
                 mBinding.speedRadioGroup.check(res);
-                mBinding.seekValue.setMax(300);
+                mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
             case LEFT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
-                mBinding.seekValue.setMax(300);
+                mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
 
             case RIGHT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
-                mBinding.seekValue.setMax(300);
+                mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
                 break;
 
@@ -115,12 +123,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                     mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
                 }
-                mBinding.seekValue.setProgress((int) targetScript.getValue());
-                mBinding.seekValue.setMax(10);
+                mBinding.seekValue.setProgress((int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
                 break;
             case FOR_START:
                 mBinding.seekValue.setProgress((int) targetScript.getValue());
-                mBinding.seekValue.setMax(10);
+                mBinding.seekValue.setMax(FOR_BLOCK_MAX_PROGRESS);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_loop_unit_text);
                 break;
         }
@@ -277,8 +285,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         ScriptModel script = mScriptPresenter.getTargetScript();
         script.setBlock(spicaBlock);
         float p = mBinding.seekValue.getProgress();
-        if (mBinding.seekValue.getMax() == 300) {
+        // 通常ブロックの時
+        if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p = p / 100;
+        } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
+            p += IF_BLOCK_GAP_PROGRESS;
         }
         script.setValue(p);
 
@@ -347,10 +358,14 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     }
 
     private void setSeekValueText() {
-        if (mBinding.seekValue.getMax() == 300) {
+        if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             float p = mBinding.seekValue.getProgress();
             mBinding.textValue.setText(String.valueOf(p / 100));
-        } else if (mBinding.seekValue.getMax() == 10) {
+        } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
+            int p = mBinding.seekValue.getProgress();
+            p += IF_BLOCK_GAP_PROGRESS;
+            mBinding.textValue.setText(String.valueOf(p));
+        }else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
             mBinding.textValue.setText(String.valueOf(p));
         }
