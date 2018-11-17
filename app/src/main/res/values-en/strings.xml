@@ -1,105 +1,104 @@
 <resources>
     <string name="app_name">Spica</string>
-    
-    <!-- common block -->
-    <string name="common_forward_name">すすむ</string>
-    <string name="common_back_name">さがる</string>
-    <string name="common_rotate_name">まわる</string>
-    <string name="common_left_name">ひだりにまわる</string>
-    <string name="common_right_name">みぎにまわる</string>
-    <string name="common_if_start_name">もしも</string>
-    <string name="common_if_end_name">もしも - おわり</string>
-    <string name="common_distance_sensor_above">cmよりとおい？</string>
-    <string name="common_distance_sensor_below">cmよりちかい？</string>
-    <string name="common_for_start_name">ループ</string>
-    <string name="common_for_end_name">ループ - おわり</string>
-    <string name="common_break_name">ぬける</string>
-    
-    <string name="common_speed_low">おそい</string>
-    <string name="common_speed_middle">ふつう</string>
-    <string name="common_speed_high">はやい</string>
 
-    <string name="common_time_unit">%sびょう</string>
-    <string name="common_count_unit">%sかい</string>
-    
+    <!-- common block -->
+    <string name="common_forward_name">Forward</string>
+    <string name="common_back_name">Back</string>
+    <string name="common_rotate_name">Rotate</string>
+    <string name="common_left_name">Left Rotate</string>
+    <string name="common_right_name">Right Rotate</string>
+    <string name="common_if_start_name">If</string>
+    <string name="common_if_end_name">If - End</string>
+    <string name="common_distance_sensor_above">cm more</string>
+    <string name="common_distance_sensor_below">cm less</string>
+    <string name="common_for_start_name">Loop</string>
+    <string name="common_for_end_name">Loop - End</string>
+    <string name="common_break_name">Early exit</string>
+
+    <string name="common_speed_low">Slow</string>
+    <string name="common_speed_middle">Normal</string>
+    <string name="common_speed_high">Fast</string>
+
+    <string name="common_time_unit">%s seconds</string>
+    <string name="common_count_unit">%s times</string>
+
     <string name="common_block_add">+</string>
 
     <!-- common button-->
-    <string name="common_button_ok">ほぞん</string>
+    <string name="common_button_ok">Save</string>
     <string name="common_button_cancel">×</string>
-    <string name="common_button_delete">すてる</string>
-    
+    <string name="common_button_delete">Delete</string>
+
     <!-- common config -->
-    <string name="common_ip_name">IPアドレス</string>
-    <string name="common_port_name">ポート番号</string>
+    <string name="common_ip_name">IP Address</string>
+    <string name="common_port_name">Port Number</string>
 
     <!-- common Error系 -->
-    <string name="error_text">何らかのError</string>
-    <string name="common_error_text">何らかのError</string>
+    <string name="common_error_text">Error</string>
 
     <!-- BlockDetailFragment -->
-    <string name="block_detail_fragment_compare_above_text">cmよりとおいなら、「はい」へ</string>
-    <string name="block_detail_fragment_compare_below_text">cmよりちかいなら、「はい」へ</string>
-    <string name="block_detail_fragment_loop_unit_text">かい、くりかえす</string>
-    
+    <string name="block_detail_fragment_compare_above_text">cm more, go to「Yes」</string>
+    <string name="block_detail_fragment_compare_below_text">cm less, go to「No」</string>
+    <string name="block_detail_fragment_loop_unit_text">times, loop</string>
+
     <string name="block_detail_fragment_block_forward_name">@string/common_forward_name</string>
-    <string name="block_detail_fragment_block_forward_description">速度と時間を設定して、ロボットを前に動かします。</string>
-    <string name="block_detail_fragment_forward_unit_text">びょう、すすむ</string>
+    <string name="block_detail_fragment_block_forward_description">Set the speed and time, robot moves forward.</string>
+    <string name="block_detail_fragment_forward_unit_text">seconds, move forward</string>
 
     <string name="block_detail_fragment_block_back_name">@string/common_back_name</string>
-    <string name="block_detail_fragment_block_back_description">速度と時間を設定して、ロボットを後ろに動かします。</string>
-    <string name="block_detail_fragment_back_unit_text">びょう、さがる</string>
+    <string name="block_detail_fragment_block_back_description">Set the speed and time, robot moves back.</string>
+    <string name="block_detail_fragment_back_unit_text">seconds, move back</string>
 
     <string name="block_detail_fragment_block_state_left_rotate">@string/common_left_name</string>
     <string name="block_detail_fragment_block_state_right_rotate">@string/common_right_name</string>
 
     <string name="block_detail_fragment_block_left_name">@string/common_left_name</string>
-    <string name="block_detail_fragment_block_left_description">速度と時間を設定して、ロボットを左に回転させます。</string>
-    <string name="block_detail_fragment_left_unit_text">びょう、ひだりにまわる</string>
+    <string name="block_detail_fragment_block_left_description">Set the speed and time, robot rotates left.</string>
+    <string name="block_detail_fragment_left_unit_text">seconds, rotate left</string>
 
     <string name="block_detail_fragment_block_right_name">@string/common_right_name</string>
-    <string name="block_detail_fragment_block_right_description">速度と時間を設定して、ロボットを右に回転させます。</string>
-    <string name="block_detail_fragment_right_unit_text">びょう、みぎにまわる</string>
+    <string name="block_detail_fragment_block_right_description">Set the speed and time, robot rotates right.</string>
+    <string name="block_detail_fragment_right_unit_text">seconds, rotate right</string>
 
     <string name="block_detail_fragment_block_if_start_name">@string/common_if_start_name</string>
     <string name="block_detail_fragment_block_if_end_name">@string/common_if_end_name</string>
-    <string name="block_detail_fragment_block_if_start_description">もしもブロックに書かれていることが起こったら、「はい」の方向にすすみます。\nそうでなければ「いいえ」の方向にすすみます。</string>
-    <string name="block_detail_fragment_block_state_above">とおい</string>
-    <string name="block_detail_fragment_block_state_below">ちかい</string>
+    <string name="block_detail_fragment_block_if_start_description">If something happens to be written on the block, go to 「Yes」.\nIf not, go to「No」.</string>
+    <string name="block_detail_fragment_block_state_above">Far</string>
+    <string name="block_detail_fragment_block_state_below">Near</string>
     <string name="block_detail_fragment_block_if_start_above">@string/common_distance_sensor_above</string>
     <string name="block_detail_fragment_block_if_start_below">@string/common_distance_sensor_below</string>
 
     <string name="block_detail_fragment_block_for_start_name">@string/common_for_start_name</string>
     <string name="block_detail_fragment_block_for_end_name">@string/common_for_end_name</string>
-    <string name="block_detail_fragment_block_for_start_description">ループブロックに囲まれたブロックが、指定した回数だけ繰り返し実行されます。</string>
+    <string name="block_detail_fragment_block_for_start_description">Blocks surrounded by loop blocks are repeatedly executed for the set number of times</string>
 
     <string name="block_detail_fragment_block_break_name">@string/common_break_name</string>
-    <string name="block_detail_fragment_block_break_description">ループブロックのループからぬける</string>
+    <string name="block_detail_fragment_block_break_description">Early exit from loop blocks</string>
 
     <!-- ScriptMainActivity -->
-    <string name="script_main_activity_send_success">ロボットにめいれいをおくったよ！</string>
-    <string name="script_main_activity_send_failed">ブロックがないよ！</string>
+    <string name="script_main_activity_send_success">Sent orders to the robot!</string>
+    <string name="script_main_activity_send_failed">Empty blocks!</string>
 
     <!-- ScriptMainAdapter -->
     <string name="script_main_adapter_block_if_above">@string/common_distance_sensor_above</string>
     <string name="script_main_adapter_block_if_below">@string/common_distance_sensor_below</string>
 
     <!-- UdpReceive -->
-    <string name="udp_receive_cancel_dialog">とめています....</string>
+    <string name="udp_receive_cancel_dialog">Stopping....</string>
     <string name="udp_receive_esp_reboot_command">reboot-now</string>
 
     <!-- activity_block_detail -->
     <string name="activity_block_detail_block_title">@string/common_error_text</string>
     <string name="activity_block_detail_block_description">@string/common_error_text</string>
     <string name="activity_block_detail_view_finish">@string/common_button_cancel</string>
-    
+
     <string name="activity_block_detail_block_speed_low">@string/common_speed_low</string>
     <string name="activity_block_detail_block_speed_middle">@string/common_speed_middle</string>
     <string name="activity_block_detail_block_speed_high">@string/common_speed_high</string>
-    
+
     <string name="activity_block_detail_block_state_left">@string/common_error_text</string>
     <string name="activity_block_detail_block_state_right">@string/common_error_text</string>
-    
+
     <string name="activity_block_detail_button_delete_text">@string/common_button_delete</string>
     <string name="activity_block_detail_button_ok_text">@string/common_button_ok</string>
 
@@ -110,13 +109,13 @@
     <string name="activity_block_select_block_if_start_name">@string/common_if_start_name</string>
     <string name="activity_block_select_block_for_start_name">@string/common_for_start_name</string>
     <string name="activity_block_select_block_break_name">@string/common_break_name</string>
-    
+
     <!-- activity_setting -->
     <string name="activity_setting_ip_name">@string/common_ip_name</string>
     <string name="activity_setting_port_name">@string/common_port_name</string>
     <string name="activity_setting_button_view_finish_text">@string/common_button_cancel</string>
     <string name="activity_setting_button_ok_text">@string/common_button_ok</string>
-    <string name="activity_setting_button_qr_text">QR読み込み</string>
+    <string name="activity_setting_button_qr_text">Read QR</string>
 
     <!-- block_back -->
     <string name="block_back_block_name">@string/common_back_name</string>
@@ -129,7 +128,7 @@
     <string name="block_break_block_add">@string/common_block_add</string>
 
     <!-- block_end -->
-    <string name="block_end_block_name">おわり</string>
+    <string name="block_end_block_name">Finish</string>
 
     <!-- block_for_end -->
     <string name="block_for_end_block_name">@string/common_for_end_name</string>
@@ -155,7 +154,7 @@
     <string name="block_if_start_block_name">@string/common_if_start_name</string>
     <string name="block_if_start_compare_sensor_value_tools_text">@string/common_error_text</string>
     <string name="block_if_start_block_add">@string/common_block_add</string>
-    <string name="block_if_start_compare_sensor_false_text">いいえ</string>
+    <string name="block_if_start_compare_sensor_false_text">No</string>
 
     <!-- block_left -->
     <string name="block_left_block_name">@string/common_left_name</string>
@@ -170,15 +169,15 @@
     <string name="block_right_block_add">@string/common_block_add</string>
 
     <!-- block_start -->
-    <string name="block_start_block_name">はじまり</string>
+    <string name="block_start_block_name">Start</string>
     <string name="block_start_block_add">@string/common_block_add</string>
 
     <!-- conductor_if_start -->
-    <string name="conductor_if_start_compare_sensor_true_text">はい</string>
+    <string name="conductor_if_start_compare_sensor_true_text">Yes</string>
     <string name="conductor_if_start_block_add">@string/common_block_add</string>
 
     <!-- receive_udp_dialog -->
-    <string name="receive_udp_dialog_description">ロボットがうごいています....</string>
-    <string name="receive_udp_dialog_button_stop_text">とめる</string>
+    <string name="receive_udp_dialog_description">Robot is moving....</string>
+    <string name="receive_udp_dialog_button_stop_text">Stop</string>
 
 </resources>
