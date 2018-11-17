@@ -83,6 +83,10 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         mScriptList.clear();
     }
 
+    public ScriptSet getItem(int index){
+        return this.mScriptList.get(index);
+    }
+
     public void addDefault(int index, ScriptModel script) {
         if (mScriptList.size() < index) return;
 
