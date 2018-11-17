@@ -241,9 +241,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingIfStart.setPosition(position);
                 bindingIfStart.setScript(script);
                 if(script.getIfOperator() == script.getSensorAboveNum()){
-                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_bigger));
+                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.script_main_adapter_block_if_above));
                 }else if(script.getIfOperator() == script.getSensorBelowNum()){
-                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.block_if_start_smaller));
+                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.script_main_adapter_block_if_below));
                 }
                 bindingIfStart.setIfState(script.getIfState());
                 lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());

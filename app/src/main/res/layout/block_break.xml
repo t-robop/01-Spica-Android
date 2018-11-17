@@ -69,7 +69,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item_no_top"
                         android:gravity="center"
-                        android:text="@string/block_break_name"
+                        android:text="@string/block_break_block_name"
                         android:textColor="@color/default_text_color" />
 
                     <TextView
@@ -107,7 +107,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="@string/plus"
+                        android:text="@string/block_break_block_add"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color"
                         android:textSize="@dimen/conductor_text_size" />

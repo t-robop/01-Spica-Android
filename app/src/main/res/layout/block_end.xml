@@ -70,7 +70,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item_no_top"
                         android:gravity="center"
-                        android:text="@string/block_end_name"
+                        android:text="@string/block_end_block_name"
                         android:textColor="@color/default_text_color" />
 
                     <TextView

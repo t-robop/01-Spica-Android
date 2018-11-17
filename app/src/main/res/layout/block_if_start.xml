@@ -69,7 +69,7 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:text="@string/block_if_start_name"
+                        android:text="@string/block_if_start_block_name"
                         android:textColor="@color/default_text_color" />
 
                     <TextView
@@ -80,7 +80,7 @@
                         android:gravity="center"
                         android:textColor="@color/default_text_color"
 
-                        tools:text="@string/error_text" />
+                        tools:text="@string/block_if_start_compare_sensor_value_tools_text" />
 
                 </LinearLayout>
 
@@ -112,7 +112,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center"
                         android:includeFontPadding="false"
-                        android:text="@string/plus"
+                        android:text="@string/block_if_start_block_add"
                         android:textAppearance="@style/TextAppearance.block_title_b"
                         android:textColor="@color/default_text_color"
                         android:textSize="@dimen/conductor_text_size" />
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:includeFontPadding="false"
-                    android:text="@string/text_false"
+                    android:text="@string/block_if_start_compare_sensor_false_text"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/white_text_color"
                     android:background="@color/color_blue"
