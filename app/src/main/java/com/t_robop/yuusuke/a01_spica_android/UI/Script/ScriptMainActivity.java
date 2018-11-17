@@ -3,6 +3,7 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
@@ -15,12 +16,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
@@ -34,10 +35,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private ScriptContract.Presenter mScriptPresenter;
 
-    private RecyclerView mScriptRecyclerView;
+    ActivityScriptMainBinding mBinding;
+
     private ScriptMainAdapter mScriptAdapter;
     private LinearLayoutManager mScriptLayoutManager;
-    FloatingActionButton fab;
 
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
@@ -53,14 +54,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         hideNavigationBar();
         udpReceive = new UdpReceive(this);
 
-        mScriptRecyclerView = findViewById(R.id.recycler_script);
-        mScriptRecyclerView.setHasFixedSize(true);
+        mBinding= DataBindingUtil.setContentView(this, R.layout.activity_script_main);
+
+        mBinding.recyclerScript.setHasFixedSize(true);
         mScriptLayoutManager = new LinearLayoutManager(this);
         mScriptLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mScriptRecyclerView.setLayoutManager(mScriptLayoutManager);
+        mBinding.recyclerScript.setLayoutManager(mScriptLayoutManager);
         mScriptAdapter = new ScriptMainAdapter(this);
-        mScriptRecyclerView.setAdapter(mScriptAdapter);
-        fab = findViewById(R.id.fab);
+        mBinding.recyclerScript.setAdapter(mScriptAdapter);
 
         /**
          * Presenterの初期化
@@ -170,7 +171,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         /**
          * fabがクリックされた時
          */
-        fab.setOnClickListener(new View.OnClickListener() {
+        mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 objectSave();
@@ -191,7 +192,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          * fabが1.2秒以上長押しされた時
          */
         final long[] then = {0};
-        fab.setOnTouchListener(new View.OnTouchListener() {
+        mBinding.fab.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -348,6 +349,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptAdapter.addDefault(mScriptAdapter.getItemCount(), scriptEnd);
 
         mScriptAdapter.notifyDataSetChanged();
+
+        mBinding.canvasView.setCommandBlocks(mScriptAdapter);
     }
 
     @Override
