@@ -62,7 +62,7 @@
 
     <string name="block_detail_fragment_block_if_start_name">@string/common_if_start_name</string>
     <string name="block_detail_fragment_block_if_end_name">@string/common_if_end_name</string>
-    <string name="block_detail_fragment_block_if_start_description">If something happens to be written on the block, go to 「Yes」.\nIf not, go to「No」.</string>
+    <string name="block_detail_fragment_block_if_start_description">If the condition is correct, go to 「Yes」.\nIf not, go to「No」.</string>
     <string name="block_detail_fragment_block_state_above">Far</string>
     <string name="block_detail_fragment_block_state_below">Near</string>
     <string name="block_detail_fragment_block_if_start_above">@string/common_distance_sensor_above</string>
@@ -70,7 +70,7 @@
 
     <string name="block_detail_fragment_block_for_start_name">@string/common_for_start_name</string>
     <string name="block_detail_fragment_block_for_end_name">@string/common_for_end_name</string>
-    <string name="block_detail_fragment_block_for_start_description">Blocks surrounded by loop blocks are repeatedly executed for the set number of times</string>
+    <string name="block_detail_fragment_block_for_start_description">Blocks surrounded by loop blocks are repeatedly executed a specified number of times.</string>
 
     <string name="block_detail_fragment_block_break_name">@string/common_break_name</string>
     <string name="block_detail_fragment_block_break_description">Early exit from loop blocks</string>
