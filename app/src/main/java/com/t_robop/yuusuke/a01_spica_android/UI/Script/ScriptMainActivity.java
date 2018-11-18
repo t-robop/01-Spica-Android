@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
 
-public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.BlockClickListener, BlockSelectFragment.OutSideClickListener {
+public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.BlockClickListener {
 
     private ScriptContract.Presenter mScriptPresenter;
 
@@ -198,9 +198,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    then[0] = (Long) System.currentTimeMillis();
+                    then[0] = System.currentTimeMillis();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (((Long) System.currentTimeMillis() - then[0]) > 1200) {
+                    if (( System.currentTimeMillis() - then[0]) > 1200) {
                         Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                         startActivity(intent);
                         return true;
@@ -230,8 +230,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
      * Fragment生成メソッド
      */
     public void inflateFragment(ScriptModel scriptModel) {
-        //fab.setVisibility(View.INVISIBLE);
-        //fab.setEnabled(false);
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -268,8 +266,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fragmentTransaction.remove(blockSelectFragment);
         fragmentTransaction.commit();
 
-        //fab.setVisibility(View.VISIBLE);
-        //fab.setEnabled(true);
     }
 
 
@@ -284,12 +280,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         inflateFragment(scriptModel);
     }
 
-    @Override
-    public void onClickOutSide() {
-        //fab.setVisibility(View.VISIBLE);
-        //fab.setEnabled(true);
-    }
-
     /**
      * スクリプトのリストを投げるとUI構築してくれる神メソッド
      */
@@ -300,8 +290,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         //スタートブロック記述
         ScriptModel scriptStart = new ScriptModel();
         scriptStart.setBlock(ScriptModel.SpicaBlock.START);
-//        blockStart.setBlock(BlockModel.SpicaBlock.START);
-//        scriptStart.setBlock(blockStart);
         scriptStart.setPos(-1);
         scriptStart.setIfState(0);
         mScriptAdapter.addDefault(0, scriptStart);
