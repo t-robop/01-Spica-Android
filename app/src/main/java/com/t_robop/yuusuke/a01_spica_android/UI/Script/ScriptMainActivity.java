@@ -236,17 +236,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         ScriptPresenter.ViewState state = mScriptPresenter.getState();
         mScriptPresenter.setTargetScript(scriptModel);
-        if (state == ScriptPresenter.ViewState.SELECT) {
+        if (state == ScriptPresenter.ViewState.SELECT && !blockSelectFragment.isAdded()) {
             /**
              * ブロック追加用の選択画面へ
              */
             fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
-        } else if (state == ScriptPresenter.ViewState.EDIT) {
+        } else if (state == ScriptPresenter.ViewState.EDIT && !blockDetailFragment.isAdded()) {
             /**
              * ブロック設定用の詳細画面へ
              */
             fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
-        } else if (state == ScriptPresenter.ViewState.ADD) {
+        } else if (state == ScriptPresenter.ViewState.ADD && !blockDetailFragment.isAdded()) {
             /**
              * ブロック追加用の詳細画面へ
              * todo 上記EDITと同じなのは一旦分かりやすさのため
