@@ -30,7 +30,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     final int STANDARD_BLOCK_MAX_PROGRESS = 500;
 
     // IF_BLOCK_MAX_PROGRESS > IF_BLOCK_GAP_PROGRESS
-    final int IF_BLOCK_MAX_PROGRESS = 20;
+    final int IF_BLOCK_MAX_PROGRESS = 30;
     final int IF_BLOCK_GAP_PROGRESS = 10;
 
     final int FOR_BLOCK_MAX_PROGRESS = 10;
