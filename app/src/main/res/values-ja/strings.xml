@@ -62,7 +62,7 @@
 
     <string name="block_detail_fragment_block_if_start_name">@string/common_if_start_name</string>
     <string name="block_detail_fragment_block_if_end_name">@string/common_if_end_name</string>
-    <string name="block_detail_fragment_block_if_start_description">もしもブロックに書かれていることが起こったら、「はい」の方向にすすみます。\nそうでなければ「いいえ」の方向にすすみます。</string>
+    <string name="block_detail_fragment_block_if_start_description">もしも条件が正しければ、「はい」にすすみます。\nそうでなければ「いいえ」にすすみます。</string>
     <string name="block_detail_fragment_block_state_above">とおい</string>
     <string name="block_detail_fragment_block_state_below">ちかい</string>
     <string name="block_detail_fragment_block_if_start_above">@string/common_distance_sensor_above</string>
