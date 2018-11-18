@@ -72,7 +72,7 @@ public class UdpReceive extends Thread{
                 while (!Thread.currentThread().isInterrupted()) {
                     try {
                         // UDPパケット待ち受け
-                        DatagramSocket recvUdpSocket = new DatagramSocket(port);
+                        final DatagramSocket recvUdpSocket = new DatagramSocket(port);
                         recvUdpSocket.setReuseAddress(true);
                         Crashlytics.log("UdpReceiveStandby: packet 待機");
 
@@ -92,14 +92,17 @@ public class UdpReceive extends Thread{
                                     //結果をトースト表示
                                     Toast.makeText(context, result, Toast.LENGTH_SHORT).show();
 
-                                    //ダイアログを消す
-                                    dialog.dismiss();
-                                    Crashlytics.log("UdpReceiveStandby: ダイアログを消す");
+                                    recvUdpSocket.close();
+
                                     //監視しているスレッドを止める
                                     checkReceive.interrupt();
                                     Crashlytics.log("UdpReceiveStandby: スレッドを停止");
                                 } catch(IOException e) {
                                     Crashlytics.log("UdpReceiveStandby: 受信後にキャッチ");
+                                } finally {
+                                    //ダイアログを消す
+                                    dialog.dismiss();
+                                    Crashlytics.log("UdpReceiveStandby: ダイアログを消す");
                                 }
                             }
                         });
