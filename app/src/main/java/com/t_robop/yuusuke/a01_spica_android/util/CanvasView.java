@@ -20,7 +20,7 @@ public class CanvasView extends View {
 
     private final Paint paint;
 
-    private int lineWeight = 5;
+    private float lineWeight = 1f;
 
     private float nowPositionX = 0;
     float y = 0;
@@ -39,12 +39,12 @@ public class CanvasView extends View {
     //スクロール可能な部分を含めた長さ
     private float mainViewMaxWidth = 600;
 
-    private int LineNoMargin = lineWeight / 2;
+    private float LineNoMargin = lineWeight / 2;
 
     ///////
     private int commandBlockNum = 2;
     private int commandBlockMargin = 50;
-    private int commandBlockSize = 20;
+    private int commandBlockSize = 5;
     private int commandBlockLineWidth = 5;
     ///////
     Paint commandBlockPaint;
@@ -60,7 +60,7 @@ public class CanvasView extends View {
         paint.setColor(Color.RED);          // 色の指定
         paint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
         paint.setAntiAlias(true);           // アンチエイリアスの適応
-        paint.setStrokeWidth(lineWeight);           // 線の太さ
+        paint.setStrokeWidth(commandBlockSize);           // 線の太さ
         commandBlockPaint = new Paint();
         commandBlockPaint.setColor(Color.BLACK);
         commandBlockPaint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
@@ -70,7 +70,7 @@ public class CanvasView extends View {
         commandBlockLinePaint.setColor(Color.BLACK);
         commandBlockLinePaint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
         commandBlockLinePaint.setAntiAlias(true);
-        commandBlockLinePaint.setStrokeWidth(commandBlockLineWidth);           // 線の太さ
+        commandBlockLinePaint.setStrokeWidth(lineWeight);           // 線の太さ
 
 
     }
@@ -86,7 +86,7 @@ public class CanvasView extends View {
         paint.setColor(Color.RED);          // 色の指定
         paint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
         paint.setAntiAlias(true);           // アンチエイリアスの適応
-        paint.setStrokeWidth(lineWeight);           // 線の太さ
+        paint.setStrokeWidth(commandBlockSize);           // 線の太さ
         commandBlockPaint = new Paint();
         commandBlockPaint.setColor(Color.BLACK);
         commandBlockPaint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
@@ -96,7 +96,7 @@ public class CanvasView extends View {
         commandBlockLinePaint.setColor(Color.BLACK);
         commandBlockLinePaint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
         commandBlockLinePaint.setAntiAlias(true);
-        commandBlockLinePaint.setStrokeWidth(commandBlockLineWidth);           // 線の太さ
+        commandBlockLinePaint.setStrokeWidth(lineWeight);           // 線の太さ
     }
 
 

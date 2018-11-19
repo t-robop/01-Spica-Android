@@ -42,7 +42,7 @@
             <com.t_robop.yuusuke.a01_spica_android.util.CanvasView
                 android:id="@+id/canvas_view"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
+                android:layout_height="50dp"
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <Button
