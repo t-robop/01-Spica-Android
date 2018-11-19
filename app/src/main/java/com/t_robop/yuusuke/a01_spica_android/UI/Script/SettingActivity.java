@@ -71,8 +71,8 @@ public class SettingActivity extends AppCompatActivity {
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(result != null) {
+        if(data != null) {
+            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             String resultData = result.getContents();
             String[] Datas = resultData.split(";", 0);
             String ipString = (Datas[0].split(":")[1]);
