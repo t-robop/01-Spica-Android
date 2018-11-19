@@ -1,17 +1,16 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -56,7 +55,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         hideNavigationBar();
         udpReceive = new UdpReceive(this);
 
-        mBinding= DataBindingUtil.setContentView(this, R.layout.activity_script_main);
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_script_main);
 
         mBinding.recyclerScript.setHasFixedSize(true);
         mScriptLayoutManager = new LinearLayoutManager(this);
@@ -178,14 +177,18 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             public void onClick(View v) {
                 objectSave();
                 String sendData = mScriptPresenter.getSendableScripts();
-                if (sendData.length() > 0) {
+                final SharedPreferences pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
+                final String ip = pref.getString("ip", "");
+                if (ip.isEmpty()) {
+                    Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_failed_empty_ip, Toast.LENGTH_SHORT).show();
+                } else if (sendData.length() <= 0) {
+                    Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_failed_empty_block, Toast.LENGTH_SHORT).show();
+                } else {
                     udpReceive.UdpReceiveStandby();
                     UdpSend udp = new UdpSend();
                     udp.UdpSendText(sendData);
                     Log.d("sendData", sendData);
                     Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_send_success, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_send_failed, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -200,7 +203,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     then[0] = System.currentTimeMillis();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    if (( System.currentTimeMillis() - then[0]) > 1200) {
+                    if ((System.currentTimeMillis() - then[0]) > 1200) {
                         Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                         startActivity(intent);
                         return true;
@@ -346,7 +349,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        sizeX=mBinding.recyclerScript.getWidth();
+        sizeX = mBinding.recyclerScript.getWidth();
     }
 
     @Override

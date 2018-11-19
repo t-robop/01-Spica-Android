@@ -77,7 +77,8 @@
 
     <!-- ScriptMainActivity -->
     <string name="script_main_activity_send_success">Sent orders to the robot!</string>
-    <string name="script_main_activity_send_failed">Empty blocks!</string>
+    <string name="script_main_activity_failed_empty_block">Empty blocks!</string>
+    <string name="script_main_activity_failed_empty_ip">Empty IP Address!</string>
 
     <!-- ScriptMainAdapter -->
     <string name="script_main_adapter_block_if_above">@string/common_distance_sensor_above</string>
