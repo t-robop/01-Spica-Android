@@ -5,8 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -45,7 +45,11 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private UdpReceive udpReceive;
 
-    float sizeX;
+    float windowSizeX;
+    private boolean canvasViewScrolling = false;
+
+    int overallXScroll = 0;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -224,6 +228,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+        mBinding.canvasView.setClass(this);
+
+
     }
 
     /**
@@ -232,6 +239,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     public void inflateFragment(ScriptModel scriptModel) {
         //fab.setVisibility(View.INVISIBLE);
         //fab.setEnabled(false);
+
+
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -343,6 +352,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             if (script.getBlock() == IF_END) {
                 ifIndex = -1;
             }
+
+
         }
 
         //エンドブロック記述
@@ -352,13 +363,51 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         mScriptAdapter.notifyDataSetChanged();
 
+
+
+
+
+        mBinding.canvasView.setClass(this);
+
+
+        mBinding.recyclerScript.setOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                if(!canvasViewScrolling) {
+                    overallXScroll = overallXScroll + dx;
+                    mBinding.canvasView.setPositon(overallXScroll);
+                    Log.d("overscroll","" + overallXScroll);
+                    Log.d("windowSize","" + windowSizeX);
+                    Log.d("sumNumber","" + (overallXScroll + windowSizeX));
+                    Log.d("maxScroll","" + mBinding.recyclerScript.computeHorizontalScrollRange());
+                    windowSizeX = mBinding.recyclerScript.getWidth();
+                }else {
+
+                }
+                //mScriptLayoutManager.scrollToPositionWithOffset(0,-100);
+            }
+        });
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // TODO: ここで処理を実行する
+                windowSizeX = mBinding.recyclerScript.getWidth();
+                mBinding.canvasView.windowSizeChange(windowSizeX, mBinding.recyclerScript.computeHorizontalScrollRange() + 300);
+                int x = mBinding.recyclerScript.computeHorizontalScrollRange();
+            }
+        }, 100);
+
         mBinding.canvasView.setCommandBlocks(mScriptAdapter);
-        mBinding.canvasView.windowSizeChange(sizeX, (float) mScriptAdapter.getItemCount());
+
     }
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
-        sizeX=mBinding.recyclerScript.getWidth();
+        windowSizeX =mBinding.recyclerScript.getWidth();
     }
 
     @Override
@@ -397,4 +446,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         View sysView = getWindow().getDecorView();
         sysView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
     }
+
+    public void setScroll(float pos){
+        canvasViewScrolling = true;
+        overallXScroll = (int)(pos * (mBinding.recyclerScript.computeHorizontalScrollRange() - windowSizeX + 300));
+        mScriptLayoutManager.scrollToPositionWithOffset(0, -overallXScroll);
+        canvasViewScrolling = false;
+    }
+
+
+
 }

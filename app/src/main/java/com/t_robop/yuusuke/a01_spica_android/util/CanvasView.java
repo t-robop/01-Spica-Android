@@ -9,14 +9,13 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainActivity;
 import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainAdapter;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
-import java.util.ArrayList;
-
 public class CanvasView extends View {
+
+    ScriptMainActivity scriptMainActivity;
 
     private final Paint paint;
 
@@ -188,29 +187,34 @@ public class CanvasView extends View {
 
     private Path drawingPath;
 
+
+
+    public interface SampleEventHandlers {
+        void CanvasViewTouchEvent(float pos);
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:                             //- 画面をタッチしたとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//                break;
-//            case MotionEvent.ACTION_UP:                               //- 画面から指を離したとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//
-//                break;
-//            case MotionEvent.ACTION_MOVE:                             //- タッチしながら指をスライドさせたとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//
-//                break;
-//        }
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:                             //- 画面をタッチしたとき
 
+                nowPositionX = event.getX();
+                y = event.getY();
+                scriptMainActivity.setScroll(getPosition());
+                break;
+            case MotionEvent.ACTION_UP:                               //- 画面から指を離したとき
+                nowPositionX = event.getX();
+                y = event.getY();
+                scriptMainActivity.setScroll(getPosition());
+
+                break;
+            case MotionEvent.ACTION_MOVE:                             //- タッチしながら指をスライドさせたとき
+                nowPositionX = event.getX();
+                y = event.getY();
+                scriptMainActivity.setScroll(getPosition());
+                break;
+        }
         return true;   /* 返却値は必ず "true" にすること!! */
     }
 
@@ -246,5 +250,9 @@ public class CanvasView extends View {
         } else {
             nowPositionX = 0;
         }
+    }
+
+    public void setClass(ScriptMainActivity SMA){
+        this.scriptMainActivity = SMA;
     }
 }
