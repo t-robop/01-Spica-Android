@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="colorMainLine">#707070</color>
+
+    <color name="colorFrontBlock">#ffffff</color>
+    <color name="colorTurnBlock">#ffffff</color>
+    <color name="colorBackBlock">#ffffff</color>
+    <color name="colorIfBlock">#ffffff</color>
+    <color name="colorForBlock">#ffffff</color>
+    <color name="colorBreakBlock">#ffffff</color>
+    <color name="colorStartBlock">#ffffff</color>
+    <color name="colorEndBlock">#ffffff</color>
+
+    <color name="default_text_color">#202020</color>
+    <color name="white_text_color">#ffffff</color>
+
+    <!--FAB -->
+    <color name="FABBGColor">#FF4081</color>
+
+    <!--blockDetail-->
+    <color name="delete_button_color">#dd2222</color>
+
+    <!--backgroundColor-->
+    <color name="default_background_color">#FDFDF8</color>
+
+    <color name="more_background_color">#F5F5F0</color>
+
+    <color name="color_red">#ff2235</color>
+    <color name="color_blue">#0089ff</color>
+    <color name="color_yellow">#ffdf00</color>
+    <color name="color_purple">#c200ff</color>
+    <color name="color_yellow_2">#f15a23</color>
+
+    <color name="filter_color">#aa808080</color>
+
+    <color name="alpha_clear">#00000000</color>
+
+</resources>
