@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ public class SettingActivity extends AppCompatActivity {
     Button saveButton;
     Button cancelButton;
     Button qrButton;
+    SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +32,7 @@ public class SettingActivity extends AppCompatActivity {
         ipEditText = findViewById(R.id.ip_edit);
         portEditText = findViewById(R.id.port_edit);
 
-        final SharedPreferences pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
+        pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         final String ip = pref.getString("ip", "");
         final int port = pref.getInt("port", 10000);
         ipEditText.setText(ip);
@@ -42,22 +44,10 @@ public class SettingActivity extends AppCompatActivity {
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        SharedPreferences.Editor editor = pref.edit();
-                        editor.putString("ip", ipEditText.getText().toString());
-                        editor.putInt("port", Integer.parseInt(portEditText.getText().toString()));
-                        editor.apply();
-                        finish();
+                        save();
                     }
                 }
         );
-
-        cancelButton = findViewById(R.id.cancel_btn);
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         qrButton = findViewById(R.id.qr);
         qrButton.setOnClickListener(
@@ -83,5 +73,22 @@ public class SettingActivity extends AppCompatActivity {
         } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode != KeyEvent.KEYCODE_BACK){
+            return super.onKeyDown(keyCode, event);
+        }else{
+            save();
+            finish();
+            return false;
+        }
+    }
+
+    private void save() {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("ip", ipEditText.getText().toString());
+        editor.putInt("port", Integer.parseInt(portEditText.getText().toString()));
+        editor.apply();
+        finish();
     }
 }
