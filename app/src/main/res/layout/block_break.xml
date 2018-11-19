@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="adapter"
+            type="com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainAdapter" />
+
+        <variable
+            name="position"
+            type="Integer" />
+
+        <variable
+            name="script"
+            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
+
+        <variable
+            name="ifState"
+            type="Integer" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/block_width"
+        android:layout_height="@dimen/block_height">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/block_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="8dp"
+                android:layout_weight="1"
+                android:onClick="@{(v)->adapter.clickBlock(v,position,ifState)}"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/block_script_item"
+                    android:layout_weight="4">
+
+                    <ImageView
+                        android:id="@+id/block_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:src="@drawable/ic_block_break" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/title_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:background="@drawable/block_script_item_no_top"
+                        android:gravity="center"
+                        android:text="@string/block_break_block_name"
+                        android:textColor="@color/default_text_color" />
+
+                    <TextView
+                        android:id="@+id/id_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="@color/default_text_color" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/conductor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@drawable/line_vertical">
+
+                <LinearLayout
+                    android:id="@+id/conductor_add"
+                    android:layout_width="@dimen/conductor_scaele"
+                    android:layout_height="@dimen/conductor_scaele"
+                    android:layout_gravity="center"
+                    android:background="@drawable/block_script_item"
+                    android:onClick="@{(v)->adapter.clickConductor(v,position,ifState)}"
+                    android:transitionName="trans_block_list">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:includeFontPadding="false"
+                        android:text="@string/block_break_block_add"
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color"
+                        android:textSize="@dimen/conductor_text_size" />
+
+                </LinearLayout>
+            </FrameLayout>
+
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>

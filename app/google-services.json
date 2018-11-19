@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "676313343916",
+    "firebase_url": "https://spica-android-65bef.firebaseio.com",
+    "project_id": "spica-android-65bef",
+    "storage_bucket": "spica-android-65bef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:676313343916:android:9cbf8d7347786ffc",
+        "android_client_info": {
+          "package_name": "com.t_robop.yuusuke.a01_spica_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "676313343916-mptupuv1s2nv5vco7nmolrq5p7v391jv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.t_robop.yuusuke.a01_spica_android",
+            "certificate_hash": "1fd6a68f72ca68928c61d375bc3fa2e56e026468"
+          }
+        },
+        {
+          "client_id": "676313343916-9aadfpb3l4q0n572aq5j794i6faq724p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAokyDatKY5hru-wL5rmvA7Dlm68xj4NhY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "676313343916-9aadfpb3l4q0n572aq5j794i6faq724p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
