@@ -78,7 +78,8 @@
 
     <!-- ScriptMainActivity -->
     <string name="script_main_activity_send_success">ロボットにめいれいをおくったよ！</string>
-    <string name="script_main_activity_send_failed">ブロックがないよ！</string>
+    <string name="script_main_activity_failed_empty_block">ブロックがないよ！</string>
+    <string name="script_main_activity_failed_empty_ip">IPアドレスが指定されていません</string>
 
     <!-- ScriptMainAdapter -->
     <string name="script_main_adapter_block_if_above">@string/common_distance_sensor_above</string>
