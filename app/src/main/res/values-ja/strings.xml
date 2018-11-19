@@ -34,7 +34,6 @@
     <string name="common_port_name">ポート番号</string>
 
     <!-- common Error系 -->
-    <string name="error_text">何らかのError</string>
     <string name="common_error_text">何らかのError</string>
 
     <!-- BlockDetailFragment -->

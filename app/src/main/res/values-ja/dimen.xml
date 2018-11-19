@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="block_width">220dp</dimen>
+    <dimen name="block_height">200dp</dimen>
+
+    <dimen name="block_height_x2">400dp</dimen>
+
+    <dimen name="conductor_scaele">36dp</dimen>
+    <dimen name="conductor_text_size">24sp</dimen>
+
+    <dimen name="detail_value_text">48sp</dimen>
+    <dimen name="detail_value_text_des">16sp</dimen>
+
+    <dimen name="fab_scale">64dp</dimen>
+    <dimen name="fab_margin">36dp</dimen>
+</resources>
