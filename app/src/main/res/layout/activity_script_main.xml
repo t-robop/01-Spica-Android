@@ -42,8 +42,9 @@
             <com.t_robop.yuusuke.a01_spica_android.util.CanvasView
                 android:id="@+id/canvas_view"
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_height="56dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@drawable/line_software_bottom"/>
 
             <Button
                 android:id="@+id/restore_btn"

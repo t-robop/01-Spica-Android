@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainActivity;
 import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainAdapter;
@@ -20,7 +21,7 @@ public class CanvasView extends View {
 
     private final Paint paint;
 
-    private float lineWeight = 1f;
+    private float lineWeight = 2f;
 
     private float nowPositionX = 0;
     float y = 0;
@@ -44,7 +45,7 @@ public class CanvasView extends View {
     ///////
     private int commandBlockNum = 2;
     private int commandBlockMargin = 50;
-    private int commandBlockSize = 5;
+    private int commandBlockSize = 15;
     private int commandBlockLineWidth = 5;
     ///////
     Paint commandBlockPaint;
@@ -139,10 +140,11 @@ public class CanvasView extends View {
             ScriptModel specialScript = commandBlockSet.getScriptSpecial();
             ScriptModel defaultScript = commandBlockSet.getScriptDefault();
             if (specialScript != null) {
+                commandBlockPaint.setColor(getBlockColor(specialScript));
                 // trueレーン
-                canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, 1, commandBlockPaint);
                 canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
                         commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
+                canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, 1, commandBlockPaint);
             } else {
                 if (defaultScript.getIfState() == 2) {
                     canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
@@ -150,6 +152,7 @@ public class CanvasView extends View {
                 }
             }
             if (defaultScript != null) {
+                commandBlockPaint.setColor(getBlockColor(defaultScript));
                 // falseレーン
                 if (defaultScript.getBlock() == ScriptModel.SpicaBlock.IF_START) {
                     // ifの始め
@@ -246,5 +249,27 @@ public class CanvasView extends View {
         } else {
             nowPositionX = 0;
         }
+    }
+
+    public int getBlockColor(ScriptModel scriptModel) {
+        switch (scriptModel.getBlock()) {
+            case START:
+            case END:
+                return MyApplication.getInstance().getResources().getColor(R.color.default_text_color);
+            case FRONT:
+            case BACK:
+            case RIGHT:
+            case LEFT:
+                return MyApplication.getInstance().getResources().getColor(R.color.color_blue);
+            case FOR_START:
+            case FOR_END:
+                return MyApplication.getInstance().getResources().getColor(R.color.color_yellow_2);
+            case IF_START:
+            case IF_END:
+                return MyApplication.getInstance().getResources().getColor(R.color.color_purple);
+            case BREAK:
+                return MyApplication.getInstance().getResources().getColor(R.color.color_red);
+        }
+        return MyApplication.getInstance().getResources().getColor(R.color.default_text_color);
     }
 }

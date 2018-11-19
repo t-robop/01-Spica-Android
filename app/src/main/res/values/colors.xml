@@ -27,6 +27,8 @@
     <!--backgroundColor-->
     <color name="default_background_color">#FDFDF8</color>
 
+    <color name="more_background_color">#F5F5F0</color>
+
     <color name="color_red">#ff2235</color>
     <color name="color_blue">#0089ff</color>
     <color name="color_yellow">#ffdf00</color>
