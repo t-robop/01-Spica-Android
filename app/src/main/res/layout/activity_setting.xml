@@ -9,6 +9,23 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/qr"
+            android:layout_width="wrap_content"
+            android:layout_height="120dp"
+            android:layout_weight="1"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:text="@string/activity_setting_button_qr_text"
+            android:textColor="@color/default_text_color" />
+        <requestFocus />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="100dp"
         android:orientation="horizontal">
 
@@ -60,33 +77,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/cancel_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/default_text_color"
-            android:text="@string/activity_setting_button_view_finish_text" />
-
-        <Button
             android:id="@+id/save_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/default_text_color"
             android:text="@string/activity_setting_button_ok_text" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/qr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textColor="@color/default_text_color"
-            android:text="@string/activity_setting_button_qr_text" />
     </LinearLayout>
 
 </LinearLayout>
