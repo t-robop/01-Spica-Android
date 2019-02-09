@@ -15,7 +15,7 @@
 
         <variable
             name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
+            type="com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel" />
 
         <variable
             name="ifState"
@@ -27,7 +27,7 @@
         android:layout_height="@dimen/block_height">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -44,12 +44,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/block_script_item"
-                    android:layout_weight="4">
+                    android:layout_weight="4"
+                    android:background="@drawable/block_script_item">
 
                     <ImageView
                         android:id="@+id/block_image"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_margin="4dp"
                         android:layout_weight="4"

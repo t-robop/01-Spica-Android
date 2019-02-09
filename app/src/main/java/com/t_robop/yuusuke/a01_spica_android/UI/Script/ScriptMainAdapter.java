@@ -9,23 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.t_robop.yuusuke.a01_spica_android.Block;
+import com.t_robop.yuusuke.a01_spica_android.Config;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockStartBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockEndBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockFrontBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBackBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBreakBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForStartBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockFrontBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockLeftBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.BlockRightBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfStartBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockIfEndBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForStartBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockForEndBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.BlockBreakBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.BlockStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorHorizontalBinding;
-import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfEndBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfStartBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 
 import java.util.ArrayList;
 
@@ -42,10 +44,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     public static class BindingHolder extends RecyclerView.ViewHolder {
         private ItemContainerScriptMainBinding mBinding;
 
-        public BindingHolder(ItemContainerScriptMainBinding binding) {
+        BindingHolder(ItemContainerScriptMainBinding binding) {
             super(binding.getRoot());
             mBinding = binding;
-            LayoutInflater layoutInflater = LayoutInflater.from(mBinding.laneDefault.getContext());
         }
 
         public ViewDataBinding getBinding() {
@@ -54,23 +55,23 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     public static class ScriptSet {
-        private ScriptModel scriptDefault;
-        private ScriptModel scriptSpecial;
+        private UIBlockModel uiBlockUnderLane;
+        private UIBlockModel uiBlockTopLane;
 
-        public ScriptModel getScriptDefault() {
-            return scriptDefault;
+        public UIBlockModel getUiBlockUnderLane() {
+            return uiBlockUnderLane;
         }
 
-        public void setScriptDefault(ScriptModel scriptDefault) {
-            this.scriptDefault = scriptDefault;
+        void setUiBlockUnderLane(UIBlockModel uiBlockUnderLane) {
+            this.uiBlockUnderLane = uiBlockUnderLane;
         }
 
-        public ScriptModel getScriptSpecial() {
-            return scriptSpecial;
+        public UIBlockModel getUiBlockTopLane() {
+            return uiBlockTopLane;
         }
 
-        public void setScriptSpecial(ScriptModel scriptSpecial) {
-            this.scriptSpecial = scriptSpecial;
+        void setUiBlockTopLane(UIBlockModel uiBlockTopLane) {
+            this.uiBlockTopLane = uiBlockTopLane;
         }
     }
 
@@ -79,40 +80,40 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         this.mContext = context;
     }
 
-    public void clear() {
+    void clear() {
         mScriptList.clear();
     }
 
-    public ScriptSet getItem(int index){
+    public ScriptSet getItem(int index) {
         return this.mScriptList.get(index);
     }
 
-    public void addDefault(int index, ScriptModel script) {
+    void addDefault(int index, UIBlockModel uiBlockModel) {
         if (mScriptList.size() < index) return;
 
         //普通に追加
         if (mScriptList.size() == index) {
             ScriptSet set = new ScriptSet();
-            set.setScriptDefault(script);
+            set.setUiBlockUnderLane(uiBlockModel);
             mScriptList.add(set);
         } else {
             ScriptSet set = mScriptList.get(index);
-            set.setScriptDefault(script);
+            set.setUiBlockUnderLane(uiBlockModel);
             mScriptList.set(index, set);
         }
     }
 
-    public void addSpecial(int index, ScriptModel script) {
+    void addSpecial(int index, UIBlockModel uiBlockModel) {
         if (mScriptList.size() < index) return;
 
         //普通に追加
         if (mScriptList.size() == index) {
             ScriptSet set = new ScriptSet();
-            set.setScriptSpecial(script);
+            set.setUiBlockTopLane(uiBlockModel);
             mScriptList.add(set);
         } else {
             ScriptSet set = mScriptList.get(index);
-            set.setScriptSpecial(script);
+            set.setUiBlockTopLane(uiBlockModel);
             mScriptList.set(index, set);
         }
     }
@@ -125,18 +126,17 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         return new BindingHolder(binding);
     }
 
-
     /**
      * if文のTrueの終点Indexを返すメソッド
      */
     private int getTrueEndIndex(int posIfStart) {
         for (int i = posIfStart + 1; i < mScriptList.size(); i++) {
-            if (mScriptList.get(i).scriptSpecial == null) {
-                ScriptModel scriptLastTrue = mScriptList.get(i - 1).scriptSpecial;
+            if (mScriptList.get(i).uiBlockTopLane == null) {
+                UIBlockModel scriptLastTrue = mScriptList.get(i - 1).uiBlockTopLane;
                 if (scriptLastTrue != null) {
                     return scriptLastTrue.getPos();
                 } else {
-                    return mScriptList.get(i - 1).scriptDefault.getPos();
+                    return mScriptList.get(i - 1).uiBlockUnderLane.getPos();
                 }
             }
         }
@@ -146,207 +146,215 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     @Override
     public void onBindViewHolder(BindingHolder holder, final int position) {
         ScriptSet set = mScriptList.get(position);
-        final ScriptModel scriptSpecial = set.scriptSpecial;
-        final ScriptModel scriptDefault = set.scriptDefault;
+        final UIBlockModel uiBlockTopLane = set.uiBlockTopLane;
+        final UIBlockModel uiBlockUnderLane = set.uiBlockUnderLane;
 
-        /**
+        /*
          * ifレーンの描画
          */
         holder.mBinding.laneIf.removeAllViews();
-        if (scriptSpecial != null) {
-            drawCommandBlock(position, holder.mBinding.laneIf, scriptSpecial);
+        if (uiBlockTopLane != null) {
+            drawCommandBlock(position, holder.mBinding.laneIf, uiBlockTopLane);
         } else {
             LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneIf.getContext());
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+
+            if (uiBlockUnderLane.getId().equals(Block.IfStartBlock.id)) {
                 ConductorIfStartBinding bindingConIfStart = ConductorIfStartBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
                 bindingConIfStart.setAdapter(this);
                 bindingConIfStart.setPosition(position);
-                bindingConIfStart.setIfState(1);
+                bindingConIfStart.setIfState(Config.IN_TRUE_LANE);
                 holder.mBinding.laneIf.addView(bindingConIfStart.getRoot());
-            } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_END) {
+            } else if (uiBlockUnderLane.getId().equals(Block.IfEndBlock.id)) {
                 ConductorIfEndBinding bindingConIfEnd = ConductorIfEndBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
                 holder.mBinding.laneIf.addView(bindingConIfEnd.getRoot());
-            } else if (scriptDefault.getIfState() == 2) {
+            } else if (uiBlockUnderLane.getIfState() == Config.IN_FALSE_LANE) {
                 ConductorHorizontalBinding bindingConHorizontal = ConductorHorizontalBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
                 holder.mBinding.laneIf.addView(bindingConHorizontal.getRoot());
             }
         }
 
-        /**
+        /*
          * 通常レーンの描画
          */
         holder.mBinding.laneDefault.removeAllViews();
-        if (scriptDefault != null) {
-            drawCommandBlock(position, holder.mBinding.laneDefault, scriptDefault);
-        } else if (scriptSpecial.getIfState() == 1) {
+        if (uiBlockUnderLane != null) {
+            drawCommandBlock(position, holder.mBinding.laneDefault, uiBlockUnderLane);
+        } else if (uiBlockTopLane.getIfState() == Config.IN_TRUE_LANE) {
             LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneDefault.getContext());
             ConductorHorizontalBinding bindingConHorizontal = ConductorHorizontalBinding.inflate(layoutInflater, holder.mBinding.laneDefault, false);
             holder.mBinding.laneDefault.addView(bindingConHorizontal.getRoot());
         }
     }
 
+    //FIXME 長すぎなのでまとめたい
     @SuppressLint("SetTextI18n")
-    public void drawCommandBlock(int position, LinearLayout lane, ScriptModel script) {
+    private void drawCommandBlock(int position, LinearLayout lane, UIBlockModel uiBlockModel) {
         LayoutInflater layoutInflater = LayoutInflater.from(lane.getContext());
-        switch (script.getBlock()) {
-            case START:
+        switch (uiBlockModel.getId()) {
+            case Block.StartBlock.id:
                 BlockStartBinding bindingStart = BlockStartBinding.inflate(layoutInflater, lane, false);
                 bindingStart.setAdapter(this);
                 bindingStart.setPosition(position);
-                bindingStart.setScript(script);
-                bindingStart.setIfState(script.getIfState());
+                bindingStart.setScript(uiBlockModel);
+                bindingStart.setIfState(uiBlockModel.getIfState());
                 lane.addView(bindingStart.getRoot());
                 break;
-            case END:
+
+            case Block.EndBlock.id:
                 BlockEndBinding bindingEnd = BlockEndBinding.inflate(layoutInflater, lane, false);
                 bindingEnd.setPosition(position);
-                bindingEnd.setScript(script);
-                lane.addView(BlockEndBinding.class.cast(bindingEnd).getRoot());
+                bindingEnd.setScript(uiBlockModel);
+                lane.addView((bindingEnd).getRoot());
                 break;
-            case FRONT:
+
+            case Block.FrontBlock.id:
                 BlockFrontBinding bindingFront = BlockFrontBinding.inflate(layoutInflater, lane, false);
                 bindingFront.setAdapter(this);
                 bindingFront.setPosition(position);
-                bindingFront.setScript(script);
-                bindingFront.setValue(script.getValue());
-                bindingFront.setIfState(script.getIfState());
+                bindingFront.setScript(uiBlockModel);
+                bindingFront.setValue(uiBlockModel.getTime());
+                bindingFront.setIfState(uiBlockModel.getIfState());
                 lane.addView(bindingFront.getRoot());
                 break;
-            case BACK:
+
+            case Block.BackBlock.id:
                 BlockBackBinding bindingBack = BlockBackBinding.inflate(layoutInflater, lane, false);
                 bindingBack.setAdapter(this);
                 bindingBack.setPosition(position);
-                bindingBack.setScript(script);
-                bindingBack.setValue(script.getValue());
-                bindingBack.setIfState(script.getIfState());
-                lane.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
+                bindingBack.setScript(uiBlockModel);
+                bindingBack.setValue(uiBlockModel.getTime());
+                bindingBack.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingBack).getRoot());
                 break;
-            case LEFT:
+
+            case Block.LeftBlock.id:
                 BlockLeftBinding bindingLeft = BlockLeftBinding.inflate(layoutInflater, lane, false);
                 bindingLeft.setAdapter(this);
                 bindingLeft.setPosition(position);
-                bindingLeft.setScript(script);
-                bindingLeft.setValue(script.getValue());
-                bindingLeft.setIfState(script.getIfState());
-                lane.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
+                bindingLeft.setScript(uiBlockModel);
+                bindingLeft.setValue(uiBlockModel.getTime());
+                bindingLeft.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingLeft).getRoot());
                 break;
-            case RIGHT:
+
+            case Block.RightBlock.id:
                 BlockRightBinding bindingRight = BlockRightBinding.inflate(layoutInflater, lane, false);
                 bindingRight.setAdapter(this);
                 bindingRight.setPosition(position);
-                bindingRight.setScript(script);
-                bindingRight.setValue(script.getValue());
-                bindingRight.setIfState(script.getIfState());
-                lane.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
+                bindingRight.setScript(uiBlockModel);
+                bindingRight.setValue(uiBlockModel.getTime());
+                bindingRight.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingRight).getRoot());
                 break;
-            case IF_START:
+
+            case Block.IfStartBlock.id:
                 BlockIfStartBinding bindingIfStart = BlockIfStartBinding.inflate(layoutInflater, lane, false);
                 bindingIfStart.setAdapter(this);
                 bindingIfStart.setPosition(position);
-                bindingIfStart.setScript(script);
-                if(script.getIfOperator() == script.getSensorAboveNum()){
-                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.script_main_adapter_block_if_above));
-                }else if(script.getIfOperator() == script.getSensorBelowNum()){
-                    bindingIfStart.idText.setText((int)Math.floor(script.getValue()) + mContext.getString(R.string.script_main_adapter_block_if_below));
+                bindingIfStart.setScript(uiBlockModel);
+                if (uiBlockModel.getIfOperator() == Config.SENSOR_ABOVE) {
+                    bindingIfStart.idText.setText((int) Math.floor(uiBlockModel.getThreshold()) + mContext.getString(R.string.script_main_adapter_block_if_above));
+                } else if (uiBlockModel.getIfOperator() == Config.SENSOR_BELOW) {
+                    bindingIfStart.idText.setText((int) Math.floor(uiBlockModel.getThreshold()) + mContext.getString(R.string.script_main_adapter_block_if_below));
                 }
-                bindingIfStart.setIfState(script.getIfState());
-                lane.addView(BlockIfStartBinding.class.cast(bindingIfStart).getRoot());
+                bindingIfStart.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingIfStart).getRoot());
                 break;
-            case IF_END:
+
+            case Block.IfEndBlock.id:
                 BlockIfEndBinding bindingIfEnd = BlockIfEndBinding.inflate(layoutInflater, lane, false);
                 bindingIfEnd.setAdapter(this);
                 bindingIfEnd.setPosition(position);
-                bindingIfEnd.setScript(script);
-                bindingIfEnd.setIfState(script.getIfState());
-                lane.addView(BlockIfEndBinding.class.cast(bindingIfEnd).getRoot());
+                bindingIfEnd.setScript(uiBlockModel);
+                bindingIfEnd.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingIfEnd).getRoot());
                 break;
-            case FOR_START:
+
+            case Block.ForStartBlock.id:
                 BlockForStartBinding bindingForStart = BlockForStartBinding.inflate(layoutInflater, lane, false);
                 bindingForStart.setAdapter(this);
                 bindingForStart.setPosition(position);
-                bindingForStart.setScript(script);
-                bindingForStart.setValue((int)Math.floor(script.getValue()));
-                bindingForStart.setIfState(script.getIfState());
-                lane.addView(BlockForStartBinding.class.cast(bindingForStart).getRoot());
+                bindingForStart.setScript(uiBlockModel);
+                bindingForStart.setValue((int) Math.floor(uiBlockModel.getLoopNum()));
+                bindingForStart.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingForStart).getRoot());
                 break;
-            case FOR_END:
+
+            case Block.ForEndBlock.id:
                 BlockForEndBinding bindingForEnd = BlockForEndBinding.inflate(layoutInflater, lane, false);
                 bindingForEnd.setAdapter(this);
                 bindingForEnd.setPosition(position);
-                bindingForEnd.setScript(script);
-                bindingForEnd.setIfState(script.getIfState());
-                lane.addView(BlockForEndBinding.class.cast(bindingForEnd).getRoot());
+                bindingForEnd.setScript(uiBlockModel);
+                bindingForEnd.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingForEnd).getRoot());
                 break;
-            case BREAK:
+
+            case Block.BreakBlock.id:
                 BlockBreakBinding bindingBreak = BlockBreakBinding.inflate(layoutInflater, lane, false);
                 bindingBreak.setAdapter(this);
                 bindingBreak.setPosition(position);
-                bindingBreak.setScript(script);
-                bindingBreak.setIfState(script.getIfState());
-                lane.addView(BlockBreakBinding.class.cast(bindingBreak).getRoot());
+                bindingBreak.setScript(uiBlockModel);
+                bindingBreak.setIfState(uiBlockModel.getIfState());
+                lane.addView((bindingBreak).getRoot());
                 break;
         }
     }
 
-    private boolean isInLoop(ScriptModel script) {
-        if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+    private boolean isInLoop(UIBlockModel uiBlockModel) {
+        if (uiBlockModel.getId().equals(Block.ForEndBlock.id)) {
             return false;
-        } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+        } else if (uiBlockModel.getId().equals(Block.ForStartBlock.id)) {
             return true;
-        } else if (script.isInLoop()) {
+        } else if (uiBlockModel.isInLoop()) {
             return true;
-        } else if (!script.isInLoop()) {
+        } else if (!uiBlockModel.isInLoop()) {
             return false;
         }
         return false;
     }
 
     public void clickConductor(View view, int position, int ifState) {
-        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
-        ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
-        if (ifState == 1) {
+        UIBlockModel uiBlockUnderLane = mScriptList.get(position).getUiBlockUnderLane();
+        UIBlockModel uiBlockTopLane = mScriptList.get(position).getUiBlockTopLane();
+        if (ifState == Config.IN_TRUE_LANE) {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-            if (scriptSpecial != null) {
-                clickConductorIf.onClick(view, scriptSpecial.getPos(), 1, isInLoop(scriptSpecial));
+            if (uiBlockTopLane != null) {
+                clickConductorIf.onClick(view, uiBlockTopLane.getPos(), Config.IN_TRUE_LANE, isInLoop(uiBlockTopLane));
             } else {
                 //if_startの直後のTrueレーンの場合は通常レーンのIF_STARTブロックのposを送る
-                clickConductorIf.onClick(view, scriptDefault.getPos(), 1, isInLoop(scriptDefault));
+                clickConductorIf.onClick(view, uiBlockUnderLane.getPos(), Config.IN_TRUE_LANE, isInLoop(uiBlockUnderLane));
             }
         } else {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+            if (uiBlockUnderLane.getId().equals(Block.IfStartBlock.id)) {
                 //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
-                clickConductor.onClick(view, getTrueEndIndex(position), 2, isInLoop(scriptDefault));
+                clickConductor.onClick(view, getTrueEndIndex(position), Config.IN_FALSE_LANE, isInLoop(uiBlockUnderLane));
             } else {
-                clickConductor.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState(), isInLoop(scriptDefault));
+                clickConductor.onClick(view, uiBlockUnderLane.getPos(), uiBlockUnderLane.getIfState(), isInLoop(uiBlockUnderLane));
             }
         }
     }
 
     public void clickBlock(View view, int position, int ifState) {
-        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
-        ScriptModel scriptSpecial = mScriptList.get(position).getScriptSpecial();
-        if (ifState == 1) {
-            clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState(), scriptSpecial.isInLoop());
+        UIBlockModel uiBlockTopLane = mScriptList.get(position).getUiBlockTopLane();
+        UIBlockModel uiBlockUnderLane = mScriptList.get(position).getUiBlockUnderLane();
+        if (ifState == Config.IN_TRUE_LANE) {
+            clickBlockIf.onClick(view, uiBlockTopLane.getPos(), uiBlockTopLane.getIfState(), uiBlockTopLane.isInLoop());
         } else {
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
-                clickBlock.onClick(view, -1, 0, scriptDefault.isInLoop());
-            } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
-                clickBlock.onClick(view, -2, 0, scriptDefault.isInLoop());
-            } else {
-                clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState(), scriptDefault.isInLoop());
-            }
+            clickBlock.onClick(view, uiBlockUnderLane.getPos(), uiBlockUnderLane.getIfState(), uiBlockUnderLane.isInLoop());
         }
     }
 
+    @Deprecated
     public void longClickBlock(View view, int position) {
-        ScriptModel scriptDefault = mScriptList.get(position).getScriptDefault();
-        longClickBlock.onLongClick(view, scriptDefault.getPos());
+        UIBlockModel uiBlockUnderLane = mScriptList.get(position).getUiBlockUnderLane();
+        longClickBlock.onLongClick(view, uiBlockUnderLane.getPos());
     }
 
+    @Deprecated
     public void longClickBlockIf(View view, int position) {
-        ScriptModel scriptSpecial = mScriptList.get(position).getScriptDefault();
-        longClickBlockIf.onLongClick(view, scriptSpecial.getPos());
+        UIBlockModel uiBlockUnderLane = mScriptList.get(position).getUiBlockUnderLane();
+        longClickBlockIf.onLongClick(view, uiBlockUnderLane.getPos());
     }
 
     public interface onItemClickListener {
@@ -357,27 +365,27 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         void onLongClick(View view, int pos);
     }
 
-    public void setOnConductorClickListener(onItemClickListener listener) {
+    void setOnConductorClickListener(onItemClickListener listener) {
         this.clickConductor = listener;
     }
 
-    public void setOnConductorIfClickListener(onItemClickListener listener) {
+    void setOnConductorIfClickListener(onItemClickListener listener) {
         this.clickConductorIf = listener;
     }
 
-    public void setOnBlockClickListener(onItemClickListener listener) {
+    void setOnBlockClickListener(onItemClickListener listener) {
         this.clickBlock = listener;
     }
 
-    public void setOnBlockIfClickListener(onItemClickListener listener) {
+    void setOnBlockIfClickListener(onItemClickListener listener) {
         this.clickBlockIf = listener;
     }
 
-    public void setOnBlockLongClickListener(onItemLongClickListener listener) {
+    void setOnBlockLongClickListener(onItemLongClickListener listener) {
         this.longClickBlock = listener;
     }
 
-    public void setOnBlockIfLongClickListener(onItemLongClickListener listener) {
+    void setOnBlockIfLongClickListener(onItemLongClickListener listener) {
         this.longClickBlockIf = listener;
     }
 

@@ -12,20 +12,17 @@ import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 import android.widget.RadioGroup;
 
+import com.t_robop.yuusuke.a01_spica_android.Block;
+import com.t_robop.yuusuke.a01_spica_android.Config;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
-
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
+import com.t_robop.yuusuke.a01_spica_android.databinding.FragmentBlockDetailBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 
 public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView {
 
     private ScriptContract.Presenter mScriptPresenter;
 
-    ActivityBlockDetailBinding mBinding;
+    FragmentBlockDetailBinding mBinding;
 
     final int STANDARD_BLOCK_MAX_PROGRESS = 500;
 
@@ -40,12 +37,12 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
     DetailListener listener;
 
-    private SpicaBlock spicaBlock;
+    private String blockId;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_block_detail, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_block_detail, container, false);
         View root = mBinding.getRoot();
         mBinding.setFragment(this);
         mBinding.fgDetail.setOnClickListener(new View.OnClickListener() {
@@ -61,9 +58,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //アニメーションスタート
-        popupAnime(mBinding.fgDetail);
+        popupAnimation(mBinding.fgDetail);
         if (mScriptPresenter.getState() == ScriptPresenter.ViewState.EDIT) {
-            alphaAnime(mBinding.bgDetail);
+            alphaAnimation(mBinding.bgDetail);
         } else {
             mBinding.bgDetail.setBackgroundResource(R.color.alpha_clear);
         }
@@ -73,61 +70,69 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     public void onStart() {
         super.onStart();
         //presenterで保持してるTargetScriptを取得
-        ScriptModel targetScript = mScriptPresenter.getTargetScript();
+        UIBlockModel targetScript = mScriptPresenter.getTargetScript();
         //ブロック種類を取得
-        spicaBlock = targetScript.getBlock();
+        blockId = targetScript.getId();
         //描画
-        drawScript(spicaBlock);
+        drawScript(blockId);
+
         int res = R.id.speed_middle_radio_button;
-        ;
-        if (targetScript.getSpeed() == 1) {
-            res = R.id.speed_low_radio_button;
-        } else if (targetScript.getSpeed() == 2) {
-            res = R.id.speed_middle_radio_button;
-        } else if (targetScript.getSpeed() == 3) {
-            res = R.id.speed_high_radio_button;
+        switch (targetScript.getPower()) {
+            case Config.LOW_POWER:
+                res = R.id.speed_low_radio_button;
+                break;
+            case Config.MIDDLE_POWER:
+                res = R.id.speed_middle_radio_button;
+                break;
+            case Config.HIGH_POWER:
+                res = R.id.speed_high_radio_button;
+                break;
         }
-        switch (spicaBlock) {
-            case FRONT:
+
+        switch (blockId) {
+            case Block.FrontBlock.id:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
+                mBinding.seekValue.setProgress((int) (targetScript.getTime() * 100));
                 break;
-            case BACK:
+
+            case Block.BackBlock.id:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
+                mBinding.seekValue.setProgress((int) (targetScript.getTime() * 100));
                 break;
-            case LEFT:
+
+            case Block.LeftBlock.id:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
+                mBinding.seekValue.setProgress((int) (targetScript.getTime() * 100));
                 break;
 
-            case RIGHT:
+            case Block.RightBlock.id:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100));
+                mBinding.seekValue.setProgress((int) (targetScript.getTime() * 100));
                 break;
 
-            case IF_START:
-                if (targetScript.getIfOperator() == targetScript.getSensorAboveNum()) {
+            case Block.IfStartBlock.id:
+                if (targetScript.getIfOperator() == Config.SENSOR_ABOVE) {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                     mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
-                } else if (targetScript.getIfOperator() == targetScript.getSensorBelowNum()) {
+                } else if (targetScript.getIfOperator() == Config.SENSOR_BELOW) {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                     mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_below_text);
                 } else {
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                     mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
                 }
-                mBinding.seekValue.setProgress((int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) targetScript.getThreshold() - IF_BLOCK_GAP_PROGRESS);
                 mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
                 break;
-            case FOR_START:
-                mBinding.seekValue.setProgress((int) targetScript.getValue());
+
+            case Block.ForStartBlock.id:
+                mBinding.seekValue.setProgress(targetScript.getLoopNum());
                 mBinding.seekValue.setMax(FOR_BLOCK_MAX_PROGRESS);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_loop_unit_text);
                 break;
@@ -136,13 +141,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         setSeekValueText();
     }
 
-    private void popupAnime(View view) {
+    private void popupAnimation(View view) {
         // ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)
         ScaleAnimation scaleAnimation = new ScaleAnimation(
                 0.01f, 1.0f, 0.01f, 1.0f,
                 Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        // animation時間 msec
+        // animation時間 ms
         scaleAnimation.setDuration(200);
         // 繰り返し回数
         scaleAnimation.setRepeatCount(0);
@@ -152,9 +157,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         view.startAnimation(scaleAnimation);
     }
 
-    private void alphaAnime(View view) {
+    private void alphaAnimation(View view) {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 0.5f);
-        // animation時間 msec
+        // animation時間 ms
         alphaAnimation.setDuration(200);
         // 繰り返し回数
         alphaAnimation.setRepeatCount(0);
@@ -167,10 +172,11 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     /**
      * mBindingを通して描画するメソッド
      */
-    public void drawScript(SpicaBlock blockId) {
+    //FIXME Blockクラスを使ってset~を削減する
+    public void drawScript(String blockId) {
 
         switch (blockId) {
-            case FRONT:
+            case Block.FrontBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_forward_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_forward_description);
@@ -179,7 +185,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_forward_unit_text);
                 break;
 
-            case BACK:
+            case Block.BackBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_back_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_back_description);
@@ -188,7 +194,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_back_unit_text);
                 break;
 
-            case LEFT:
+            case Block.LeftBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_left_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_left_description);
@@ -198,7 +204,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_left_unit_text);
                 break;
 
-            case RIGHT:
+            case Block.RightBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_right_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_right_description);
@@ -208,7 +214,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_right_unit_text);
                 break;
 
-            case IF_START:
+            case Block.IfStartBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_if_start_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_if_start_description);
@@ -218,7 +224,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_purple);
                 break;
 
-            case FOR_START:
+            case Block.ForStartBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_for_start_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_for_start_description);
@@ -227,7 +233,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_yellow_2);
                 break;
 
-            case BREAK:
+            case Block.BreakBlock.id:
                 mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_break_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_break_description);
@@ -251,14 +257,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     }
 
     public interface DetailListener {
-        void onClickAdd(ScriptModel script);
+        void onClickAdd(UIBlockModel uiBlockModel);
 
         void onClickDelete(int pos);
     }
 
     public void setAddClickListener(BlockDetailFragment.DetailListener listener) {
         this.listener = listener;
-
     }
 
     /**
@@ -266,7 +271,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
      */
     public void close() {
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
-
     }
 
     /**
@@ -275,52 +279,51 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     public void cancel() {
         confirm();
         getFragmentManager().beginTransaction().remove(BlockDetailFragment.this).commit();
-
     }
 
     /**
      * 決定されたら反映したスクリプトをActivityに送る
      */
     public void confirm() {
-        ScriptModel script = mScriptPresenter.getTargetScript();
-        script.setBlock(spicaBlock);
+        UIBlockModel uiBlockModel = mScriptPresenter.getTargetScript();
+        uiBlockModel.setId(blockId);
         float p = mBinding.seekValue.getProgress();
         // 通常ブロックの時
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p = p / 100;
-        } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
+        } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
             p += IF_BLOCK_GAP_PROGRESS;
         }
-        script.setValue(p);
+        uiBlockModel.setValue(p);
 
-        switch (spicaBlock) {
-            case FRONT:
-            case BACK:
-            case LEFT:
-            case RIGHT:
+        switch (blockId) {
+            case Block.FrontBlock.id:
+            case Block.BackBlock.id:
+            case Block.LeftBlock.id:
+            case Block.RightBlock.id:
                 //スピード値の設定
                 int speedCheckId = mBinding.speedRadioGroup.getCheckedRadioButtonId();
                 if (speedCheckId == R.id.speed_low_radio_button) {
-                    script.setSpeed(script.getLowSpeedValue());
+                    uiBlockModel.setLowPower();
                 } else if (speedCheckId == R.id.speed_middle_radio_button) {
-                    script.setSpeed(script.getMiddleSpeedValue());
+                    uiBlockModel.setMiddlePower();
                 } else {
-                    script.setSpeed(script.getHighSpeedValue());
+                    uiBlockModel.setHighPower();
                 }
                 break;
 
-            case IF_START:
+            case Block.IfStartBlock.id:
                 ////ifスタートブロックの条件指定
                 int checkId = mBinding.settingRadioGroup.getCheckedRadioButtonId();
                 if (checkId == R.id.radiobutton_left) {
-                    script.setIfOperator(script.getSensorAboveNum());
+                    uiBlockModel.setSensorAbove();
                 } else {
-                    script.setIfOperator(script.getSensorBelowNum());
+                    uiBlockModel.setSensorBelow();
                 }
                 break;
         }
 
-        listener.onClickAdd(script);
+        listener.onClickAdd(uiBlockModel);
     }
 
     /**
@@ -333,15 +336,16 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     /**
      * 回転の逆回転スイッチの処理
      */
-    public void onCheckedChanged(RadioGroup group, int checkedId) {
-        if (spicaBlock == LEFT || spicaBlock == RIGHT) {
+    //Binding Method 引数は固定
+    public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+        if (blockId.equals(Block.LeftBlock.id) || blockId.equals(Block.RightBlock.id)) {
             if (checkedId == R.id.radiobutton_left) {
-                spicaBlock = LEFT;
+                blockId = Block.LeftBlock.id;
             } else if (checkedId == R.id.radiobutton_right) {
-                spicaBlock = RIGHT;
+                blockId = Block.RightBlock.id;
             }
-            drawScript(spicaBlock);
-        } else if (spicaBlock == IF_START) {
+            drawScript(blockId);
+        } else if (blockId.equals(Block.IfStartBlock.id)) {
             if (checkedId == R.id.radiobutton_left) {
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
             } else if (checkedId == R.id.radiobutton_right) {
@@ -365,7 +369,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             int p = mBinding.seekValue.getProgress();
             p += IF_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
-        }else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
             mBinding.textValue.setText(String.valueOf(p));
         }

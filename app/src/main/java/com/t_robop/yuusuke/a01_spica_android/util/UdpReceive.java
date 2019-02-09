@@ -3,6 +3,7 @@ package com.t_robop.yuusuke.a01_spica_android.util;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ public class UdpReceive extends Thread{
     private byte[] buffer;
     private Thread checkReceive;
 
-    final int KILL_DIALOG_TIME = 2000;
+    private final int KILL_DIALOG_TIME = 2000;
 
     public UdpReceive(Context context){
         port = 10000;
@@ -107,7 +108,7 @@ public class UdpReceive extends Thread{
                             }
                         });
                     } catch (IOException e) {
-
+                        Log.d("error", e.toString());
                     }
                 }
             }

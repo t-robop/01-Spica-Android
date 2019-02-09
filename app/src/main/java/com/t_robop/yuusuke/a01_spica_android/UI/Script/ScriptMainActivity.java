@@ -19,16 +19,15 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.t_robop.yuusuke.a01_spica_android.Block;
+import com.t_robop.yuusuke.a01_spica_android.Config;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
-
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
 
 public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.BlockClickListener {
 
@@ -37,15 +36,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     ActivityScriptMainBinding mBinding;
 
     private ScriptMainAdapter mScriptAdapter;
-    private LinearLayoutManager mScriptLayoutManager;
 
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
 
     private UdpReceive udpReceive;
 
-    float sizeX;
+    private float sizeX;
 
+    //FIXME onCreate長すぎなので、切り出しする
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,76 +57,52 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_script_main);
 
         mBinding.recyclerScript.setHasFixedSize(true);
-        mScriptLayoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager mScriptLayoutManager = new LinearLayoutManager(this);
         mScriptLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         mBinding.recyclerScript.setLayoutManager(mScriptLayoutManager);
         mScriptAdapter = new ScriptMainAdapter(this);
         mBinding.recyclerScript.setAdapter(mScriptAdapter);
 
-        /**
+        /*
          * Presenterの初期化
          */
         blockSelectFragment = new BlockSelectFragment();
         blockDetailFragment = new BlockDetailFragment();
         new ScriptPresenter(this, blockSelectFragment, blockDetailFragment);
 
-        /**
+        /*
          * 追加ボタンクリック時
          */
         mScriptAdapter.setOnConductorClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
-                hideNavigationBar();
-                mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
-                ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
-                inflateFragment(scriptModel);
+                showBlockSelect(pos, ifState, isInLoop);
             }
         });
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
-                hideNavigationBar();
-                mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
-                ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
-                inflateFragment(scriptModel);
+                showBlockSelect(pos, ifState, isInLoop);
             }
         });
 
-        /**
+        /*
          * ブロッククリック時
          */
         mScriptAdapter.setOnBlockClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
-                hideNavigationBar();
-                if (0 <= pos) {
-                    /**
-                     * ブロック設定へ
-                     */
-                    mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
-                    ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
-                    if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
-                        return;
-                    inflateFragment(scriptModel);
-                }
+                showBlockDetail(pos);
             }
         });
         mScriptAdapter.setOnBlockIfClickListener(new ScriptMainAdapter.onItemClickListener() {
             @Override
             public void onClick(View view, int pos, int ifState, boolean isInLoop) {
-                hideNavigationBar();
-                /**
-                 * ブロック設定へ
-                 */
-                mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
-                ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
-                if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
-                    return;
-                inflateFragment(scriptModel);
+                showBlockDetail(pos);
             }
         });
 
-        /**
+        /*
          * ブロックロングクリック時
          */
         mScriptAdapter.setOnBlockLongClickListener(new ScriptMainAdapter.onItemLongClickListener() {
@@ -143,17 +118,17 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
-        /**
+        /*
          * Detailフラグメントのボタンが押された時
          */
         blockDetailFragment.setAddClickListener(new BlockDetailFragment.DetailListener() {
             @Override
-            public void onClickAdd(ScriptModel script) {
+            public void onClickAdd(UIBlockModel uiBlockModel) {
                 ScriptPresenter.ViewState state = mScriptPresenter.getState();
                 if (state == ScriptPresenter.ViewState.ADD) {
-                    mScriptPresenter.insertScript(script, script.getPos());
+                    mScriptPresenter.insertScript(uiBlockModel, uiBlockModel.getPos());
                 } else if (state == ScriptPresenter.ViewState.EDIT) {
-                    mScriptPresenter.setScript(script, script.getPos());
+                    mScriptPresenter.setScript(uiBlockModel, uiBlockModel.getPos());
                 } else {
                     Toast.makeText(ScriptMainActivity.this, "ADDorEDITでエラー", Toast.LENGTH_SHORT).show();
                 }
@@ -169,8 +144,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
-        /**
-         * fabがクリックされた時
+        /*
+         * 実行ボタン(fab)がクリックされた時
          */
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +168,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
-        /**
+        /*
          * fabが1.2秒以上長押しされた時
          */
         final long[] then = {0};
@@ -214,7 +189,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         });
 
 
-        /**
+        /*
          *
          * 透明ボタンが押されたときの処理
          */
@@ -232,25 +207,25 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     /**
      * Fragment生成メソッド
      */
-    public void inflateFragment(ScriptModel scriptModel) {
+    public void inflateFragment(UIBlockModel uiBlockModel) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         ScriptPresenter.ViewState state = mScriptPresenter.getState();
-        mScriptPresenter.setTargetScript(scriptModel);
+        mScriptPresenter.setTargetScript(uiBlockModel);
         if (state == ScriptPresenter.ViewState.SELECT && !blockSelectFragment.isAdded()) {
-            /**
+            /*
              * ブロック追加用の選択画面へ
              */
             fragmentTransaction.add(R.id.conductor_fragment, blockSelectFragment);
         } else if (state == ScriptPresenter.ViewState.EDIT && !blockDetailFragment.isAdded()) {
-            /**
+            /*
              * ブロック設定用の詳細画面へ
              */
             fragmentTransaction.add(R.id.conductor_fragment, blockDetailFragment);
         } else if (state == ScriptPresenter.ViewState.ADD && !blockDetailFragment.isAdded()) {
-            /**
+            /*
              * ブロック追加用の詳細画面へ
              * todo 上記EDITと同じなのは一旦分かりやすさのため
              */
@@ -268,78 +243,76 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         fragmentTransaction.remove(blockDetailFragment);
         fragmentTransaction.remove(blockSelectFragment);
         fragmentTransaction.commit();
-
     }
-
 
     /**
      * 追加時のブロック選択画面で選択されたブロックを元にフラグメント生成
      */
     @Override
-    public void onClickButton(ScriptModel.SpicaBlock block) {
+    public void onClickButton(String blockId) {
         mScriptPresenter.setState(ScriptPresenter.ViewState.ADD);
-        ScriptModel scriptModel = mScriptPresenter.getTargetScript();
-        scriptModel.setBlock(block);
-        inflateFragment(scriptModel);
+        UIBlockModel uiBlockModel = mScriptPresenter.getTargetScript();
+        uiBlockModel.setId(blockId);
+        inflateFragment(uiBlockModel);
     }
 
     /**
      * スクリプトのリストを投げるとUI構築してくれる神メソッド
      */
     @Override
-    public void drawScripts(ArrayList<ScriptModel> scripts) {
+    public void drawScripts(ArrayList<UIBlockModel> uiBlockModels) {
         mScriptAdapter.clear();
 
         //スタートブロック記述
-        ScriptModel scriptStart = new ScriptModel();
-        scriptStart.setBlock(ScriptModel.SpicaBlock.START);
-        scriptStart.setPos(-1);
-        scriptStart.setIfState(0);
-        mScriptAdapter.addDefault(0, scriptStart);
+        UIBlockModel startBlockModel = new UIBlockModel(-1, Config.OUT_OF_IF_LANE, false);
+        startBlockModel.setId(Block.StartBlock.id);
+        mScriptAdapter.addDefault(0, startBlockModel);
 
         //引数を使ってUIに反映させる
         int ifIndex = -1;
         int laneIndex = 1;
-        boolean isInloop = false;
-        for (int i = 0; i < scripts.size(); i++) {
-            ScriptModel script = scripts.get(i);
-            script.setPos(i);
-            script.setInLoop(isInloop);
+        for (int i = 0; i < uiBlockModels.size(); i++) {
+            UIBlockModel uiBlockModel = uiBlockModels.get(i);
+            uiBlockModel.setPos(i);
 
-            if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
-                isInloop = true;
-            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
-                isInloop = false;
+            if (uiBlockModel.getId().equals(Block.ForStartBlock.id)) {
+                uiBlockModel.setInLoop(true);
+            } else if (uiBlockModel.getId().equals(Block.ForEndBlock.id)) {
+                uiBlockModel.setInLoop(false);
             }
 
-            if (script.getIfState() == 0) {
-                //通常
-                mScriptAdapter.addDefault(laneIndex, script);
-                laneIndex++;
-            } else if (script.getIfState() == 1) {
-                //true
-                mScriptAdapter.addSpecial(laneIndex, script);
-                laneIndex++;
-            } else if (script.getIfState() == 2) {
-                //false
-                mScriptAdapter.addDefault(ifIndex, script);
-                if (ifIndex == laneIndex) {
+            switch (uiBlockModel.getIfState()) {
+                case Config.OUT_OF_IF_LANE:
+                    mScriptAdapter.addDefault(laneIndex, uiBlockModel);
                     laneIndex++;
-                }
-                ifIndex++;
+                    break;
+
+                case Config.IN_TRUE_LANE:
+                    mScriptAdapter.addSpecial(laneIndex, uiBlockModel);
+                    laneIndex++;
+                    break;
+
+                case Config.IN_FALSE_LANE:
+                    mScriptAdapter.addDefault(ifIndex, uiBlockModel);
+                    if (ifIndex == laneIndex) {
+                        laneIndex++;
+                    }
+                    ifIndex++;
+                    break;
             }
-            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+
+            if (uiBlockModel.getId().equals(Block.IfStartBlock.id)) {
                 ifIndex = laneIndex;
             }
-            if (script.getBlock() == IF_END) {
+            if (uiBlockModel.getId().equals(Block.IfEndBlock.id)) {
                 ifIndex = -1;
             }
         }
 
         //エンドブロック記述
-        ScriptModel scriptEnd = new ScriptModel();
-        scriptEnd.setBlock(ScriptModel.SpicaBlock.END);
-        mScriptAdapter.addDefault(mScriptAdapter.getItemCount(), scriptEnd);
+        UIBlockModel endBlockModel = new UIBlockModel(uiBlockModels.size() + 1, Config.OUT_OF_IF_LANE, false);
+        endBlockModel.setId(Block.EndBlock.id);
+        mScriptAdapter.addDefault(mScriptAdapter.getItemCount(), endBlockModel);
 
         mScriptAdapter.notifyDataSetChanged();
 
@@ -358,7 +331,6 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         this.mScriptPresenter.start();
     }
 
-
     private void objectSave() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Gson gson = new Gson();
@@ -375,17 +347,45 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             // 保存されているjson文字列を取得
             String userSettingString = prefs.getString("dataSave", "");
             // json文字列を 「UserSettingクラス」のインスタンスに変換
-            ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
+            ArrayList<UIBlockModel> uiBlockModels = gson.fromJson(userSettingString, new TypeToken<ArrayList<UIBlockModel>>() {
             }.getType());
-            mScriptPresenter.setScripts(mScripts);
+            mScriptPresenter.setScripts(uiBlockModels);
         } catch (Exception e) {
             Toast.makeText(this, "データがありません", Toast.LENGTH_SHORT).show();
         }
 
     }
 
+    // Field requires API level 19 (current min is 16): android.view.View#SYSTEM_UI_FLAG_IMMERSIVE
+    @SuppressLint("InlinedApi")
     private void hideNavigationBar() {
         View sysView = getWindow().getDecorView();
         sysView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    /**
+     * ブロック選択へ
+     */
+    private void showBlockSelect(int pos, int ifState, boolean isInLoop) {
+        hideNavigationBar();
+        mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
+        UIBlockModel uiBlockModel = new UIBlockModel(pos, ifState, isInLoop);
+        inflateFragment(uiBlockModel);
+    }
+
+    /**
+     * ブロック設定へ
+     */
+    private void showBlockDetail(int pos) {
+        hideNavigationBar();
+        if (0 <= pos) {  //エンドブロックはリスト外なのでpos比較していない
+            mScriptPresenter.setState(ScriptPresenter.ViewState.EDIT);
+            UIBlockModel uiBlockModel = mScriptPresenter.getScripts().get(pos);
+            if (uiBlockModel.getId().equals(Block.IfEndBlock.id) || uiBlockModel.getId().equals(Block.ForEndBlock.id)) {
+                return;
+            }
+            inflateFragment(uiBlockModel);
+
+        }
     }
 }

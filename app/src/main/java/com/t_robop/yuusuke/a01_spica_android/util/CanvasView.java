@@ -4,18 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.t_robop.yuusuke.a01_spica_android.Block;
 import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainActivity;
 import com.t_robop.yuusuke.a01_spica_android.UI.Script.ScriptMainAdapter;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
-
-import java.util.ArrayList;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 
 public class CanvasView extends View {
 
@@ -24,7 +21,6 @@ public class CanvasView extends View {
     private float lineWeight = 2f;
 
     private float nowPositionX = 0;
-    float y = 0;
 
     //canvasのサイズ
     private float canvasWidth;
@@ -44,13 +40,10 @@ public class CanvasView extends View {
 
     ///////
     private int commandBlockNum = 2;
-    private int commandBlockMargin = 50;
     private int commandBlockSize = 15;
-    private int commandBlockLineWidth = 5;
     ///////
     Paint commandBlockPaint;
     Paint commandBlockLinePaint;
-    private float commandBlockLineLength;
     ScriptMainAdapter commandBlocks;
 
     public CanvasView(Context context) {
@@ -72,8 +65,6 @@ public class CanvasView extends View {
         commandBlockLinePaint.setStyle(Paint.Style.STROKE); // 描画設定を'線'に設定
         commandBlockLinePaint.setAntiAlias(true);
         commandBlockLinePaint.setStrokeWidth(lineWeight);           // 線の太さ
-
-
     }
 
     public CanvasView(Context context, AttributeSet attrs) {
@@ -100,7 +91,6 @@ public class CanvasView extends View {
         commandBlockLinePaint.setStrokeWidth(lineWeight);           // 線の太さ
     }
 
-
     //canvasのサイズを取得
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -108,67 +98,61 @@ public class CanvasView extends View {
         canvasHeight = this.getHeight();
         windowWidth = mainViewWindowWidth / mainViewMaxWidth * canvasWidth;
         windowHeight = canvasHeight;
-
     }
 
     public void windowSizeChange(float minSize, float maxSize) {
-
         float tempWindowWidth = windowWidth;
         windowWidth = minSize / maxSize * canvasWidth;
         nowPositionX = nowPositionX * windowWidth / tempWindowWidth;
 
         mainViewWindowWidth = minSize;
         mainViewMaxWidth = maxSize;
-
     }
 
-
-    //======================================================================================
-    //--  描画メソッド
-    //======================================================================================
+    //描画メソッド
     @Override
     protected void onDraw(Canvas canvas) {
         //コマンドブロックを生成
+        int commandBlockMargin = 50;
         canvas.drawCircle(commandBlockMargin, canvasHeight * 2 / 3, 1, commandBlockPaint);
         canvas.drawCircle(canvasWidth - commandBlockMargin, canvasHeight * 2 / 3, 1, commandBlockPaint);
         canvas.drawLine(commandBlockMargin, canvasHeight * 2 / 3, canvasWidth - commandBlockMargin, canvasHeight * 2 / 3, commandBlockLinePaint);
 
-        commandBlockLineLength = canvasWidth - commandBlockMargin * 2;
+        float commandBlockLineLength = canvasWidth - commandBlockMargin * 2;
         for (int i = 0; i < commandBlockNum; i++) {
 
             ScriptMainAdapter.ScriptSet commandBlockSet = commandBlocks.getItem(i);
-            ScriptModel specialScript = commandBlockSet.getScriptSpecial();
-            ScriptModel defaultScript = commandBlockSet.getScriptDefault();
-            if (specialScript != null) {
-                commandBlockPaint.setColor(getBlockColor(specialScript));
+            UIBlockModel uiBlockTopLane = commandBlockSet.getUiBlockTopLane();
+            UIBlockModel uiBlockUnderLane = commandBlockSet.getUiBlockUnderLane();
+            if (uiBlockTopLane != null) {
+                commandBlockPaint.setColor(getBlockColor(uiBlockTopLane.getId()));
                 // trueレーン
                 canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
                         commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
                 canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, 1, commandBlockPaint);
             } else {
-                if (defaultScript.getIfState() == 2) {
+                if (uiBlockUnderLane.getIfState() == 2) {
                     canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
                 }
             }
-            if (defaultScript != null) {
-                commandBlockPaint.setColor(getBlockColor(defaultScript));
+            if (uiBlockUnderLane != null) {
+                commandBlockPaint.setColor(getBlockColor(uiBlockUnderLane.getId()));
                 // falseレーン
-                if (defaultScript.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+                int commandBlockLineWidth = 5;
+                if (uiBlockUnderLane.getId().equals(Block.IfStartBlock.id)) {
                     // ifの始め
-                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
+                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2.0f,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
-                } else if (defaultScript.getBlock() == ScriptModel.SpicaBlock.IF_END) {
+                } else if (uiBlockUnderLane.getId().equals(Block.IfEndBlock.id)) {
                     // ifの終わり
-                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
+                    canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2.0f,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
                     canvas.drawLine(commandBlockMargin + (i - 1) * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3, commandBlockLinePaint);
                 }
                 canvas.drawCircle(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, 1, commandBlockPaint);
             }
-
-            //canvas.drawCircle(commandBlockMargin + i*(commandBlockLineLength / (commandBlockNum - 1))  , canvasHeight / 2, 1, commandBlockPaint);
         }
 
 
@@ -188,38 +172,14 @@ public class CanvasView extends View {
         invalidate();   // 再描画
     }
 
-
-    private Path drawingPath;
-
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
-//        switch (event.getAction()) {
-//            case MotionEvent.ACTION_DOWN:                             //- 画面をタッチしたとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//                break;
-//            case MotionEvent.ACTION_UP:                               //- 画面から指を離したとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//
-//                break;
-//            case MotionEvent.ACTION_MOVE:                             //- タッチしながら指をスライドさせたとき
-//                nowPositionX = event.getX();
-//                y = event.getY();
-//                scriptMainActivity.setScroll(getPosition());
-//
-//                break;
-//        }
-
-        return true;   /* 返却値は必ず "true" にすること!! */
+        return true;
     }
 
 
     public void allDelete() {
-        return;   // リストが保持しているPathのインスタンスを全て削除
+        // リストが保持しているPathのインスタンスを全て削除
     }
 
     public void setCommandBlocks(ScriptMainAdapter commandBlocks) {
@@ -251,23 +211,23 @@ public class CanvasView extends View {
         }
     }
 
-    public int getBlockColor(ScriptModel scriptModel) {
-        switch (scriptModel.getBlock()) {
-            case START:
-            case END:
+    public int getBlockColor(String blockId) {
+        switch (blockId) {
+            case Block.StartBlock.id:
+            case Block.EndBlock.id:
                 return MyApplication.getInstance().getResources().getColor(R.color.default_text_color);
-            case FRONT:
-            case BACK:
-            case RIGHT:
-            case LEFT:
+            case Block.FrontBlock.id:
+            case Block.BackBlock.id:
+            case Block.LeftBlock.id:
+            case Block.RightBlock.id:
                 return MyApplication.getInstance().getResources().getColor(R.color.color_blue);
-            case FOR_START:
-            case FOR_END:
+            case Block.ForStartBlock.id:
+            case Block.ForEndBlock.id:
                 return MyApplication.getInstance().getResources().getColor(R.color.color_yellow_2);
-            case IF_START:
-            case IF_END:
+            case Block.IfStartBlock.id:
+            case Block.IfEndBlock.id:
                 return MyApplication.getInstance().getResources().getColor(R.color.color_purple);
-            case BREAK:
+            case Block.BreakBlock.id:
                 return MyApplication.getInstance().getResources().getColor(R.color.color_red);
         }
         return MyApplication.getInstance().getResources().getColor(R.color.default_text_color);

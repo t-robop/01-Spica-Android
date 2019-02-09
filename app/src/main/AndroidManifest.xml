@@ -29,12 +29,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".UI.Script.BlockSelectActivity"
-            android:theme="@style/Theme.DarkTranslucent" />
-        <activity
-            android:name=".UI.Script.BlockDetailActivity"
-            android:theme="@style/Theme.DarkTranslucent" />
+        <!--<activity-->
+            <!--android:name=".UI.Script.BlockSelectActivity"-->
+            <!--android:theme="@style/Theme.DarkTranslucent" />-->
+        <!--<activity-->
+            <!--android:name=".UI.Script.BlockDetailActivity"-->
+            <!--android:theme="@style/Theme.DarkTranslucent" />-->
         <activity android:name=".UI.Script.SettingActivity"
             android:screenOrientation="landscape">
         </activity>

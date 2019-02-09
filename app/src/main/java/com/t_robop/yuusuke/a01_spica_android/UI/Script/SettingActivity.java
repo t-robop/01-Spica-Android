@@ -17,13 +17,9 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView ipEditText;
-    TextView portEditText;
-
-    Button saveButton;
-    Button cancelButton;
-    Button qrButton;
-    SharedPreferences pref;
+    private TextView ipEditText;
+    private TextView portEditText;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +35,7 @@ public class SettingActivity extends AppCompatActivity {
         portEditText.setText(String.valueOf(port));
 
 
-        saveButton = findViewById(R.id.save_btn);
+        Button saveButton = findViewById(R.id.save_btn);
         saveButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -49,7 +45,7 @@ public class SettingActivity extends AppCompatActivity {
                 }
         );
 
-        qrButton = findViewById(R.id.qr);
+        Button qrButton = findViewById(R.id.qr);
         qrButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

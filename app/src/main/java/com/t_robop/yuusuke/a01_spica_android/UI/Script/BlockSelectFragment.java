@@ -13,16 +13,17 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
 
+import com.t_robop.yuusuke.a01_spica_android.Block;
 import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
-import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockSelectBinding;
+import com.t_robop.yuusuke.a01_spica_android.databinding.FragmentBlockSelectBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 
 public class BlockSelectFragment extends Fragment implements ScriptContract.SelectView {
 
     private ScriptContract.Presenter mScriptPresenter;
 
-    private ActivityBlockSelectBinding mBinding;
+    private FragmentBlockSelectBinding mBinding;
 
     public BlockSelectFragment() {
     }
@@ -31,8 +32,8 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        mBinding = DataBindingUtil.inflate(inflater, R.layout.activity_block_select, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mBinding = DataBindingUtil.inflate(inflater, R.layout.fragment_block_select, container, false);
         View root = mBinding.getRoot();
 
         mBinding.bgSelect.setOnClickListener(new View.OnClickListener() {
@@ -42,7 +43,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             }
         });
 
-        ScriptModel script = mScriptPresenter.getTargetScript();
+        UIBlockModel script = mScriptPresenter.getTargetScript();
 
         mBinding.selectDialogBg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,19 +55,19 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         mBinding.susumu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.FRONT);
+                mListener.onClickButton(Block.FrontBlock.id);
             }
         });
         mBinding.magaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.LEFT);
+                mListener.onClickButton(Block.LeftBlock.id);
             }
         });
         mBinding.sagaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.BACK);
+                mListener.onClickButton(Block.BackBlock.id);
             }
         });
 
@@ -77,7 +78,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.mosimo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.IF_START);
+                    mListener.onClickButton(Block.IfStartBlock.id);
                 }
             });
         }
@@ -87,7 +88,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.kurikaesu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.FOR_START);
+                    mListener.onClickButton(Block.ForStartBlock.id);
                 }
             });
         }
@@ -97,7 +98,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.nukeru.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.BREAK);
+                    mListener.onClickButton(Block.BreakBlock.id);
                 }
             });
         }
@@ -108,12 +109,12 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        popupAnime(mBinding.selectDialogBg);
-        alphaAnime(mBinding.bgSelect);
+        popupAnimation(mBinding.selectDialogBg);
+        alphaAnimation(mBinding.bgSelect);
     }
 
+    @Deprecated
     public void drawArrangeableBlocks() {
-        //todo
     }
 
     @Override
@@ -123,18 +124,14 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
 
     public interface BlockClickListener {
-        void onClickButton(ScriptModel.SpicaBlock block);
+        void onClickButton(String blockId);
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド
     @Override
     public void onAttach(Context context) {
-        // APILevel23からは引数がActivity->Contextになっているので注意する
-
-        // contextクラスがMyListenerを実装しているかをチェックする
         super.onAttach(context);
         if (context instanceof BlockClickListener) {
-            // リスナーをここでセットするようにします
             mListener = (BlockClickListener) context;
         }
     }
@@ -153,13 +150,13 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
     }
 
-    private void popupAnime(View view) {
+    private void popupAnimation(View view) {
         // ScaleAnimation(float fromX, float toX, float fromY, float toY, int pivotXType, float pivotXValue, int pivotYType, float pivotYValue)
         ScaleAnimation scaleAnimation = new ScaleAnimation(
                 0.01f, 1.0f, 0.01f, 1.0f,
                 Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        // animation時間 msec
+        // animation時間 ms
         scaleAnimation.setDuration(200);
         // 繰り返し回数
         scaleAnimation.setRepeatCount(0);
@@ -169,9 +166,9 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         view.startAnimation(scaleAnimation);
     }
 
-    private void alphaAnime(View view) {
+    private void alphaAnimation(View view) {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 0.5f);
-        // animation時間 msec
+        // animation時間 ms
         alphaAnimation.setDuration(200);
         // 繰り返し回数
         alphaAnimation.setRepeatCount(0);

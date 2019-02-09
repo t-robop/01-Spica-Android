@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -17,7 +16,7 @@
 
         <variable
             name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
+            type="com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel" />
 
         <variable
             name="value"
@@ -33,7 +32,7 @@
         android:layout_height="@dimen/block_height">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -69,8 +68,8 @@
                         android:layout_weight="4"
                         android:background="@drawable/block_script_item"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="@string/block_for_start_block_name" />
+                        android:text="@string/block_for_start_block_name"
+                        android:textColor="@color/default_text_color" />
 
                     <TextView
                         android:id="@+id/id_text"
@@ -78,8 +77,8 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
                         android:text="@{@string/block_for_start_loop_count_text(String.valueOf(value))}"
+                        android:textColor="@color/default_text_color"
                         tools:text="@string/block_for_start_loop_count_tools_text" />
 
                 </LinearLayout>
@@ -107,11 +106,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:textColor="@color/default_text_color"
-                        android:text="@string/block_for_start_block_add"
-                        android:textSize="@dimen/conductor_text_size"
                         android:includeFontPadding="false"
-                        android:textAppearance="@style/TextAppearance.block_title_b" />
+                        android:text="@string/block_for_start_block_add"
+                        android:textAppearance="@style/TextAppearance.block_title_b"
+                        android:textColor="@color/default_text_color"
+                        android:textSize="@dimen/conductor_text_size" />
 
                 </LinearLayout>
             </FrameLayout>

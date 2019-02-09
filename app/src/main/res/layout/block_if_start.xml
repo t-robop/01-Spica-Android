@@ -17,7 +17,7 @@
 
         <variable
             name="script"
-            type="com.t_robop.yuusuke.a01_spica_android.model.ScriptModel" />
+            type="com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel" />
 
         <variable
             name="value"
@@ -33,7 +33,7 @@
         android:layout_height="@dimen/block_height">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -122,17 +122,17 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@color/color_blue"
                     android:gravity="center"
                     android:includeFontPadding="false"
                     android:text="@string/block_if_start_compare_sensor_false_text"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/white_text_color"
-                    android:background="@color/color_blue"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginRight="8dp"
                     app:layout_constraintBottom_toTopOf="@id/conductor_add"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"/>
+                    app:layout_constraintStart_toStartOf="parent" />
 
             </android.support.constraint.ConstraintLayout>
 

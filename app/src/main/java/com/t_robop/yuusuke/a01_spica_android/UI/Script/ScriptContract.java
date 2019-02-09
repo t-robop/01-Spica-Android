@@ -1,6 +1,6 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.UIBlockModel;
 
 import java.util.ArrayList;
 
@@ -10,14 +10,14 @@ public interface ScriptContract {
      * メインのスクリプト
      */
     interface ScriptView extends BaseView<Presenter> {
-        void drawScripts(ArrayList<ScriptModel> scrips);
+        void drawScripts(ArrayList<UIBlockModel> scrips);
     }
 
     /**
      * ブロック選択画面
      */
     interface SelectView extends BaseView<Presenter> {
-        /**
+        /*
          * 配置可能なブロックのみ描画するメソッド
          * todo なにでわたすか決める(リスト or state ?)
          */
@@ -32,13 +32,13 @@ public interface ScriptContract {
 
     interface Presenter extends BasePresenter {
 
-        void setScript(ScriptModel script, int index);
+        void setScript(UIBlockModel uiBlockModel, int index);
 
-        void insertScript(ScriptModel script, int beforeIndex);
+        void insertScript(UIBlockModel uiBlockModel, int beforeIndex);
 
         void removeScript(int index);
 
-        ArrayList<ScriptModel> getScripts();
+        ArrayList<UIBlockModel> getScripts();
 
         String getSendableScripts();
 
@@ -46,11 +46,11 @@ public interface ScriptContract {
 
         ScriptPresenter.ViewState getState();
 
-        void setTargetScript(ScriptModel script);
+        void setTargetScript(UIBlockModel script);
 
-        ScriptModel getTargetScript();
+        UIBlockModel getTargetScript();
 
-        void setScripts(ArrayList<ScriptModel> scripts);
+        void setScripts(ArrayList<UIBlockModel> scripts);
     }
 }
 

@@ -88,7 +88,7 @@
     <string name="udp_receive_cancel_dialog">とめています....</string>
     <string name="udp_receive_esp_reboot_command">reboot-now</string>
 
-    <!-- activity_block_detail -->
+    <!-- fragment_block_detail -->
     <string name="activity_block_detail_block_title">@string/common_error_text</string>
     <string name="activity_block_detail_block_description">@string/common_error_text</string>
     <string name="activity_block_detail_view_finish">@string/common_button_cancel</string>
@@ -103,7 +103,7 @@
     <string name="activity_block_detail_button_delete_text">@string/common_button_delete</string>
     <string name="activity_block_detail_button_ok_text">@string/common_button_ok</string>
 
-    <!-- activity_block_select -->
+    <!-- fragment_block_select -->
     <string name="activity_block_select_block_forward_name">@string/common_forward_name</string>
     <string name="activity_block_select_block_rotate_name">@string/common_rotate_name</string>
     <string name="activity_block_select_block_back_name">@string/common_back_name</string>
