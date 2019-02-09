@@ -21,23 +21,17 @@
         <activity
             android:name=".UI.Script.ScriptMainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity-->
-            <!--android:name=".UI.Script.BlockSelectActivity"-->
-            <!--android:theme="@style/Theme.DarkTranslucent" />-->
-        <!--<activity-->
-            <!--android:name=".UI.Script.BlockDetailActivity"-->
-            <!--android:theme="@style/Theme.DarkTranslucent" />-->
-        <activity android:name=".UI.Script.SettingActivity"
-            android:screenOrientation="landscape">
-        </activity>
+        <activity
+            android:name=".UI.Script.SettingActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
