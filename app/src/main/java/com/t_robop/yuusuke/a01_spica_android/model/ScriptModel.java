@@ -121,22 +121,6 @@ public class ScriptModel extends BaseObservable {
         return 3;
     }
 
-    public enum SpeedValue {
-        LOW(60),
-        MIDDLE(80),
-        HIGH(100);
-
-        private final int num;
-
-        SpeedValue(final int num) {
-            this.num = num;
-        }
-
-        public int getSpeed() {
-            return this.num;
-        }
-    }
-
     public enum SpicaBlock {
         FRONT(1),
         BACK(2),

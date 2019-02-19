@@ -1,8 +1,10 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
+import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
@@ -172,21 +174,23 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             String blockId = String.format("%02d", script.getBlock().getId());
 
             //速度値は左右同じものを使う
+            Context context = MyApplication.getInstance();
+            SharedPreferences preferences = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
             String leftSpeed, rightSpeed;
             switch (script.getSpeed()) {
                 case 1:
-                    leftSpeed = String.format("%03d", ScriptModel.SpeedValue.LOW.getSpeed());
-                    rightSpeed = String.format("%03d", ScriptModel.SpeedValue.LOW.getSpeed());
+                    leftSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
+                    rightSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
                     break;
 
                 case 2:
-                    leftSpeed = String.format("%03d", ScriptModel.SpeedValue.MIDDLE.getSpeed());
-                    rightSpeed = String.format("%03d", ScriptModel.SpeedValue.MIDDLE.getSpeed());
+                    leftSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
+                    rightSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
                     break;
 
                 case 3:
-                    leftSpeed = String.format("%03d", ScriptModel.SpeedValue.HIGH.getSpeed());
-                    rightSpeed = String.format("%03d", ScriptModel.SpeedValue.HIGH.getSpeed());
+                    leftSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
+                    rightSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
                     break;
 
                 default:
