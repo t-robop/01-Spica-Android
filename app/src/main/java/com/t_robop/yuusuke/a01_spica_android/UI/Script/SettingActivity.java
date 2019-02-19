@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -19,6 +20,9 @@ public class SettingActivity extends AppCompatActivity {
 
     TextView ipEditText;
     TextView portEditText;
+    private EditText configLowSpeedEdit;
+    private EditText configMiddleSpeedEdit;
+    private EditText configHighSpeedEdit;
 
     Button saveButton;
     Button cancelButton;
@@ -31,6 +35,9 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         ipEditText = findViewById(R.id.ip_edit);
         portEditText = findViewById(R.id.port_edit);
+        configLowSpeedEdit = findViewById(R.id.config_low_speed_edit);
+        configMiddleSpeedEdit = findViewById(R.id.config_middle_speed_edit);
+        configHighSpeedEdit = findViewById(R.id.config_high_speed_edit);
 
         pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         final String ip = pref.getString("ip", "");
@@ -38,6 +45,13 @@ public class SettingActivity extends AppCompatActivity {
         ipEditText.setText(ip);
         portEditText.setText(String.valueOf(port));
 
+        int configLowSpeedNUm = pref.getInt("lowSpeed", 60);
+        int configMiddleSpeedNum = pref.getInt("middleSpeed", 80);
+        int configHighSpeedNum = pref.getInt("highSpeed", 100);
+
+        configLowSpeedEdit.setText(String.valueOf(configLowSpeedNUm));
+        configMiddleSpeedEdit.setText(String.valueOf(configMiddleSpeedNum));
+        configHighSpeedEdit.setText(String.valueOf(configHighSpeedNum));
 
         saveButton = findViewById(R.id.save_btn);
         saveButton.setOnClickListener(
@@ -88,6 +102,9 @@ public class SettingActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = pref.edit();
         editor.putString("ip", ipEditText.getText().toString());
         editor.putInt("port", Integer.parseInt(portEditText.getText().toString()));
+        editor.putInt("lowSpeed", Integer.parseInt(configLowSpeedEdit.getText().toString()));
+        editor.putInt("middleSpeed", Integer.parseInt(configMiddleSpeedEdit.getText().toString()));
+        editor.putInt("highSpeed", Integer.parseInt(configHighSpeedEdit.getText().toString()));
         editor.apply();
         finish();
     }

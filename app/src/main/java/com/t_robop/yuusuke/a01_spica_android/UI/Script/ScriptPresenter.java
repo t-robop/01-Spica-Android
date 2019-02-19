@@ -1,12 +1,18 @@
 package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 
+import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.*;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
 
 public class ScriptPresenter implements ScriptContract.Presenter {
 
@@ -155,6 +161,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         mScriptView.drawScripts(mScripts);
 
     }
+
     /**
      * スクリプト一覧を送信可能データにするメソッド
      */
@@ -167,20 +174,43 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             String blockId = String.format("%02d", script.getBlock().getId());
 
             //速度値は左右同じものを使う
-            String leftSpeed = String.format("%03d", script.getSpeed());
-            if(script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
+            Context context = MyApplication.getInstance();
+            SharedPreferences preferences = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
+            String leftSpeed, rightSpeed;
+            switch (script.getSpeed()) {
+                case 1:
+                    leftSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
+                    rightSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
+                    break;
+
+                case 2:
+                    leftSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
+                    rightSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
+                    break;
+
+                case 3:
+                    leftSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
+                    rightSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
+                    break;
+
+                default:
+                    leftSpeed = String.format("%03d", 0);
+                    rightSpeed = String.format("%03d", 0);
+            }
+//            String leftSpeed = String.format("%03d", script.getSpeed());
+            if (script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END) {
                 leftSpeed = String.format("%03d", 0);
             }
 
-            String rightSpeed = String.format("%03d", script.getSpeed());
-            if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END){
+//            String rightSpeed = String.format("%03d", script.getSpeed());
+            if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END) {
                 rightSpeed = String.format("%03d", 0);
             }
 
-            String value = String.format("%03d", (int)Math.round(script.getValue() * 10.0));
-            if (script.getBlock() == IF_START || script.getBlock() == FOR_START){
-                value = String.format("%03d", (int)Math.round(script.getValue()));
-            }else if(script.getBlock() == IF_END || script.getBlock() == FOR_END){
+            String value = String.format("%03d", (int) Math.round(script.getValue() * 10.0));
+            if (script.getBlock() == IF_START || script.getBlock() == FOR_START) {
+                value = String.format("%03d", (int) Math.round(script.getValue()));
+            } else if (script.getBlock() == IF_END || script.getBlock() == FOR_END) {
                 value = String.format("%03d", 0);
             }
 

@@ -15,7 +15,7 @@ public class ScriptModel extends BaseObservable {
     private int speed = 1;
     //ブロック毎の値
     private float value = 2;
-    private boolean isInLoop=false;
+    private boolean isInLoop = false;
 
     public ScriptModel() {
     }
@@ -24,10 +24,10 @@ public class ScriptModel extends BaseObservable {
         this.block = block;
     }
 
-    public ScriptModel(int pos, int ifState,boolean isInLoop) {
+    public ScriptModel(int pos, int ifState, boolean isInLoop) {
         this.pos = pos;
         this.ifState = ifState;
-        this.isInLoop=isInLoop;
+        this.isInLoop = isInLoop;
     }
 
     @Bindable
@@ -75,15 +75,6 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getSeekValue() {  //シークバーの3段階(1~3)のセット アプリ上では0~2を使いたいので-1してる
-        return this.speed - 1;
-    }
-
-    public void setSeekValue(int speed) {  //シークバーの3段階(1~3)のセット 送信コマンド上では0を使いたくないので+1してる
-        this.speed = speed + 1;
-    }
-
-    @Bindable
     public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
         return this.speed;
     }
@@ -101,11 +92,12 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public boolean isInLoop(){
+    public boolean isInLoop() {
         return this.isInLoop;
     }
-    public void setInLoop(boolean isInLoop){
-        this.isInLoop=isInLoop;
+
+    public void setInLoop(boolean isInLoop) {
+        this.isInLoop = isInLoop;
     }
 
     //FIXME 定数なのでenumを使う
@@ -117,15 +109,15 @@ public class ScriptModel extends BaseObservable {
         return 2;  //センサー値より小さい を表す
     }
 
-    public int getLowSpeedValue(){
+    public int getLowSpeedValue() {
         return 1;
     }
 
-    public int getMiddleSpeedValue(){
+    public int getMiddleSpeedValue() {
         return 2;
     }
 
-    public int getHighSpeedValue(){
+    public int getHighSpeedValue() {
         return 3;
     }
 
