@@ -14,7 +14,7 @@ import java.net.InetAddress;
 public class UdpSend {
 
     private String ip = "192.168.1.7";
-    private int port = 10000;
+    private int port = 50000;
     private InetAddress inetAddress;
     private byte[] buff;
     private DatagramSocket socket;
@@ -27,7 +27,7 @@ public class UdpSend {
         Context context = MyApplication.getInstance();
         SharedPreferences pref = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         this.ip = pref.getString("ip","");
-        this.port = pref.getInt("port",10000);
+        this.port = pref.getInt("port",50000);
     }
     public UdpSend(String ip, int port){
         Context context = MyApplication.getInstance();
@@ -39,7 +39,7 @@ public class UdpSend {
 
         // 読み込み
         this.ip = pref.getString("ip","");
-        this.port = pref.getInt("port",10000);
+        this.port = pref.getInt("port",50000);
     }
 
     public void UdpSendText(String sendText){
