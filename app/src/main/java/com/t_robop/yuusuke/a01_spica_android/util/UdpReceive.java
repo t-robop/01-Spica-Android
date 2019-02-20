@@ -27,7 +27,7 @@ public class UdpReceive extends Thread{
     final int KILL_DIALOG_TIME = 2000;
 
     public UdpReceive(Context context){
-        port = 10000;
+        port = 50000;
         this.context = context;
     }
 

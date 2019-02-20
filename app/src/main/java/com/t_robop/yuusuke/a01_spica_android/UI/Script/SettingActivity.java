@@ -41,7 +41,7 @@ public class SettingActivity extends AppCompatActivity {
 
         pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         final String ip = pref.getString("ip", "");
-        final int port = pref.getInt("port", 10000);
+        final int port = pref.getInt("port", 50000);
         ipEditText.setText(ip);
         portEditText.setText(String.valueOf(port));
 
