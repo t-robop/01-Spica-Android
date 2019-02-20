@@ -29,11 +29,13 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
 
     final int STANDARD_BLOCK_MAX_PROGRESS = 500;
 
-    // IF_BLOCK_MAX_PROGRESS > IF_BLOCK_GAP_PROGRESS
+    // IF_BLOCK_GAP_PROGRESS ~ IF_BLOCK_MAX_PROGRESS
     final int IF_BLOCK_MAX_PROGRESS = 30;
     final int IF_BLOCK_GAP_PROGRESS = 10;
 
+    // FOR_BLOCK_GAP_PROGRESS ~ FOR_BLOCK_MAX_PROGRESS
     final int FOR_BLOCK_MAX_PROGRESS = 10;
+    final int FOR_BLOCK_GAP_PROGRESS = 2;
 
     public BlockDetailFragment() {
     }
@@ -127,7 +129,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
                 break;
             case FOR_START:
-                mBinding.seekValue.setProgress((int) targetScript.getValue());
+                mBinding.seekValue.setProgress((int) targetScript.getValue() - FOR_BLOCK_GAP_PROGRESS);
                 mBinding.seekValue.setMax(FOR_BLOCK_MAX_PROGRESS);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_loop_unit_text);
                 break;
@@ -290,6 +292,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             p = p / 100;
         } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
             p += IF_BLOCK_GAP_PROGRESS;
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS){
+            p += FOR_BLOCK_GAP_PROGRESS;
         }
         script.setValue(p);
 
@@ -367,6 +371,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             mBinding.textValue.setText(String.valueOf(p));
         }else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
+            p += FOR_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
         }
     }
