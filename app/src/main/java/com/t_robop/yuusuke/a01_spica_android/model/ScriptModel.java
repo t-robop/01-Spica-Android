@@ -14,7 +14,7 @@ public class ScriptModel extends BaseObservable {
     //スピードの三段階値
     private int speed = 1;
     //ブロック毎の値
-    private float value = 2;
+    private float value = 0;
     private boolean isInLoop = false;
 
     public ScriptModel() {
