@@ -2,10 +2,12 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.SharedElementCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -70,6 +72,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             }
         });
 
+
         int colorFilterInt = MyApplication.getInstance().getResources().getColor(R.color.filter_color);
         if (script.getIfState() != 0) {
             mBinding.mosimoImageview.setColorFilter(colorFilterInt);
@@ -100,6 +103,23 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
                     mListener.onClickButton(ScriptModel.SpicaBlock.BREAK);
                 }
             });
+        }
+
+        SharedPreferences pref = getContext().getSharedPreferences("udp_config", Context.MODE_PRIVATE);
+        boolean ifState = pref.getBoolean("ifState", true);
+        boolean loopState = pref.getBoolean("loopState", true);
+        if (!ifState) {
+            mBinding.mosimo.setVisibility(View.GONE);
+            mBinding.nukeru.setVisibility(View.GONE);
+
+        } else {
+            mBinding.mosimo.setVisibility(View.VISIBLE);
+            mBinding.nukeru.setVisibility(View.VISIBLE);
+        }
+        if (!loopState) {
+            mBinding.kurikaesu.setVisibility(View.GONE);
+        }else {
+            mBinding.kurikaesu.setVisibility(View.VISIBLE);
         }
 
         return root;
