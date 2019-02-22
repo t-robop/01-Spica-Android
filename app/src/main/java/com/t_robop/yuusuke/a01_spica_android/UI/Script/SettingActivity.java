@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -23,6 +24,9 @@ public class SettingActivity extends AppCompatActivity {
     private EditText configLowSpeedEdit;
     private EditText configMiddleSpeedEdit;
     private EditText configHighSpeedEdit;
+    private CheckBox ifCheckBox;
+    private CheckBox loopCheckBox;
+
 
     Button saveButton;
     Button cancelButton;
@@ -38,6 +42,8 @@ public class SettingActivity extends AppCompatActivity {
         configLowSpeedEdit = findViewById(R.id.config_low_speed_edit);
         configMiddleSpeedEdit = findViewById(R.id.config_middle_speed_edit);
         configHighSpeedEdit = findViewById(R.id.config_high_speed_edit);
+        ifCheckBox = findViewById(R.id.checkBox1);
+        loopCheckBox = findViewById(R.id.checkBox2);
 
         pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         final String ip = pref.getString("ip", "");
@@ -105,6 +111,8 @@ public class SettingActivity extends AppCompatActivity {
         editor.putInt("lowSpeed", Integer.parseInt(configLowSpeedEdit.getText().toString()));
         editor.putInt("middleSpeed", Integer.parseInt(configMiddleSpeedEdit.getText().toString()));
         editor.putInt("highSpeed", Integer.parseInt(configHighSpeedEdit.getText().toString()));
+        editor.putBoolean("ifState", ifCheckBox.isChecked());
+        editor.putBoolean("loopState", loopCheckBox.isChecked());
         editor.apply();
         finish();
     }
