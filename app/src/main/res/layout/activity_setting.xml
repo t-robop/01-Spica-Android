@@ -173,17 +173,17 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <CheckBox
-                        android:id="@+id/checkBox1"
+                        android:id="@+id/checkBoxLoop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="loopを表示する" />
                     <CheckBox
-                        android:id="@+id/checkBox2"
+                        android:id="@+id/checkBoxIf"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="分岐を表示する" />
+                        android:text="ifを表示する" />
                 </LinearLayout>
 
             </LinearLayout>

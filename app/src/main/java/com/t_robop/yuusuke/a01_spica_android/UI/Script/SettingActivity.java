@@ -42,14 +42,17 @@ public class SettingActivity extends AppCompatActivity {
         configLowSpeedEdit = findViewById(R.id.config_low_speed_edit);
         configMiddleSpeedEdit = findViewById(R.id.config_middle_speed_edit);
         configHighSpeedEdit = findViewById(R.id.config_high_speed_edit);
-        ifCheckBox = findViewById(R.id.checkBox1);
-        loopCheckBox = findViewById(R.id.checkBox2);
+        ifCheckBox = findViewById(R.id.checkBoxIf);
+        loopCheckBox = findViewById(R.id.checkBoxLoop);
 
         pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
         final String ip = pref.getString("ip", "");
         final int port = pref.getInt("port", 50000);
         ipEditText.setText(ip);
         portEditText.setText(String.valueOf(port));
+
+        ifCheckBox.setChecked(pref.getBoolean("ifState",true));
+        loopCheckBox.setChecked(pref.getBoolean("loopState",true));
 
         int configLowSpeedNUm = pref.getInt("lowSpeed", 60);
         int configMiddleSpeedNum = pref.getInt("middleSpeed", 80);
