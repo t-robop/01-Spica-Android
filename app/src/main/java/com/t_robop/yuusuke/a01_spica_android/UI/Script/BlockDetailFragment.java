@@ -291,7 +291,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         // 通常ブロックの時
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p += STANDARD_BLOCK_GAP_PROGRESS;
-            p = p / 100;
+            p = p / 10;
         } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
             p += IF_BLOCK_GAP_PROGRESS;
         } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS){
