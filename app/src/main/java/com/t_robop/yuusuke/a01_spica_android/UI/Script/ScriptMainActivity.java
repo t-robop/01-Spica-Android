@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.renderscript.Script;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -25,7 +26,10 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.util.ArrayList;
+import java.util.List;
 
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
 import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
@@ -361,31 +365,73 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private void objectSave() {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        // objectをjson文字列へ変換
-        String jsonInstanceString = gson.toJson(mScriptPresenter.getScripts());
-        // 変換後の文字列をputStringで保存
+        // TODO 復元処理が問題なかったら消す
+//        Gson gson = new Gson();
+//        // objectをjson文字列へ変換
+//        String jsonInstanceString = gson.toJson(mScriptPresenter.getScripts());
+//        // 変換後の文字列をputStringで保存
+//        pref.edit().putString("dataSave", jsonInstanceString).apply();
+
+
+        String jsonInstanceString = mScriptPresenter.getSendableScripts();
+//        // 変換後の文字列をputStringで保存
         pref.edit().putString("dataSave", jsonInstanceString).apply();
     }
 
     public void objectLoad() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        Gson gson = new Gson();
-        try {
-            // 保存されているjson文字列を取得
-            String userSettingString = prefs.getString("dataSave", "");
-            // json文字列を 「UserSettingクラス」のインスタンスに変換
-            ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
-            }.getType());
-            mScriptPresenter.setScripts(mScripts);
-        } catch (Exception e) {
-            Toast.makeText(this, "データがありません", Toast.LENGTH_SHORT).show();
-        }
+        // TODO 復元処理が問題なかったら消す
+//        Gson gson = new Gson();
+//        try {
+//            // 保存されているjson文字列を取得
+//            String userSettingString = prefs.getString("dataSave", "");
+//            // json文字列を 「UserSettingクラス」のインスタンスに変換
+//            ArrayList<ScriptModel> mScripts = gson.fromJson(userSettingString, new TypeToken<ArrayList<ScriptModel>>() {
+//            }.getType());
+//            mScriptPresenter.setScripts(mScripts);
+//        } catch (Exception e) {
+//            Toast.makeText(this, "データがありません", Toast.LENGTH_SHORT).show();
+//        }
+        String userSettingString = prefs.getString("dataSave", "");
+        ArrayList<ScriptModel> models = commandConvert(userSettingString);
+        mScriptAdapter.clear();
+        mScriptPresenter.setScripts(models);
+
 
     }
 
     private void hideNavigationBar() {
         View sysView = getWindow().getDecorView();
         sysView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_IMMERSIVE);
+    }
+
+    public ArrayList<ScriptModel> commandConvert(String cmdText) {
+        ArrayList<ScriptModel> scripts = new ArrayList();
+        ArrayList<String> cmds = splitCommand(cmdText,13);
+        for (String cmd: cmds) {
+            String str1 = cmd.substring(0,2);
+            String str2 = cmd.substring(2,4);
+            String str3 = cmd.substring(4,7);
+            String str4 = cmd.substring(7,10);
+            String str5 = cmd.substring(10,13);
+            ScriptModel model = new ScriptModel();
+            model.setIfState(Integer.parseInt(str1));
+
+            ScriptModel.SpicaBlock[] values = ScriptModel.SpicaBlock.values();
+            ScriptModel.SpicaBlock block = values[Integer.parseInt(str2)-1];
+            model.setBlock(block);
+            model.setSpeed(Integer.parseInt(str3));
+            model.setValue(Integer.parseInt(str5));
+            scripts.add(model);
+        }
+        return scripts;
+    }
+
+    ArrayList<String> splitCommand (String str, int length) {
+        ArrayList<String> strs = new ArrayList<>();
+        for (int i = 0; i < StringUtils.length(str); i += length) {
+            strs.add(StringUtils.substring(str, i, i + length));
+        }
+        return strs;
     }
 }
