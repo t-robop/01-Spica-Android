@@ -208,7 +208,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingFront.setAdapter(this);
                 bindingFront.setPosition(position);
                 bindingFront.setScript(script);
-                bindingFront.setValue(script.getValue());
+                bindingFront.setValue(script.getValue()/10);
                 bindingFront.setIfState(script.getIfState());
                 lane.addView(bindingFront.getRoot());
                 break;
@@ -217,7 +217,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingBack.setAdapter(this);
                 bindingBack.setPosition(position);
                 bindingBack.setScript(script);
-                bindingBack.setValue(script.getValue());
+                bindingBack.setValue(script.getValue()/10);
                 bindingBack.setIfState(script.getIfState());
                 lane.addView(BlockBackBinding.class.cast(bindingBack).getRoot());
                 break;
@@ -226,7 +226,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingLeft.setAdapter(this);
                 bindingLeft.setPosition(position);
                 bindingLeft.setScript(script);
-                bindingLeft.setValue(script.getValue());
+                bindingLeft.setValue(script.getValue()/10);
                 bindingLeft.setIfState(script.getIfState());
                 lane.addView(BlockLeftBinding.class.cast(bindingLeft).getRoot());
                 break;
@@ -235,7 +235,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
                 bindingRight.setAdapter(this);
                 bindingRight.setPosition(position);
                 bindingRight.setScript(script);
-                bindingRight.setValue(script.getValue());
+                bindingRight.setValue(script.getValue()/10);
                 bindingRight.setIfState(script.getIfState());
                 lane.addView(BlockRightBinding.class.cast(bindingRight).getRoot());
                 break;
