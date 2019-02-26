@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.repository.ScriptRepository;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
@@ -227,6 +228,25 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+
+        // todo realmのてすと
+        ScriptRepository repository=new ScriptRepository(this);
+        ArrayList<ScriptModel> scriptsTest=new ArrayList<>();
+        ScriptModel s1=new ScriptModel();
+        s1.setId("1");
+        scriptsTest.add(s1);
+        ScriptModel s2=new ScriptModel();
+        s1.setId("2");
+        scriptsTest.add(s2);
+        ScriptModel s3=new ScriptModel();
+        s1.setId("3");
+        scriptsTest.add(s3);
+        ScriptModel s4=new ScriptModel();
+        s1.setId("4");
+        scriptsTest.add(s4);
+        repository.writeScripts("TEST",scriptsTest);
+        ArrayList<ScriptModel> scriptsTestResult=repository.getScripts("TEST");
+        scriptsTestResult.size();
     }
 
     /**
