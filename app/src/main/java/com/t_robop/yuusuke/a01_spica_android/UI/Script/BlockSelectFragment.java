@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,16 @@ import android.view.animation.ScaleAnimation;
 
 import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockSelectBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock;
+
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.BACK;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.BREAK;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FOR_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FRONT;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.LEFT;
 
 public class BlockSelectFragment extends Fragment implements ScriptContract.SelectView {
 
@@ -56,19 +63,19 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         mBinding.susumu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.FRONT);
+                mListener.onClickButton(FRONT);
             }
         });
         mBinding.magaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.LEFT);
+                mListener.onClickButton(LEFT);
             }
         });
         mBinding.sagaru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClickButton(ScriptModel.SpicaBlock.BACK);
+                mListener.onClickButton(BACK);
             }
         });
 
@@ -80,7 +87,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.mosimo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.IF_START);
+                    mListener.onClickButton(IF_START);
                 }
             });
         }
@@ -90,7 +97,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.kurikaesu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.FOR_START);
+                    mListener.onClickButton(FOR_START);
                 }
             });
         }
@@ -100,7 +107,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
             mBinding.nukeru.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mListener.onClickButton(ScriptModel.SpicaBlock.BREAK);
+                    mListener.onClickButton(BREAK);
                 }
             });
         }
@@ -118,7 +125,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         }
         if (!loopState) {
             mBinding.kurikaesu.setVisibility(View.GONE);
-        }else {
+        } else {
             mBinding.kurikaesu.setVisibility(View.VISIBLE);
         }
 
@@ -143,7 +150,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
 
 
     public interface BlockClickListener {
-        void onClickButton(ScriptModel.SpicaBlock block);
+        void onClickButton(SpicaBlock block);
     }
 
     // FragmentがActivityに追加されたら呼ばれるメソッド

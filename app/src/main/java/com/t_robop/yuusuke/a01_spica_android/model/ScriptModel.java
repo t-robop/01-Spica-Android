@@ -121,27 +121,28 @@ public class ScriptModel extends BaseObservable {
         return 3;
     }
 
-    public enum SpicaBlock {
-        FRONT(1),
-        BACK(2),
-        LEFT(3),
-        RIGHT(4),
-        FOR_START(5),
-        FOR_END(6),
-        IF_START(7),
-        IF_END(8),
-        BREAK(9),
-        START(10),
-        END(11);
+//    public enum SpicaBlock {
+//        FRONT(1),
+//        BACK(2),
+//        LEFT(3),
+//        RIGHT(4),
+//        FOR_START(5),
+//        FOR_END(6),
+//        IF_START(7),
+//        IF_END(8),
+//        BREAK(9),
+//        START(10),
+//        END(11);
+//
+//        private final int id;
+//
+//        SpicaBlock(final int id) {
+//            this.id = id;
+//        }
+//
+//        public int getId() {
+//            return this.id;
+//        }
+//    }
 
-        private final int id;
-
-        SpicaBlock(final int id) {
-            this.id = id;
-        }
-
-        public int getId() {
-            return this.id;
-        }
-    }
 }

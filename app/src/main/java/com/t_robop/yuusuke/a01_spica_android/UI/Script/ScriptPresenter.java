@@ -6,13 +6,14 @@ import android.content.SharedPreferences;
 
 import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock;
 
 import java.util.ArrayList;
 
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_START;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FOR_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FOR_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_START;
 
 public class ScriptPresenter implements ScriptContract.Presenter {
 
@@ -72,7 +73,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     /**
      *
      */
-    private ScriptModel createEmptyBlock(ScriptModel.SpicaBlock spicaBlock, int ifState) {
+    private ScriptModel createEmptyBlock(SpicaBlock spicaBlock, int ifState) {
         ScriptModel scriptOther = new ScriptModel(spicaBlock);
         scriptOther.setIfState(ifState);
         return scriptOther;

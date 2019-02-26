@@ -17,6 +17,9 @@ import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 import java.util.ArrayList;
 
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_START;
+
 public class CanvasView extends View {
 
     private final Paint paint;
@@ -154,11 +157,11 @@ public class CanvasView extends View {
             if (defaultScript != null) {
                 commandBlockPaint.setColor(getBlockColor(defaultScript));
                 // falseレーン
-                if (defaultScript.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+                if (defaultScript.getBlock() == IF_START) {
                     // ifの始め
                     canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
-                } else if (defaultScript.getBlock() == ScriptModel.SpicaBlock.IF_END) {
+                } else if (defaultScript.getBlock() == IF_END) {
                     // ifの終わり
                     canvas.drawLine(commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight / 3 - commandBlockLineWidth / 2,
                             commandBlockMargin + i * (commandBlockLineLength / (commandBlockNum - 1)), canvasHeight * 2 / 3, commandBlockLinePaint);
