@@ -26,6 +26,7 @@ import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfStartBinding
 import com.t_robop.yuusuke.a01_spica_android.databinding.ConductorIfEndBinding;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemContainerScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock;
 
 import java.util.ArrayList;
 
@@ -157,13 +158,13 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
             drawCommandBlock(position, holder.mBinding.laneIf, scriptSpecial);
         } else {
             LayoutInflater layoutInflater = LayoutInflater.from(holder.mBinding.laneIf.getContext());
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+            if (scriptDefault.getBlock() == SpicaBlock.IF_START) {
                 ConductorIfStartBinding bindingConIfStart = ConductorIfStartBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
                 bindingConIfStart.setAdapter(this);
                 bindingConIfStart.setPosition(position);
                 bindingConIfStart.setIfState(1);
                 holder.mBinding.laneIf.addView(bindingConIfStart.getRoot());
-            } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_END) {
+            } else if (scriptDefault.getBlock() ==SpicaBlock.IF_END) {
                 ConductorIfEndBinding bindingConIfEnd = ConductorIfEndBinding.inflate(layoutInflater, holder.mBinding.laneIf, false);
                 holder.mBinding.laneIf.addView(bindingConIfEnd.getRoot());
             } else if (scriptDefault.getIfState() == 2) {
@@ -289,9 +290,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
     }
 
     private boolean isInLoop(ScriptModel script) {
-        if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+        if (script.getBlock() == SpicaBlock.FOR_END) {
             return false;
-        } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+        } else if (script.getBlock() == SpicaBlock.FOR_START) {
             return true;
         } else if (script.isInLoop()) {
             return true;
@@ -314,7 +315,7 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
             }
         } else {
             //ここでは追加する場所の前ブロック(タッチされた+ボタンを所持するブロック)のposを送る
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+            if (scriptDefault.getBlock() == SpicaBlock.IF_START) {
                 //if_startの直後のFalseレーンの場合はTrueレーンのブロック数を数えてから配置する
                 clickConductor.onClick(view, getTrueEndIndex(position), 2, isInLoop(scriptDefault));
             } else {
@@ -329,9 +330,9 @@ public class ScriptMainAdapter extends RecyclerView.Adapter<ScriptMainAdapter.Bi
         if (ifState == 1) {
             clickBlockIf.onClick(view, scriptSpecial.getPos(), scriptSpecial.getIfState(), scriptSpecial.isInLoop());
         } else {
-            if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.START) {
+            if (scriptDefault.getBlock() == SpicaBlock.START) {
                 clickBlock.onClick(view, -1, 0, scriptDefault.isInLoop());
-            } else if (scriptDefault.getBlock() == ScriptModel.SpicaBlock.END) {
+            } else if (scriptDefault.getBlock() == SpicaBlock.END) {
                 clickBlock.onClick(view, -2, 0, scriptDefault.isInLoop());
             } else {
                 clickBlock.onClick(view, scriptDefault.getPos(), scriptDefault.getIfState(), scriptDefault.isInLoop());

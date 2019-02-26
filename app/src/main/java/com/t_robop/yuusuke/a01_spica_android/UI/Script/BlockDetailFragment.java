@@ -15,11 +15,11 @@ import android.widget.RadioGroup;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockDetailBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock;
 
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_START;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.LEFT;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.RIGHT;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.LEFT;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.RIGHT;
 
 public class BlockDetailFragment extends DialogFragment implements ScriptContract.DetailView {
 
@@ -170,73 +170,50 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     /**
      * mBindingを通して描画するメソッド
      */
-    public void drawScript(SpicaBlock blockId) {
+    public void drawScript(SpicaBlock block) {
 
-        switch (blockId) {
+        mBinding.blockImage.setImageResource(block.getImage());
+        mBinding.blockTitleText.setText(block.getTitle());
+        mBinding.blockDesText.setText(block.getDes());
+        mBinding.bgDetailBlockView.setBackgroundResource(block.getBgImage());
+
+        switch (block) {
             case FRONT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_front);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_forward_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_forward_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_forward_unit_text);
                 break;
 
             case BACK:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_back);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_back_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_back_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_back_unit_text);
                 break;
 
             case LEFT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_left);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_left_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_left_description);
                 mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_left_rotate);
                 mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_right_rotate);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_left_unit_text);
                 break;
 
             case RIGHT:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_right);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_right_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_right_description);
                 mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_left_rotate);
                 mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_right_rotate);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_blue);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_right_unit_text);
                 break;
 
             case IF_START:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_if_wall);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_if_start_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_if_start_description);
                 mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_above);
                 mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_below);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_purple);
                 break;
 
             case FOR_START:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_for_start);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_for_start_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_for_start_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_yellow_2);
                 break;
 
             case BREAK:
-                mBinding.blockImage.setImageResource(R.drawable.ic_block_break);
-                mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_break_name);
-                mBinding.blockDesText.setText(R.string.block_detail_fragment_block_break_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_red);
                 mBinding.seekValue.setVisibility(View.INVISIBLE);
                 break;
         }
@@ -292,9 +269,9 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p += STANDARD_BLOCK_GAP_PROGRESS;
             p = p / 100;
-        } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
+        } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
             p += IF_BLOCK_GAP_PROGRESS;
-        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS){
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             p += FOR_BLOCK_GAP_PROGRESS;
         }
         script.setValue(p);
@@ -372,7 +349,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             int p = mBinding.seekValue.getProgress();
             p += IF_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
-        }else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
             p += FOR_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));

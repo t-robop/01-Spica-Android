@@ -22,13 +22,18 @@ import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
 import java.util.ArrayList;
 
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.FOR_END;
-import static com.t_robop.yuusuke.a01_spica_android.model.ScriptModel.SpicaBlock.IF_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FOR_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.FOR_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_END;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.IF_START;
+import static com.t_robop.yuusuke.a01_spica_android.model.SpicaBlock.START;
 
 public class ScriptMainActivity extends AppCompatActivity implements ScriptContract.ScriptView, BlockSelectFragment.BlockClickListener {
 
@@ -276,7 +281,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
      * 追加時のブロック選択画面で選択されたブロックを元にフラグメント生成
      */
     @Override
-    public void onClickButton(ScriptModel.SpicaBlock block) {
+    public void onClickButton(SpicaBlock block) {
         mScriptPresenter.setState(ScriptPresenter.ViewState.ADD);
         ScriptModel scriptModel = mScriptPresenter.getTargetScript();
         scriptModel.setBlock(block);
@@ -292,7 +297,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         //スタートブロック記述
         ScriptModel scriptStart = new ScriptModel();
-        scriptStart.setBlock(ScriptModel.SpicaBlock.START);
+        scriptStart.setBlock(START);
         scriptStart.setPos(-1);
         scriptStart.setIfState(0);
         mScriptAdapter.addDefault(0, scriptStart);
@@ -306,9 +311,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             script.setPos(i);
             script.setInLoop(isInloop);
 
-            if (script.getBlock() == ScriptModel.SpicaBlock.FOR_START) {
+            if (script.getBlock() == FOR_START) {
                 isInloop = true;
-            } else if (script.getBlock() == ScriptModel.SpicaBlock.FOR_END) {
+            } else if (script.getBlock() == FOR_END) {
                 isInloop = false;
             }
 
@@ -328,7 +333,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 }
                 ifIndex++;
             }
-            if (script.getBlock() == ScriptModel.SpicaBlock.IF_START) {
+            if (script.getBlock() == IF_START) {
                 ifIndex = laneIndex;
             }
             if (script.getBlock() == IF_END) {
@@ -338,7 +343,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         //エンドブロック記述
         ScriptModel scriptEnd = new ScriptModel();
-        scriptEnd.setBlock(ScriptModel.SpicaBlock.END);
+        scriptEnd.setBlock(END);
         mScriptAdapter.addDefault(mScriptAdapter.getItemCount(), scriptEnd);
 
         mScriptAdapter.notifyDataSetChanged();
