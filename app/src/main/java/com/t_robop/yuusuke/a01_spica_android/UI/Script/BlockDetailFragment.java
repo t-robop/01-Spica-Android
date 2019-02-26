@@ -94,25 +94,25 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case FRONT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
             case BACK:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
             case LEFT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
 
             case RIGHT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
 
             case IF_START:

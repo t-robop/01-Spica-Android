@@ -213,7 +213,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
                 rightSpeed = String.format("%03d", 0);
             }
 
-            String value = String.format("%03d", (int) Math.round(script.getValue()));
+            String value = String.format("%03d", (int) script.getValue());
             if (script.getBlock() == IF_START || script.getBlock() == FOR_START) {
                 value = String.format("%03d", (int) Math.round(script.getValue()));
             } else if (script.getBlock() == IF_END || script.getBlock() == FOR_END) {
