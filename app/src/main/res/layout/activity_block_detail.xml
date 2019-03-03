@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="200dp"
-            android:background="@drawable/select_shape_white"
+            android:background="@color/default_background_color"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,8 +41,8 @@
                 android:id="@+id/bg_detail_block_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                tools:background="@color/color_blue">
+                tools:background="@color/color_blue"
+                android:layout_weight="5">
 
                 <ImageView
                     android:id="@+id/block_image"
