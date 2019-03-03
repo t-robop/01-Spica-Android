@@ -14,21 +14,30 @@ public class ScriptRepository {
         realmManager = new RealmManager(context);
     }
 
-    public void writeScripts(
+    public void writeScript(
             String title,
             ArrayList<ScriptModel> scripts) {
         realmManager.writeBook(title, scripts);
     }
 
-    public ArrayList<ScriptModel> getScripts(String title) {
+    public ArrayList<ScriptModel> getScript(String title) {
         return realmManager.findBook(title);
     }
 
-    public int getAllScriptSize(){
+    public void deleteScript(String title) {
+        realmManager.deleteBook(title);
+    }
+
+    public int getAllScriptSize() {
         return realmManager.sizeBookShelf();
     }
 
-    public ArrayList<String> getAllScriptTitle(){
+    public ArrayList<String> getAllScriptTitle() {
         return realmManager.getTitles();
+    }
+
+    public String getLastScriptTitle() {
+        // todo 最後に開いていたタイトルを保持しておく
+        return "FirstScript";
     }
 }

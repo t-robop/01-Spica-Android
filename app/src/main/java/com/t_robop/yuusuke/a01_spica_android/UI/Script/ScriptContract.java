@@ -10,7 +10,7 @@ public interface ScriptContract {
      * メインのスクリプト
      */
     interface ScriptView extends BaseView<Presenter> {
-        void drawScripts(ArrayList<ScriptModel> scrips);
+        void drawScripts(String title, ArrayList<ScriptModel> scrips);
     }
 
     /**
@@ -27,6 +27,13 @@ public interface ScriptContract {
      * ブロック詳細画面
      */
     interface DetailView extends BaseView<Presenter> {
+
+    }
+
+    /**
+     * ファイル一覧画面
+     */
+    interface FilesView extends BaseView<Presenter> {
 
     }
 
@@ -51,6 +58,8 @@ public interface ScriptContract {
         ScriptModel getTargetScript();
 
         void setScripts(ArrayList<ScriptModel> scripts);
+
+        void setScriptTitle(String title);
     }
 }
 

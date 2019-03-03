@@ -1,6 +1,7 @@
 package com.t_robop.yuusuke.a01_spica_android.manager;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptBook;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
@@ -74,6 +75,18 @@ public class RealmManager {
             titles.add(book.title);
         }
         return titles;
+    }
+
+    public void deleteBook(String title) {
+        RealmResults<ScriptBook> r = realm.where(ScriptBook.class)
+                .equalTo("title", title)
+                .findAll();
+
+        realm.beginTransaction();
+
+        r.deleteAllFromRealm();
+
+        realm.commitTransaction();
     }
 
     private ScriptModel toScript(ScriptRealmObject page) {
