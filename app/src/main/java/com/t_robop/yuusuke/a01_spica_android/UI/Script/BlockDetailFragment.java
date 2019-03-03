@@ -94,25 +94,25 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case FRONT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
             case BACK:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
             case LEFT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
 
             case RIGHT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS);
                 break;
 
             case IF_START:
@@ -291,7 +291,7 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         // 通常ブロックの時
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p += STANDARD_BLOCK_GAP_PROGRESS;
-            p = p / 100;
+            p = p / 10;
         } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
             p += IF_BLOCK_GAP_PROGRESS;
         } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS){
