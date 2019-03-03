@@ -70,8 +70,8 @@
                     android:id="@+id/block_des_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="8dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="8dp"
                     android:text="@string/activity_block_detail_block_description"
                     android:textColor="@color/white_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -134,15 +134,30 @@
                     tools:text="びょう、すすむ" />
 
                 <SeekBar
-                    android:id="@+id/seek_value"
+                    android:id="@+id/seek_value_screen"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="8dp"
-                    android:onProgressChanged="@{(s,p,f)->fragment.onProgressChanged()}"
+                    android:focusable="false"
                     app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_value" />
+
+                <SeekBar
+                    android:id="@+id/seek_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@null"
+                    android:onProgressChanged="@{(s,p,f)->fragment.onProgressChanged(p)}"
+                    android:progressDrawable="@null"
+                    android:thumb="@drawable/invisible_seekbar"
+                    app:layout_constraintBottom_toBottomOf="@id/seek_value_screen"
+                    app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_value" />
 
                 <RadioGroup
                     android:id="@+id/speed_radio_group"
