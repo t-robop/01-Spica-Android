@@ -190,25 +190,31 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             Context context = MyApplication.getInstance();
             SharedPreferences preferences = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
             String leftSpeed, rightSpeed;
-            switch (script.getSpeed()) {
-                case 1:
-                    leftSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
-                    rightSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
-                    break;
+            if (script.getBlock() != ScriptModel.SpicaBlock.IF_START) {
 
-                case 2:
-                    leftSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
-                    rightSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
-                    break;
+                switch (script.getSpeed()) {
+                    case 1:
+                        leftSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
+                        rightSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
+                        break;
 
-                case 3:
-                    leftSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
-                    rightSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
-                    break;
+                    case 2:
+                        leftSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
+                        rightSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
+                        break;
 
-                default:
-                    leftSpeed = String.format("%03d", 0);
-                    rightSpeed = String.format("%03d", 0);
+                    case 3:
+                        leftSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
+                        rightSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
+                        break;
+
+                    default:
+                        leftSpeed = String.format("%03d", 0);
+                        rightSpeed = String.format("%03d", 0);
+                }
+            } else {
+                leftSpeed = String.format("%03d",script.getSpeed());
+                rightSpeed = "000";
             }
 //            String leftSpeed = String.format("%03d", script.getSpeed());
             if (script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END) {
@@ -220,7 +226,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
                 rightSpeed = String.format("%03d", 0);
             }
 
-            String value = String.format("%03d", (int) Math.round(script.getValue() * 10.0));
+            String value = String.format("%03d", (int) script.getValue());
             if (script.getBlock() == IF_START || script.getBlock() == FOR_START) {
                 value = String.format("%03d", (int) Math.round(script.getValue()));
             } else if (script.getBlock() == IF_END || script.getBlock() == FOR_END) {
