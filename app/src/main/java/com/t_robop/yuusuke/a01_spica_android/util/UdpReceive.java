@@ -14,6 +14,7 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.SocketException;
 
 public class UdpReceive extends Thread{
     private int port;
@@ -26,10 +27,48 @@ public class UdpReceive extends Thread{
 
     final int KILL_DIALOG_TIME = 2000;
 
+    private int udpPort;
+    private boolean waiting;
+
+
     public UdpReceive(Context context){
-        port = 50000;
+        udpPort = 50000;
         this.context = context;
     }
+
+
+    public void createRecycleUdpSocket(){
+        waiting = true;
+        new Thread() {
+            @Override
+            public void run(){
+                String address = null;
+                try {
+                    //waiting = trueの間、ブロードキャストを受け取る
+                    while(waiting){
+                        //受信用ソケット
+                        DatagramSocket receiveUdpSocket = new DatagramSocket(udpPort);
+                        byte[] buf = new byte[256];
+                        DatagramPacket packet = new DatagramPacket(buf, buf.length);
+                        //ゲスト端末からのブロードキャストを受け取る
+                        //受け取るまでは待ち状態になる
+                        receiveUdpSocket.receive(packet);
+                        //受信バイト数取得
+                        int length = packet.getLength();
+                        //受け取ったパケットを文字列にする
+                        address = new String(buf, 0, length);
+                        //↓③で使用
+                        receiveUdpSocket.close();
+                    }
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
 
     public void UdpReceiveStandby(){
         Crashlytics.log("UdpReceiveStandby");
