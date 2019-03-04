@@ -94,7 +94,7 @@ public class RealmManager {
         script.setId(page.getId());
         script.setBlock(ScriptModel.SpicaBlock.getScriptBlock(Integer.parseInt(page.getId())));
         script.setPos(page.getPos());
-        script.setIfOperator(page.getIfState());
+        script.setIfState(page.getIfState());
         script.setInLoop(page.isInLoop());
         script.setSpeed(page.getSpeed());
         script.setValue(page.getValue());

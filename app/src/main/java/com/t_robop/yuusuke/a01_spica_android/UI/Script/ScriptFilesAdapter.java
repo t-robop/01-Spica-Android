@@ -8,12 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ItemScriptFilesBinding;
 
 import java.util.ArrayList;
 
 public class ScriptFilesAdapter extends RecyclerView.Adapter<ScriptFilesAdapter.BindingHolder> {
-    private ArrayList<String> mTitles;
+    private ArrayList<FilesItemModel> mTitles;
     private Context mContext;
     private OnDeleteBtnClickListener deleteBtnClickListener;
     private OnItemClickListener itemClickListener;
@@ -36,8 +37,8 @@ public class ScriptFilesAdapter extends RecyclerView.Adapter<ScriptFilesAdapter.
         this.mContext = context;
     }
 
-    public void titleAdd(String title) {
-        mTitles.add(title);
+    public void titleAdd(String title, boolean isCurrent) {
+        mTitles.add(new FilesItemModel(title, isCurrent));
     }
 
     public void clear() {
@@ -55,20 +56,23 @@ public class ScriptFilesAdapter extends RecyclerView.Adapter<ScriptFilesAdapter.
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(BindingHolder holder, final int position) {
-        final String title = mTitles.get(position);
-        holder.mBinding.textFileName.setText(title);
+        final FilesItemModel item = mTitles.get(position);
+        holder.mBinding.textFileName.setText(item.title);
         holder.mBinding.fileDeleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteBtnClickListener.onClick(title);
+                deleteBtnClickListener.onClick(item.title);
             }
         });
         holder.mBinding.fileContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                itemClickListener.onClick(title);
+                itemClickListener.onClick(item.title);
             }
         });
+        if (item.isCurrent) {
+            holder.mBinding.fileContainer.setBackgroundResource(R.drawable.corner_shape_gray_green);
+        }
     }
 
     @Override
@@ -90,5 +94,15 @@ public class ScriptFilesAdapter extends RecyclerView.Adapter<ScriptFilesAdapter.
 
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.itemClickListener = listener;
+    }
+
+    class FilesItemModel {
+        private String title;
+        private boolean isCurrent;
+
+        FilesItemModel(String title, boolean isCurrent) {
+            this.title = title;
+            this.isCurrent = isCurrent;
+        }
     }
 }

@@ -175,6 +175,11 @@ public class ScriptPresenter implements ScriptContract.Presenter {
         this.scriptTitle = scriptTitle;
     }
 
+    @Override
+    public boolean isScriptTitle(String title) {
+        return this.scriptTitle.equals(title);
+    }
+
     /**
      * スクリプト一覧を送信可能データにするメソッド
      */
@@ -213,7 +218,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
                         rightSpeed = String.format("%03d", 0);
                 }
             } else {
-                leftSpeed = String.format("%03d",script.getSpeed());
+                leftSpeed = String.format("%03d", script.getSpeed());
                 rightSpeed = "000";
             }
 //            String leftSpeed = String.format("%03d", script.getSpeed());

@@ -35,6 +35,7 @@
     <color name="color_purple">#c200ff</color>
     <color name="color_yellow_2">#f15a23</color>
     <color name="color_green">#51CA31</color>
+    <color name="color_green_alpha">#3351CA31</color>
 
     <color name="filter_color">#aa808080</color>
 

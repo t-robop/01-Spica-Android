@@ -70,7 +70,8 @@ public class ScriptFilesFragment extends DialogFragment implements ScriptContrac
             public void onClick(String title) {
                 mScriptPresenter.setScriptTitle(title);
                 mScriptPresenter.setScripts(repository.getScript(title));
-                close();
+                loadScript();
+                //close();
             }
         });
         loadScript();
@@ -98,7 +99,7 @@ public class ScriptFilesFragment extends DialogFragment implements ScriptContrac
     private void loadScript() {
         adapter.clear();
         for (String title : repository.getAllScriptTitle()) {
-            adapter.titleAdd(title);
+            adapter.titleAdd(title, mScriptPresenter.isScriptTitle(title));
         }
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         mBinding.listFiles.setLayoutManager(linearLayoutManager);

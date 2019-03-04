@@ -60,6 +60,8 @@ public interface ScriptContract {
         void setScripts(ArrayList<ScriptModel> scripts);
 
         void setScriptTitle(String title);
+
+        boolean isScriptTitle(String title);
     }
 }
 
