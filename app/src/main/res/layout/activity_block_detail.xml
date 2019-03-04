@@ -166,7 +166,7 @@
                     android:layout_marginVertical="4dp"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toTopOf="@id/setting_radio_group"
-                    app:layout_constraintEnd_toEndOf="@id/seek_value"
+                    app:layout_constraintEnd_toStartOf="@id/detail_delete_btn"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/seek_value">
@@ -175,6 +175,7 @@
                         android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_low"
                         android:textColor="@color/default_text_color" />
 
@@ -182,6 +183,7 @@
                         android:id="@+id/speed_middle_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_middle"
                         android:textColor="@color/default_text_color" />
 
@@ -189,6 +191,7 @@
                         android:id="@+id/speed_high_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_high"
                         android:textColor="@color/default_text_color" />
 
@@ -202,7 +205,7 @@
                     android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
                     android:orientation="horizontal"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@id/seek_value"
+                    app:layout_constraintEnd_toStartOf="@id/detail_delete_btn"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/speed_radio_group">
@@ -211,6 +214,7 @@
                         android:id="@+id/radiobutton_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_state_left"
                         android:textColor="@color/default_text_color" />
 
@@ -218,6 +222,7 @@
                         android:id="@+id/radiobutton_right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_state_right"
                         android:textColor="@color/default_text_color" />
 
@@ -227,15 +232,19 @@
                     android:id="@+id/detail_delete_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="4dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/block_script_item"
                     android:onClick="@{()->fragment.delete()}"
                     android:text="@string/activity_block_detail_button_delete_text"
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/delete_button_color"
                     android:visibility="invisible"
-                    app:layout_constraintBottom_toTopOf="@id/detail_add_btn"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0"
                     tools:visibility="visible" />
 
 
@@ -249,7 +258,11 @@
                     android:textAppearance="@style/TextAppearance.block_title_b"
                     android:textColor="@color/default_text_color"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </android.support.constraint.ConstraintLayout>
 

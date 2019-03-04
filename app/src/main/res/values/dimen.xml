@@ -13,4 +13,6 @@
 
     <dimen name="fab_scale">64dp</dimen>
     <dimen name="fab_margin">36dp</dimen>
+
+    <dimen name="detail_radio_margin">16dp</dimen>
 </resources>
