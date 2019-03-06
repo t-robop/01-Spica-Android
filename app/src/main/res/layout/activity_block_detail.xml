@@ -41,8 +41,8 @@
                 android:id="@+id/bg_detail_block_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:background="@color/color_blue"
-                android:layout_weight="5">
+                android:layout_weight="5"
+                tools:background="@color/color_blue">
 
                 <ImageView
                     android:id="@+id/block_image"
@@ -138,7 +138,7 @@
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="8dp"
-                    android:paddingBottom="8dp"
+                    android:layout_marginBottom="8dp"
                     android:focusable="false"
                     app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
                     app:layout_constraintHorizontal_bias="0"
@@ -177,6 +177,7 @@
                         android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_low"
                         android:textColor="@color/default_text_color" />
 
@@ -184,6 +185,7 @@
                         android:id="@+id/speed_middle_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_middle"
                         android:textColor="@color/default_text_color" />
 
@@ -215,7 +217,7 @@
                         android:id="@+id/radiobutton_left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
+                        android:layout_marginEnd="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_state_left"
                         android:textColor="@color/default_text_color" />
 
