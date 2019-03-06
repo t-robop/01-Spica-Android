@@ -37,13 +37,8 @@ dependencies {
     implementation 'com.koushikdutta.async:androidasync:2.2.1'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    implementation 'com.google.firebase:firebase-core:16.0.4'
+    implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-
-
-
-
-
 }
 apply plugin: 'com.google.gms.google-services'
