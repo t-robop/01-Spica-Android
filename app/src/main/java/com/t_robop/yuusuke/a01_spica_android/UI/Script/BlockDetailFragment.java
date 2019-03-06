@@ -79,6 +79,8 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         ScriptModel targetScript = mScriptPresenter.getTargetScript();
         //ブロック種類を取得
         spicaBlock = targetScript.getBlock();
+        //シークバー値
+        int seekProgress = 0;
         //描画
         drawScript(spicaBlock);
         int res = R.id.speed_middle_radio_button;
@@ -94,25 +96,29 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
             case FRONT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 break;
             case BACK:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 break;
             case LEFT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 break;
 
             case RIGHT:
                 mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
-                mBinding.seekValue.setProgress((int) (targetScript.getValue() * 100) - STANDARD_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 break;
 
             case IF_START:
@@ -126,17 +132,19 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                     mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                     mBinding.textValueDes.setText(R.string.block_detail_fragment_compare_above_text);
                 }
-                mBinding.seekValue.setProgress((int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) targetScript.getValue() - IF_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 mBinding.seekValue.setMax(IF_BLOCK_MAX_PROGRESS);
                 break;
             case FOR_START:
-                mBinding.seekValue.setProgress((int) targetScript.getValue() - FOR_BLOCK_GAP_PROGRESS);
+                seekProgress = (int) targetScript.getValue() - FOR_BLOCK_GAP_PROGRESS;
+                mBinding.seekValue.setProgress(seekProgress);
                 mBinding.seekValue.setMax(FOR_BLOCK_MAX_PROGRESS);
                 mBinding.textValueDes.setText(R.string.block_detail_fragment_loop_unit_text);
                 break;
         }
         //シークバーのテキストに反映
-        setSeekValueText();
+        syncSeekValue(seekProgress);
     }
 
     private void popupAnime(View view) {
@@ -291,10 +299,10 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         // 通常ブロックの時
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             p += STANDARD_BLOCK_GAP_PROGRESS;
-            p = p / 100;
-        } else if(mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS){
+            p = p / 10;
+        } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
             p += IF_BLOCK_GAP_PROGRESS;
-        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS){
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             p += FOR_BLOCK_GAP_PROGRESS;
         }
         script.setValue(p);
@@ -359,23 +367,27 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
     /**
      * 時間のシークバー変更時
      */
-    public void onProgressChanged() {
-        setSeekValueText();
+    public void onProgressChanged(int progress) {
+        syncSeekValue(progress);
     }
 
-    private void setSeekValueText() {
+    private void syncSeekValue(int progress) {
         if (mBinding.seekValue.getMax() == STANDARD_BLOCK_MAX_PROGRESS) {
             float p = mBinding.seekValue.getProgress();
             p += STANDARD_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p / 100));
+            mBinding.seekValueScreen.setMax(STANDARD_BLOCK_MAX_PROGRESS);
         } else if (mBinding.seekValue.getMax() == IF_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
             p += IF_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
-        }else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
+            mBinding.seekValueScreen.setMax(IF_BLOCK_MAX_PROGRESS);
+        } else if (mBinding.seekValue.getMax() == FOR_BLOCK_MAX_PROGRESS) {
             int p = mBinding.seekValue.getProgress();
             p += FOR_BLOCK_GAP_PROGRESS;
             mBinding.textValue.setText(String.valueOf(p));
+            mBinding.seekValueScreen.setMax(FOR_BLOCK_MAX_PROGRESS);
         }
+        mBinding.seekValueScreen.setProgress(progress);
     }
 }

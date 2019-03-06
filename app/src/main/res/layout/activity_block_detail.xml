@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="200dp"
-            android:background="@drawable/select_shape_white"
+            android:background="@color/default_background_color"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -41,8 +41,8 @@
                 android:id="@+id/bg_detail_block_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="5"
-                tools:background="@color/color_blue">
+                tools:background="@color/color_blue"
+                android:layout_weight="5">
 
                 <ImageView
                     android:id="@+id/block_image"
@@ -134,16 +134,31 @@
                     tools:text="びょう、すすむ" />
 
                 <SeekBar
-                    android:id="@+id/seek_value"
+                    android:id="@+id/seek_value_screen"
                     android:layout_width="0dp"
                     android:layout_height="30dp"
                     android:layout_marginRight="8dp"
-                    android:onProgressChanged="@{(s,p,f)->fragment.onProgressChanged()}"
                     android:paddingBottom="8dp"
+                    android:focusable="false"
                     app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/text_value" />
+
+                <SeekBar
+                    android:id="@+id/seek_value"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@null"
+                    android:onProgressChanged="@{(s,p,f)->fragment.onProgressChanged(p)}"
+                    android:progressDrawable="@null"
+                    android:thumb="@drawable/invisible_seekbar"
+                    app:layout_constraintBottom_toBottomOf="@id/seek_value_screen"
+                    app:layout_constraintEnd_toStartOf="@id/detail_add_btn"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/text_value" />
 
                 <RadioGroup
                     android:id="@+id/speed_radio_group"
@@ -162,7 +177,6 @@
                         android:id="@+id/speed_low_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_low"
                         android:textColor="@color/default_text_color" />
 
@@ -170,7 +184,6 @@
                         android:id="@+id/speed_middle_radio_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
                         android:text="@string/activity_block_detail_block_speed_middle"
                         android:textColor="@color/default_text_color" />
 
