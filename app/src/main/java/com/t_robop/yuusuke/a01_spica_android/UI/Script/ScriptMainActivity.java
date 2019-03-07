@@ -24,6 +24,7 @@ import com.google.gson.reflect.TypeToken;
 import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
+import com.t_robop.yuusuke.a01_spica_android.repository.LogRepository;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
@@ -46,6 +47,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private UdpReceive udpReceive;
 
+    private LogRepository logRepository;
+
     float sizeX;
 
     @SuppressLint("ClickableViewAccessibility")
@@ -58,6 +61,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         udpReceive = new UdpReceive(this);
 
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_script_main);
+
+        logRepository = new LogRepository(this);
 
         mBinding.recyclerScript.setHasFixedSize(true);
         mScriptLayoutManager = new LinearLayoutManager(this);
@@ -172,7 +177,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         });
 
         /**
-         * fabがクリックされた時
+         * Runボタンがクリックされた時
          */
         mBinding.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,20 +188,23 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 final String ip = pref.getString("ip", "");
                 if (ip.isEmpty()) {
                     Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_failed_empty_ip, Toast.LENGTH_SHORT).show();
+                    logRepository.onClickRun(mScriptPresenter.getScripts().size(), "error_no_ip");
                 } else if (sendData.length() <= 0) {
                     Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_failed_empty_block, Toast.LENGTH_SHORT).show();
+                    logRepository.onClickRun(mScriptPresenter.getScripts().size(), "error_no_block");
                 } else {
                     udpReceive.UdpReceiveStandby();
                     UdpSend udp = new UdpSend();
                     udp.UdpSendText(sendData);
                     Log.d("sendData", sendData);
                     Toast.makeText(ScriptMainActivity.this, R.string.script_main_activity_send_success, Toast.LENGTH_SHORT).show();
+                    logRepository.onClickRun(mScriptPresenter.getScripts().size(), "success");
                 }
             }
         });
 
         /**
-         * fabが1.2秒以上長押しされた時
+         * Runボタンが1.2秒以上長押しされた時
          */
         final long[] then = {0};
         mBinding.fab.setOnTouchListener(new View.OnTouchListener() {
@@ -206,6 +214,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                     then[0] = System.currentTimeMillis();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     if ((System.currentTimeMillis() - then[0]) > 1200) {
+                        logRepository.onToSettingView();
                         Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
                         startActivity(intent);
                         return true;
@@ -218,13 +227,15 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         /**
          *
-         * 透明ボタンが押されたときの処理
+         * 左端の透明ボタンが押されたときの処理
          */
         Button restoreButton = findViewById(R.id.restore_btn);
         restoreButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                // ブロック復元
                 objectLoad();
+                logRepository.onClickRecovery();
                 return false;
             }
         });
