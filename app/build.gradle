@@ -23,6 +23,8 @@ android {
     lintOptions {
         abortOnError false
     }
+
+    apply from: './keystore/debug.gradle', to: android
 }
 
 dependencies {
