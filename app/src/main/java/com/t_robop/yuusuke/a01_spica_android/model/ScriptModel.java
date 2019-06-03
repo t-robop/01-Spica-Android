@@ -11,8 +11,8 @@ public class ScriptModel extends BaseObservable {
     private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //スピードの三段階値 //FIXME ifブロックのセンサー基準値 getCheckedRadioButtonId()の値が入るようになる
-    private int ifOpelator = 1;
+    // ifブロックのセンサー基準値 (1: センサー値より大きい, 2: センサー値より小さい)
+    private int ifOperator = 1;
     //ブロック毎の値
     private float value = 0;
     private boolean isInLoop = false;
@@ -66,12 +66,12 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
-        return this.ifOpelator;
+    public int getIfOperator() {
+        return this.ifOperator;
     }
 
-    public void setIfOperator(int ifOpelator) {
-        this.ifOpelator = ifOpelator;
+    public void setIfOperator(int ifOperator) {
+        this.ifOperator = ifOperator;
     }
 
     public float getValue() {
