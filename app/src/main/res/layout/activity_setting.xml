@@ -79,75 +79,22 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:orientation="horizontal">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/config_high_speed_text"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:text="速度設定"
+                android:textColor="@color/default_text_color" />
 
-                <TextView
-                    android:id="@+id/config_high_speed_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="速度設定 [はやい]"
-                    android:textColor="@color/default_text_color" />
-
-                <EditText
-                    android:id="@+id/config_high_speed_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2" />
-
-            </LinearLayout>
-
-            <LinearLayout
+            <EditText
+                android:id="@+id/config_speed_edit"
                 android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/config_middle_speed_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="速度設定 [ふつう]"
-                    android:textColor="@color/default_text_color" />
-
-                <EditText
-                    android:id="@+id/config_middle_speed_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="80dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/config_low_speed_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="30dp"
-                    android:layout_weight="1"
-                    android:text="速度設定 [おそい]"
-                    android:textColor="@color/default_text_color" />
-
-                <EditText
-                    android:id="@+id/config_low_speed_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2" />
-
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_weight="2" />
 
         </LinearLayout>
 
@@ -168,16 +115,19 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Viewの設定" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <CheckBox
                         android:id="@+id/checkBoxLoop"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="loopを表示する" />
+
                     <CheckBox
                         android:id="@+id/checkBoxIf"
                         android:layout_width="wrap_content"
