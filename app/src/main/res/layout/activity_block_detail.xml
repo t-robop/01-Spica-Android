@@ -31,7 +31,8 @@
             android:id="@+id/fg_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="200dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginEnd="200dp"
             android:background="@color/default_background_color"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -100,7 +101,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:layout_weight="3">
+                android:layout_weight="3"
+                android:paddingTop="14dp"
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/text_value"
@@ -161,57 +164,20 @@
                     app:layout_constraintTop_toTopOf="@id/text_value" />
 
                 <RadioGroup
-                    android:id="@+id/speed_radio_group"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
-                    android:orientation="horizontal"
-                    android:paddingVertical="8dp"
-                    app:layout_constraintBottom_toTopOf="@id/setting_radio_group"
-                    app:layout_constraintEnd_toStartOf="@id/detail_delete_btn"
-                    app:layout_constraintHorizontal_bias="0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/seek_value">
-
-                    <RadioButton
-                        android:id="@+id/speed_low_radio_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/detail_radio_margin"
-                        android:text="@string/activity_block_detail_block_speed_low"
-                        android:textColor="@color/default_text_color" />
-
-                    <RadioButton
-                        android:id="@+id/speed_middle_radio_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
-                        android:text="@string/activity_block_detail_block_speed_middle"
-                        android:textColor="@color/default_text_color" />
-
-                    <RadioButton
-                        android:id="@+id/speed_high_radio_button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/detail_radio_margin"
-                        android:text="@string/activity_block_detail_block_speed_high"
-                        android:textColor="@color/default_text_color" />
-
-                </RadioGroup>
-
-                <RadioGroup
                     android:id="@+id/setting_radio_group"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginVertical="4dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginBottom="4dp"
                     android:onCheckedChanged="@{(g,id)->fragment.onCheckedChanged(g,id)}"
                     android:orientation="horizontal"
-                    android:paddingVertical="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/detail_delete_btn"
                     app:layout_constraintHorizontal_bias="0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/speed_radio_group">
+                    app:layout_constraintTop_toBottomOf="@id/seek_value">
 
                     <RadioButton
                         android:id="@+id/radiobutton_left"

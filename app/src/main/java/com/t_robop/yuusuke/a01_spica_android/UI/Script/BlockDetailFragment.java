@@ -83,30 +83,18 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         int seekProgress = 0;
         //描画
         drawScript(spicaBlock);
-        int res = R.id.speed_middle_radio_button;
-        ;
-        if (targetScript.getSpeed() == 1) {
-            res = R.id.speed_low_radio_button;
-        } else if (targetScript.getSpeed() == 2) {
-            res = R.id.speed_middle_radio_button;
-        } else if (targetScript.getSpeed() == 3) {
-            res = R.id.speed_high_radio_button;
-        }
         switch (spicaBlock) {
             case FRONT:
-                mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
                 mBinding.seekValue.setProgress(seekProgress);
                 break;
             case BACK:
-                mBinding.speedRadioGroup.check(res);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
                 mBinding.seekValue.setProgress(seekProgress);
                 break;
             case LEFT:
-                mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_left);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
@@ -114,7 +102,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 break;
 
             case RIGHT:
-                mBinding.speedRadioGroup.check(res);
                 mBinding.settingRadioGroup.check(R.id.radiobutton_right);
                 mBinding.seekValue.setMax(STANDARD_BLOCK_MAX_PROGRESS);
                 seekProgress = (int) (targetScript.getValue() * 10) - STANDARD_BLOCK_GAP_PROGRESS;
@@ -225,7 +212,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_if_start_description);
                 mBinding.radiobuttonLeft.setText(R.string.block_detail_fragment_block_state_above);
                 mBinding.radiobuttonRight.setText(R.string.block_detail_fragment_block_state_below);
-                mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_purple);
                 break;
 
@@ -234,7 +220,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_for_start_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_for_start_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_yellow_2);
                 break;
 
@@ -243,7 +228,6 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
                 mBinding.blockTitleText.setText(R.string.block_detail_fragment_block_break_name);
                 mBinding.blockDesText.setText(R.string.block_detail_fragment_block_break_description);
                 mBinding.settingRadioGroup.setVisibility(View.INVISIBLE);
-                mBinding.speedRadioGroup.setVisibility(View.INVISIBLE);
                 mBinding.bgDetailBlockView.setBackgroundResource(R.color.color_red);
                 mBinding.seekValue.setVisibility(View.INVISIBLE);
                 break;
@@ -307,31 +291,14 @@ public class BlockDetailFragment extends DialogFragment implements ScriptContrac
         }
         script.setValue(p);
 
-        switch (spicaBlock) {
-            case FRONT:
-            case BACK:
-            case LEFT:
-            case RIGHT:
-                //スピード値の設定
-                int speedCheckId = mBinding.speedRadioGroup.getCheckedRadioButtonId();
-                if (speedCheckId == R.id.speed_low_radio_button) {
-                    script.setSpeed(script.getLowSpeedValue());
-                } else if (speedCheckId == R.id.speed_middle_radio_button) {
-                    script.setSpeed(script.getMiddleSpeedValue());
-                } else {
-                    script.setSpeed(script.getHighSpeedValue());
-                }
-                break;
-
-            case IF_START:
-                ////ifスタートブロックの条件指定
-                int checkId = mBinding.settingRadioGroup.getCheckedRadioButtonId();
-                if (checkId == R.id.radiobutton_left) {
-                    script.setIfOperator(script.getSensorAboveNum());
-                } else {
-                    script.setIfOperator(script.getSensorBelowNum());
-                }
-                break;
+        if (spicaBlock == IF_START) {
+            ////ifスタートブロックの条件指定
+            int checkId = mBinding.settingRadioGroup.getCheckedRadioButtonId();
+            if (checkId == R.id.radiobutton_left) {
+                script.setIfOperator(script.getSensorAboveNum());
+            } else {
+                script.setIfOperator(script.getSensorBelowNum());
+            }
         }
 
         listener.onClickAdd(script);

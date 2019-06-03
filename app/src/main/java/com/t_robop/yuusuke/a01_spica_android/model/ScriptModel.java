@@ -11,8 +11,8 @@ public class ScriptModel extends BaseObservable {
     private int ifState = 0;
     //ブロック
     private SpicaBlock block;
-    //スピードの三段階値
-    private int speed = 1;
+    // ifブロックのセンサー基準値 (1: センサー値より大きい, 2: センサー値より小さい)
+    private int ifOperator = 1;
     //ブロック毎の値
     private float value = 0;
     private boolean isInLoop = false;
@@ -66,21 +66,12 @@ public class ScriptModel extends BaseObservable {
     }
 
     @Bindable
-    public int getSpeed() {
-        return this.speed;
+    public int getIfOperator() {
+        return this.ifOperator;
     }
 
-    public void setSpeed(int speed) {
-        this.speed = speed;
-    }
-
-    @Bindable
-    public int getIfOperator() {  //ifブロックの比較演算子(1: センサー値より大きい, 2: センサー値より小さい)の取得
-        return this.speed;
-    }
-
-    public void setIfOperator(int speed) {
-        this.speed = speed;
+    public void setIfOperator(int ifOperator) {
+        this.ifOperator = ifOperator;
     }
 
     public float getValue() {
@@ -107,18 +98,6 @@ public class ScriptModel extends BaseObservable {
 
     public int getSensorBelowNum() {
         return 2;  //センサー値より小さい を表す
-    }
-
-    public int getLowSpeedValue() {
-        return 1;
-    }
-
-    public int getMiddleSpeedValue() {
-        return 2;
-    }
-
-    public int getHighSpeedValue() {
-        return 3;
     }
 
     public enum SpicaBlock {
