@@ -18,11 +18,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".UI.Script.SettingDetailActivity"></activity>
+        <activity android:name=".UI.Script.SettingActivity2" />
         <activity
             android:name=".UI.Script.ScriptMainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
-            android:windowSoftInputMode="adjustPan"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -35,9 +37,9 @@
         <activity
             android:name=".UI.Script.BlockDetailActivity"
             android:theme="@style/Theme.DarkTranslucent" />
-        <activity android:name=".UI.Script.SettingActivity"
-            android:screenOrientation="landscape">
-        </activity>
+        <activity
+            android:name=".UI.Script.SettingActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

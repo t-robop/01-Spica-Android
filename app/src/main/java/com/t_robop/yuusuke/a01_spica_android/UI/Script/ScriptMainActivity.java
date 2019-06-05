@@ -215,7 +215,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     if ((System.currentTimeMillis() - then[0]) > 1200) {
                         logRepository.onToSettingView();
-                        Intent intent = new Intent(getApplicationContext(), SettingActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), SettingActivity2.class);
                         startActivity(intent);
                         return true;
                     }

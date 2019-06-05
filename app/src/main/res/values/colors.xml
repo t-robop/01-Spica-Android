@@ -21,6 +21,9 @@
     <!--FAB -->
     <color name="FABBGColor">#FF4081</color>
 
+    <!--Toolbar-->
+    <color name="toolbar_color">#000000</color>
+
     <!--blockDetail-->
     <color name="delete_button_color">#dd2222</color>
 
@@ -34,8 +37,11 @@
     <color name="color_yellow">#ffdf00</color>
     <color name="color_purple">#c200ff</color>
     <color name="color_yellow_2">#f15a23</color>
+    <color name="color_green">#11b96b</color>
 
     <color name="filter_color">#aa808080</color>
+
+    <color name="divider_color">#40000000</color>
 
     <color name="alpha_clear">#00000000</color>
 
