@@ -1,11 +1,11 @@
 package com.t_robop.yuusuke.a01_spica_android.manager;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptBook;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptRealmObject;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptShell;
 
 import java.util.ArrayList;
 
@@ -34,6 +34,7 @@ public class RealmManager {
         if (r.size() == 0) {
             book = realm.createObject(ScriptBook.class);
             book.setTtitle(title);
+            addBookNum();
         } else {
             book = r.first();
             book.pages.clear();
@@ -69,7 +70,7 @@ public class RealmManager {
     }
 
     public ArrayList<String> getTitles() {
-        RealmResults<ScriptBook> r = realm.where(ScriptBook.class).findAll();
+        RealmResults<ScriptBook> r = realm.where(ScriptBook.class).findAll().sort("title");
         ArrayList<String> titles = new ArrayList<>();
         for (ScriptBook book : r) {
             titles.add(book.title);
@@ -87,6 +88,25 @@ public class RealmManager {
         r.deleteAllFromRealm();
 
         realm.commitTransaction();
+    }
+
+    private void addBookNum() {
+        RealmResults<ScriptShell> r = realm.where(ScriptShell.class).findAll();
+
+        if (r.isEmpty()) {
+            ScriptShell shell = realm.createObject(ScriptShell.class);
+        } else {
+            r.first().setAllBookNum(r.first().getAllBookNum() + 1);
+        }
+    }
+
+    public int getAllBookNum() {
+        RealmResults<ScriptShell> r = realm.where(ScriptShell.class).findAll();
+        if (r.isEmpty()) {
+            return 0;
+        } else {
+            return r.first().getAllBookNum();
+        }
     }
 
     private ScriptModel toScript(ScriptRealmObject page) {

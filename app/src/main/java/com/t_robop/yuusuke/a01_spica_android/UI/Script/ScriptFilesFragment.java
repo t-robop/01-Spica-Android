@@ -53,7 +53,7 @@ public class ScriptFilesFragment extends DialogFragment implements ScriptContrac
             @Override
             public void onClick(View view) {
                 // fixme 名前を入力させるかどうか不明なため、一旦数字で保存する
-                String title = String.valueOf(repository.getAllScriptSize() + 1);
+                String title = String.valueOf(repository.getAllBookNum() + 1);
                 repository.writeScript(title, new ArrayList<ScriptModel>());
                 loadScript();
             }

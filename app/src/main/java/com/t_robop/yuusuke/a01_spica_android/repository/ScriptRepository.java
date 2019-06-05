@@ -40,4 +40,8 @@ public class ScriptRepository {
         // todo 最後に開いていたタイトルを保持しておく
         return "FirstScript";
     }
+
+    public int getAllBookNum() {
+        return realmManager.getAllBookNum();
+    }
 }
