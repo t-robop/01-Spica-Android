@@ -14,5 +14,10 @@
     <dimen name="fab_scale">64dp</dimen>
     <dimen name="fab_margin">36dp</dimen>
 
+    <dimen name="save_btn_height">36dp</dimen>
+
+    <dimen name="adapter_files_name_text_size">18sp</dimen>
+    <dimen name="adapter_files_size_text_size">12sp</dimen>
+
     <dimen name="detail_radio_margin">16dp</dimen>
 </resources>

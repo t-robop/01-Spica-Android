@@ -19,8 +19,10 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     private ScriptContract.ScriptView mScriptView;
     private ScriptContract.SelectView mSelectView;
     private ScriptContract.DetailView mDetailView;
+    private ScriptContract.FilesView mFilesView;
 
     private ArrayList<ScriptModel> mScripts;
+    private String scriptTitle;
 
     //今自分がどの画面にいるのかを管理する
     private ViewState mState;
@@ -28,18 +30,25 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     private ScriptModel targetScript;
 
     public ScriptPresenter(
+            String lastTitle,
             ScriptContract.ScriptView scriptView,
             ScriptContract.SelectView selectView,
-            ScriptContract.DetailView detailView) {
+            ScriptContract.DetailView detailView,
+            ScriptContract.FilesView filesView) {
+        scriptTitle = lastTitle;
+
         this.mScriptView = scriptView;
         this.mScriptView.setPresenter(this);
-        mScriptView.drawScripts(mScripts);
+        mScriptView.drawScripts(scriptTitle, mScripts);
 
         this.mSelectView = selectView;
         this.mSelectView.setPresenter(this);
 
         this.mDetailView = detailView;
         this.mDetailView.setPresenter(this);
+
+        this.mFilesView = filesView;
+        this.mFilesView.setPresenter(this);
     }
 
     /**
@@ -99,7 +108,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     @Override
     public void setScript(ScriptModel script, int index) {
         mScripts.set(index, script);
-        mScriptView.drawScripts(mScripts);
+        mScriptView.drawScripts(scriptTitle, mScripts);
     }
 
     /**
@@ -124,7 +133,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
                         beforeIndex + 1);
             }
         }
-        mScriptView.drawScripts(mScripts);
+        mScriptView.drawScripts(scriptTitle, mScripts);
     }
 
     @Override
@@ -147,7 +156,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             }
         }
         mScripts.remove(index);
-        mScriptView.drawScripts(mScripts);
+        mScriptView.drawScripts(scriptTitle, mScripts);
     }
 
     @Override
@@ -158,8 +167,17 @@ public class ScriptPresenter implements ScriptContract.Presenter {
     @Override
     public void setScripts(ArrayList<ScriptModel> scripts) {
         this.mScripts = scripts;
-        mScriptView.drawScripts(mScripts);
+        mScriptView.drawScripts(scriptTitle, mScripts);
+    }
 
+    @Override
+    public void setScriptTitle(String scriptTitle) {
+        this.scriptTitle = scriptTitle;
+    }
+
+    @Override
+    public boolean isScriptTitle(String title) {
+        return this.scriptTitle.equals(title);
     }
 
     /**

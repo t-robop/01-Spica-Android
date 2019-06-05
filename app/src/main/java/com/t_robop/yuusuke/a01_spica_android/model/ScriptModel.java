@@ -5,8 +5,8 @@ import android.databinding.Bindable;
 
 public class ScriptModel extends BaseObservable {
 
-    private String id;
-    private int pos;
+    private String id="";
+    private int pos=0;
     //if
     private int ifState = 0;
     //ブロック
@@ -121,6 +121,16 @@ public class ScriptModel extends BaseObservable {
 
         public int getId() {
             return this.id;
+        }
+
+        public static SpicaBlock getScriptBlock(final int id) {
+            SpicaBlock[] blocks = SpicaBlock.values();
+            for (SpicaBlock block : blocks) {
+                if (block.getId() == id) {
+                    return block;
+                }
+            }
+            return null;
         }
     }
 }

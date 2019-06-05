@@ -42,5 +42,8 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.5'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+
+    implementation 'io.realm:realm-annotations-processor:5.9.1'
 }
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'realm-android'

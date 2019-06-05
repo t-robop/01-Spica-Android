@@ -25,6 +25,7 @@ import com.t_robop.yuusuke.a01_spica_android.R;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityScriptMainBinding;
 import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.repository.LogRepository;
+import com.t_robop.yuusuke.a01_spica_android.repository.ScriptRepository;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpReceive;
 import com.t_robop.yuusuke.a01_spica_android.util.UdpSend;
 
@@ -44,6 +45,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
     private BlockSelectFragment blockSelectFragment;
     private BlockDetailFragment blockDetailFragment;
+    private ScriptFilesFragment scriptFilesFragment;
 
     private UdpReceive udpReceive;
 
@@ -76,7 +78,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
          */
         blockSelectFragment = new BlockSelectFragment();
         blockDetailFragment = new BlockDetailFragment();
-        new ScriptPresenter(this, blockSelectFragment, blockDetailFragment);
+        scriptFilesFragment = new ScriptFilesFragment();
+
+        ScriptRepository repo = new ScriptRepository(this);
+        new ScriptPresenter(repo.getLastScriptTitle(), this, blockSelectFragment, blockDetailFragment, scriptFilesFragment);
 
         /**
          * 追加ボタンクリック時
@@ -87,7 +92,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 hideNavigationBar();
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
                 ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
-                inflateFragment(scriptModel);
+                inflateBlockFragment(scriptModel);
             }
         });
         mScriptAdapter.setOnConductorIfClickListener(new ScriptMainAdapter.onItemClickListener() {
@@ -96,7 +101,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 hideNavigationBar();
                 mScriptPresenter.setState(ScriptPresenter.ViewState.SELECT);
                 ScriptModel scriptModel = new ScriptModel(pos, ifState, isInLoop);
-                inflateFragment(scriptModel);
+                inflateBlockFragment(scriptModel);
             }
         });
 
@@ -115,7 +120,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                     ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
                     if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
                         return;
-                    inflateFragment(scriptModel);
+                    inflateBlockFragment(scriptModel);
                 }
             }
         });
@@ -130,7 +135,7 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
                 ScriptModel scriptModel = mScriptPresenter.getScripts().get(pos);
                 if (scriptModel.getBlock() == IF_END || scriptModel.getBlock() == FOR_END)
                     return;
-                inflateFragment(scriptModel);
+                inflateBlockFragment(scriptModel);
             }
         });
 
@@ -224,6 +229,19 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+        /**
+         * filesボタンが押されたとき
+         */
+        mBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideNavigationBar();
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.add(R.id.conductor_fragment, scriptFilesFragment);
+                fragmentTransaction.commit();
+            }
+        });
 
         /**
          *
@@ -240,6 +258,25 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
             }
         });
 
+
+        // todo realmのてすと
+//        ScriptRepository repository=new ScriptRepository(this);
+//        ArrayList<ScriptModel> scriptsTest=new ArrayList<>();
+//        ScriptModel s1=new ScriptModel();
+//        s1.setId("1");
+//        scriptsTest.add(s1);
+//        ScriptModel s2=new ScriptModel();
+//        s1.setId("2");
+//        scriptsTest.add(s2);
+//        ScriptModel s3=new ScriptModel();
+//        s1.setId("3");
+//        scriptsTest.add(s3);
+//        ScriptModel s4=new ScriptModel();
+//        s1.setId("4");
+//        scriptsTest.add(s4);
+//        repository.writeScript("TEST",scriptsTest);
+//        ArrayList<ScriptModel> scriptsTestResult=repository.getScript("TEST");
+//        scriptsTestResult.size();
     }
 
     @Override
@@ -249,9 +286,9 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
     }
 
     /**
-     * Fragment生成メソッド
+     * Block系Fragment生成メソッド
      */
-    public void inflateFragment(ScriptModel scriptModel) {
+    public void inflateBlockFragment(ScriptModel scriptModel) {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -286,8 +323,8 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.remove(blockDetailFragment);
         fragmentTransaction.remove(blockSelectFragment);
+        fragmentTransaction.remove(scriptFilesFragment);
         fragmentTransaction.commit();
-
     }
 
 
@@ -299,14 +336,14 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
         mScriptPresenter.setState(ScriptPresenter.ViewState.ADD);
         ScriptModel scriptModel = mScriptPresenter.getTargetScript();
         scriptModel.setBlock(block);
-        inflateFragment(scriptModel);
+        inflateBlockFragment(scriptModel);
     }
 
     /**
      * スクリプトのリストを投げるとUI構築してくれる神メソッド
      */
     @Override
-    public void drawScripts(ArrayList<ScriptModel> scripts) {
+    public void drawScripts(String title, ArrayList<ScriptModel> scripts) {
         mScriptAdapter.clear();
 
         //スタートブロック記述
@@ -364,6 +401,10 @@ public class ScriptMainActivity extends AppCompatActivity implements ScriptContr
 
         mBinding.canvasView.setCommandBlocks(mScriptAdapter);
         mBinding.canvasView.windowSizeChange(sizeX, (float) mScriptAdapter.getItemCount());
+
+        mBinding.saveText.setText(title);
+        ScriptRepository repo = new ScriptRepository(this);
+        repo.writeScript(title, scripts);
     }
 
     @Override

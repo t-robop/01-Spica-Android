@@ -181,4 +181,7 @@
     <string name="receive_udp_dialog_description">Robot is moving....</string>
     <string name="receive_udp_dialog_button_stop_text">Stop</string>
 
+    <!-- files fragment -->
+    <string name="files_fragment_title">Saved Files</string>
+
 </resources>

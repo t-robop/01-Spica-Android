@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Spica</string>
-    
+
     <!-- common block -->
     <string name="common_forward_name">すすむ</string>
     <string name="common_back_name">さがる</string>
@@ -14,21 +14,21 @@
     <string name="common_for_start_name">ループ</string>
     <string name="common_for_end_name">ループ - おわり</string>
     <string name="common_break_name">ぬける</string>
-    
+
     <string name="common_speed_low">おそい</string>
     <string name="common_speed_middle">ふつう</string>
     <string name="common_speed_high">はやい</string>
 
     <string name="common_time_unit">%sびょう</string>
     <string name="common_count_unit">%sかい</string>
-    
+
     <string name="common_block_add">+</string>
 
     <!-- common button-->
     <string name="common_button_ok">ほぞん</string>
     <string name="common_button_cancel">×</string>
     <string name="common_button_delete">すてる</string>
-    
+
     <!-- common config -->
     <string name="common_ip_name">IPアドレス</string>
     <string name="common_port_name">ポート番号</string>
@@ -40,7 +40,7 @@
     <string name="block_detail_fragment_compare_above_text">cmよりとおいなら、「はい」へ</string>
     <string name="block_detail_fragment_compare_below_text">cmよりちかいなら、「はい」へ</string>
     <string name="block_detail_fragment_loop_unit_text">かい、くりかえす</string>
-    
+
     <string name="block_detail_fragment_block_forward_name">@string/common_forward_name</string>
     <string name="block_detail_fragment_block_forward_description">速度と時間を設定して、ロボットを前に動かします。</string>
     <string name="block_detail_fragment_forward_unit_text">びょう、すすむ</string>
@@ -92,14 +92,14 @@
     <string name="activity_block_detail_block_title">@string/common_error_text</string>
     <string name="activity_block_detail_block_description">@string/common_error_text</string>
     <string name="activity_block_detail_view_finish">@string/common_button_cancel</string>
-    
+
     <string name="activity_block_detail_block_speed_low">@string/common_speed_low</string>
     <string name="activity_block_detail_block_speed_middle">@string/common_speed_middle</string>
     <string name="activity_block_detail_block_speed_high">@string/common_speed_high</string>
-    
+
     <string name="activity_block_detail_block_state_left">@string/common_error_text</string>
     <string name="activity_block_detail_block_state_right">@string/common_error_text</string>
-    
+
     <string name="activity_block_detail_button_delete_text">@string/common_button_delete</string>
     <string name="activity_block_detail_button_ok_text">@string/common_button_ok</string>
 
@@ -110,7 +110,7 @@
     <string name="activity_block_select_block_if_start_name">@string/common_if_start_name</string>
     <string name="activity_block_select_block_for_start_name">@string/common_for_start_name</string>
     <string name="activity_block_select_block_break_name">@string/common_break_name</string>
-    
+
     <!-- activity_setting -->
     <string name="activity_setting_ip_name">@string/common_ip_name</string>
     <string name="activity_setting_port_name">@string/common_port_name</string>
@@ -180,5 +180,8 @@
     <!-- receive_udp_dialog -->
     <string name="receive_udp_dialog_description">ロボットがうごいています....</string>
     <string name="receive_udp_dialog_button_stop_text">とめる</string>
+
+    <!-- files fragment -->
+    <string name="files_fragment_title">ほぞんされたファイル</string>
 
 </resources>
