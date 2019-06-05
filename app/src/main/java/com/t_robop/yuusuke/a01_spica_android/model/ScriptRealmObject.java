@@ -8,7 +8,6 @@ public class ScriptRealmObject extends RealmObject {
         this.id = String.valueOf(script.getBlock().getId());
         this.pos = script.getPos();
         this.ifState = script.getIfState();
-        this.speed = script.getSpeed();
         this.value = script.getValue();
         this.isInLoop = script.isInLoop();
     }

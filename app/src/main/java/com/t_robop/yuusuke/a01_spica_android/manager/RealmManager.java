@@ -116,7 +116,6 @@ public class RealmManager {
         script.setPos(page.getPos());
         script.setIfState(page.getIfState());
         script.setInLoop(page.isInLoop());
-        script.setSpeed(page.getSpeed());
         script.setValue(page.getValue());
         return script;
     }

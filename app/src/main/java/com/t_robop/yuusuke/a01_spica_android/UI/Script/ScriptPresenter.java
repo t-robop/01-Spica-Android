@@ -196,37 +196,16 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             SharedPreferences preferences = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
             String leftSpeed, rightSpeed;
             if (script.getBlock() != ScriptModel.SpicaBlock.IF_START) {
-
-                switch (script.getSpeed()) {
-                    case 1:
-                        leftSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
-                        rightSpeed = String.format("%03d", preferences.getInt("lowSpeed", 60));
-                        break;
-
-                    case 2:
-                        leftSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
-                        rightSpeed = String.format("%03d", preferences.getInt("middleSpeed", 80));
-                        break;
-
-                    case 3:
-                        leftSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
-                        rightSpeed = String.format("%03d", preferences.getInt("highSpeed", 100));
-                        break;
-
-                    default:
-                        leftSpeed = String.format("%03d", 0);
-                        rightSpeed = String.format("%03d", 0);
-                }
+                leftSpeed = String.format("%03d", preferences.getInt("speed", 80));
+                rightSpeed = String.format("%03d", preferences.getInt("speed", 80));
             } else {
-                leftSpeed = String.format("%03d", script.getSpeed());
+                leftSpeed = String.format("%03d", script.getIfOperator());
                 rightSpeed = "000";
             }
-//            String leftSpeed = String.format("%03d", script.getSpeed());
             if (script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END) {
                 leftSpeed = String.format("%03d", 0);
             }
 
-//            String rightSpeed = String.format("%03d", script.getSpeed());
             if (script.getBlock() == IF_START || script.getBlock() == IF_END || script.getBlock() == FOR_START || script.getBlock() == FOR_END) {
                 rightSpeed = String.format("%03d", 0);
             }
@@ -238,7 +217,7 @@ public class ScriptPresenter implements ScriptContract.Presenter {
                 value = String.format("%03d", 0);
             }
 
-            sendStringData = sendStringData + String.valueOf(ifState) + blockId + String.valueOf(leftSpeed) + String.valueOf(rightSpeed) + String.valueOf(value);
+            sendStringData = sendStringData + ifState + blockId + leftSpeed + rightSpeed + value;
         }
         return sendStringData;
     }
