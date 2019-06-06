@@ -1,158 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout>
+    
+    <data>
+        <variable
+            name="activity"
+            type="com.t_robop.yuusuke.a01_spica_android.UI.Script.SettingActivity" />
+    </data>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_height="match_parent"
         tools:context=".UI.Script.SettingActivity">
 
-        <LinearLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/setting_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_color"
+            android:theme="@style/AppTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:title="@string/activity_setting_toolbar_title"
+            app:titleTextColor="@color/white_text_color">
+
+        </android.support.v7.widget.Toolbar>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/setting_network_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_margin="16dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_toolbar">
 
-            <Button
-                android:id="@+id/qr"
+            <TextView
+                android:id="@+id/setting_header_network"
                 android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:layout_weight="1"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
-                android:text="@string/activity_setting_button_qr_text"
-                android:textColor="@color/default_text_color" />
+                android:layout_height="wrap_content"
+                android:text="@string/common_network"
+                android:textSize="@dimen/setting_text_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/common_network" />
 
-            <requestFocus />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/ip_text"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/setting_ip_text_input_layout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/activity_setting_ip_name"
-                android:textColor="@color/default_text_color" />
+                android:layout_marginTop="16dp"
+                android:textColorHint="@color/color_green"
+                app:counterEnabled="true"
+                app:counterMaxLength="13"
+                app:errorEnabled="true"
+                app:hintAnimationEnabled="true"
+                app:hintEnabled="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/setting_header_network"
+                app:layout_constraintWidth_percent="0.45">
 
-            <EditText
-                android:id="@+id/ip_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:singleLine="true"
-                android:text=""
-                android:textColor="@color/default_text_color" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/port_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/activity_setting_port_name"
-                android:textColor="@color/default_text_color" />
-
-            <EditText
-                android:id="@+id/port_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:inputType="text"
-                android:text=""
-                android:textColor="@color/default_text_color" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/config_high_speed_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="速度設定"
-                android:textColor="@color/default_text_color" />
-
-            <EditText
-                android:id="@+id/config_speed_edit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Viewの設定" />
-
-                <LinearLayout
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/setting_ip_text_edit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:hint="@string/activity_setting_ip_name"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:textColor="@color/default_text_color"
+                    android:textSize="@dimen/setting_text_size_large"
+                    tools:text="192.168.1.101" />
 
-                    <CheckBox
-                        android:id="@+id/checkBoxLoop"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="loopを表示する" />
-
-                    <CheckBox
-                        android:id="@+id/checkBoxIf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="ifを表示する" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/save_btn"
+                android:id="@+id/setting_qr_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@color/color_green"
+                android:text="@string/activity_setting_button_qr_text"
+                android:textColor="@color/white_text_color"
+                android:textSize="@dimen/setting_text_size_medium"
+                android:textStyle="bold"
+                android:onClick="onClickReadQr"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/setting_ip_text_input_layout"
+                app:layout_constraintWidth_percent="0.45" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/setting_network_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            app:layout_constraintTop_toBottomOf="@+id/setting_network_group" />
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/setting_block_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintTop_toBottomOf="@id/setting_network_divider">
+
+            <TextView
+                android:id="@+id/setting_header_block"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/activity_setting_button_ok_text"
-                android:textColor="@color/default_text_color" />
-        </LinearLayout>
+                android:text="@string/activity_setting_header_block"
+                android:textSize="@dimen/setting_text_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@string/activity_setting_header_block" />
 
-    </LinearLayout>
-</ScrollView>
+            <CheckBox
+                android:id="@+id/checkbox_loop"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/activity_setting_checkbox_text_loop"
+                android:textSize="@dimen/setting_text_size_medium"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/setting_header_block"
+                app:layout_constraintWidth_percent="0.45" />
+
+            <CheckBox
+                android:id="@+id/checkbox_if"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/activity_setting_checkbox_text_if"
+                android:textSize="@dimen/setting_text_size_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/checkbox_loop"
+                app:layout_constraintWidth_percent="0.45" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:id="@+id/setting_block_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider_color"
+            app:layout_constraintTop_toBottomOf="@+id/setting_block_group" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</layout>

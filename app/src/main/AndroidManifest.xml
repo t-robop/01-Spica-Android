@@ -18,8 +18,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".UI.Script.SettingDetailActivity"></activity>
-        <activity android:name=".UI.Script.SettingActivity2" />
+        <activity
+            android:name=".UI.Script.SettingDetailActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".UI.Script.SettingActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".UI.Script.ScriptMainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -37,9 +41,6 @@
         <activity
             android:name=".UI.Script.BlockDetailActivity"
             android:theme="@style/Theme.DarkTranslucent" />
-        <activity
-            android:name=".UI.Script.SettingActivity"
-            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
