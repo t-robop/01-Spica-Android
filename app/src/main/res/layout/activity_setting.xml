@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
-    
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="activity"
             type="com.t_robop.yuusuke.a01_spica_android.UI.Script.SettingActivity" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -26,122 +26,113 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/setting_network_group"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/setting_header_network"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            app:layout_constraintTop_toBottomOf="@id/setting_toolbar">
+            android:text="@string/common_network"
+            android:textSize="@dimen/setting_text_size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setting_toolbar"
+            tools:text="@string/common_network" />
 
-            <TextView
-                android:id="@+id/setting_header_network"
-                android:layout_width="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/setting_ip_text_input_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColorHint="@color/color_green"
+            app:counterEnabled="true"
+            app:counterMaxLength="13"
+            app:errorEnabled="true"
+            app:hintAnimationEnabled="true"
+            app:hintEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_header_network"
+            app:layout_constraintWidth_percent="0.45">
+
+            <android.support.design.widget.TextInputEditText
+                android:id="@+id/setting_ip_text_edit"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/common_network"
-                android:textSize="@dimen/setting_text_size_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/common_network" />
+                android:hint="@string/activity_setting_ip_name"
+                android:inputType="number"
+                android:maxLines="1"
+                android:textColor="@color/default_text_color"
+                android:textSize="@dimen/setting_text_size_large"
+                tools:text="192.168.1.101" />
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/setting_ip_text_input_layout"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textColorHint="@color/color_green"
-                app:counterEnabled="true"
-                app:counterMaxLength="13"
-                app:errorEnabled="true"
-                app:hintAnimationEnabled="true"
-                app:hintEnabled="true"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/setting_header_network"
-                app:layout_constraintWidth_percent="0.45">
+        </android.support.design.widget.TextInputLayout>
 
-                <android.support.design.widget.TextInputEditText
-                    android:id="@+id/setting_ip_text_edit"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/activity_setting_ip_name"
-                    android:inputType="number"
-                    android:maxLines="1"
-                    android:textColor="@color/default_text_color"
-                    android:textSize="@dimen/setting_text_size_large"
-                    tools:text="192.168.1.101" />
-
-            </android.support.design.widget.TextInputLayout>
-
-            <Button
-                android:id="@+id/setting_qr_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@color/color_green"
-                android:text="@string/activity_setting_button_qr_text"
-                android:textColor="@color/white_text_color"
-                android:textSize="@dimen/setting_text_size_medium"
-                android:textStyle="bold"
-                android:onClick="onClickReadQr"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/setting_ip_text_input_layout"
-                app:layout_constraintWidth_percent="0.45" />
-
-        </android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/setting_qr_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@color/color_green"
+            android:onClick="onClickReadQr"
+            android:text="@string/activity_setting_button_qr_text"
+            android:textColor="@color/white_text_color"
+            android:textSize="@dimen/setting_text_size_medium"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/setting_ip_text_input_layout"
+            app:layout_constraintWidth_percent="0.45" />
 
         <View
             android:id="@+id/setting_network_divider"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginTop="16dp"
             android:background="@color/divider_color"
-            app:layout_constraintTop_toBottomOf="@+id/setting_network_group" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setting_ip_text_input_layout" />
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/setting_block_group"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/setting_header_block"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
-            android:paddingBottom="16dp"
-            app:layout_constraintTop_toBottomOf="@id/setting_network_divider">
+            android:text="@string/activity_setting_header_block"
+            android:textSize="@dimen/setting_text_size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setting_network_divider"
+            tools:text="@string/activity_setting_header_block" />
 
-            <TextView
-                android:id="@+id/setting_header_block"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_setting_header_block"
-                android:textSize="@dimen/setting_text_size_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="@string/activity_setting_header_block" />
+        <CheckBox
+            android:id="@+id/checkbox_loop"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="@string/activity_setting_checkbox_text_loop"
+            android:textSize="@dimen/setting_text_size_medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/setting_header_block"
+            app:layout_constraintWidth_percent="0.45" />
 
-            <CheckBox
-                android:id="@+id/checkbox_loop"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/activity_setting_checkbox_text_loop"
-                android:textSize="@dimen/setting_text_size_medium"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/setting_header_block"
-                app:layout_constraintWidth_percent="0.45" />
-
-            <CheckBox
-                android:id="@+id/checkbox_if"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/activity_setting_checkbox_text_if"
-                android:textSize="@dimen/setting_text_size_medium"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@id/checkbox_loop"
-                app:layout_constraintWidth_percent="0.45" />
-
-        </android.support.constraint.ConstraintLayout>
+        <CheckBox
+            android:id="@+id/checkbox_if"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/activity_setting_checkbox_text_if"
+            android:textSize="@dimen/setting_text_size_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/setting_header_block"
+            app:layout_constraintWidth_percent="0.45" />
 
         <View
             android:id="@+id/setting_block_divider"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="1dp"
+            android:layout_marginTop="24dp"
             android:background="@color/divider_color"
-            app:layout_constraintTop_toBottomOf="@+id/setting_block_group" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/checkbox_loop" />
 
     </android.support.constraint.ConstraintLayout>
 

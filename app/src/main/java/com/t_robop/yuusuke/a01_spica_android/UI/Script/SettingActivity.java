@@ -37,7 +37,7 @@ public class SettingActivity extends AppCompatActivity {
         setSupportActionBar(binding.settingToolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_white_24dp);
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
         String ip = preferences.getString(preferenceIpKey, "192.168.1.101");
