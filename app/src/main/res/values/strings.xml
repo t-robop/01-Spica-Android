@@ -127,6 +127,7 @@
     <string name="activity_setting_header_block" translatable="false">ブロックの表示</string>
     <string name="activity_setting_checkbox_text_loop" translatable="false">ループブロックを表示する</string>
     <string name="activity_setting_checkbox_text_if" translatable="false">もしもブロック・ぬけるブロックを表示する</string>
+    <string name="activity_setting_ip_length_error_text" translatable="false">桁数が間違っています</string>
 
     <!-- activity_setting_detail -->
     <string name="activity_setting_detail_toolbar_title">@string/common_setting_detail</string>
