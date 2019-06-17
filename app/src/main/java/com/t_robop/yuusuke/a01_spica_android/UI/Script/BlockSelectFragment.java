@@ -7,7 +7,6 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,8 +16,8 @@ import android.view.animation.ScaleAnimation;
 
 import com.t_robop.yuusuke.a01_spica_android.MyApplication;
 import com.t_robop.yuusuke.a01_spica_android.R;
-import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 import com.t_robop.yuusuke.a01_spica_android.databinding.ActivityBlockSelectBinding;
+import com.t_robop.yuusuke.a01_spica_android.model.ScriptModel;
 
 public class BlockSelectFragment extends Fragment implements ScriptContract.SelectView {
 
@@ -118,7 +117,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         }
         if (!loopState) {
             mBinding.kurikaesu.setVisibility(View.GONE);
-        }else {
+        } else {
             mBinding.kurikaesu.setVisibility(View.VISIBLE);
         }
 
