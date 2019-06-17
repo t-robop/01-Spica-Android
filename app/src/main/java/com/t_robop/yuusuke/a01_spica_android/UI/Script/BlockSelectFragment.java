@@ -106,7 +106,7 @@ public class BlockSelectFragment extends Fragment implements ScriptContract.Sele
         }
 
         SharedPreferences pref = getContext().getSharedPreferences("udp_config", Context.MODE_PRIVATE);
-        boolean ifState = pref.getBoolean("ifState", true);
+        boolean ifState = pref.getBoolean("ifState", false);
         boolean loopState = pref.getBoolean("loopState", true);
         if (!ifState) {
             mBinding.mosimo.setVisibility(View.GONE);

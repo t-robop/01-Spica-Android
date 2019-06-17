@@ -30,8 +30,11 @@
     <string name="common_button_delete">Delete</string>
 
     <!-- common config -->
+    <string name="common_network">Network</string>
     <string name="common_ip_name">IP Address</string>
     <string name="common_port_name">Port Number</string>
+    <string name="common_setting">設定</string>
+    <string name="common_setting_detail">Detail Setting</string>
 
     <!-- common Error系 -->
     <string name="common_error_text">Error</string>
@@ -112,11 +115,19 @@
     <string name="activity_block_select_block_break_name">@string/common_break_name</string>
 
     <!-- activity_setting -->
+    <string name="activity_setting_toolbar_title">@string/common_setting</string>
     <string name="activity_setting_ip_name">@string/common_ip_name</string>
     <string name="activity_setting_port_name">@string/common_port_name</string>
     <string name="activity_setting_button_view_finish_text">@string/common_button_cancel</string>
     <string name="activity_setting_button_ok_text">@string/common_button_ok</string>
     <string name="activity_setting_button_qr_text">Read QR</string>
+    <string name="activity_setting_detail_text">@string/common_setting_detail</string>
+    <string name="activity_setting_header_network">@string/common_network</string>
+
+    <!-- activity_setting_detail -->
+    <string name="activity_setting_detail_toolbar_title">@string/common_setting_detail</string>
+    <string name="activity_setting_detail_header_network">@string/common_network</string>
+    <string name="activity_setting_detail_hint_text_port">@string/common_port_name</string>
 
     <!-- block_back -->
     <string name="block_back_block_name">@string/common_back_name</string>

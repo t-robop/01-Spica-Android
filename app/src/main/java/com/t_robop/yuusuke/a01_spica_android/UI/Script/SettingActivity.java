@@ -3,108 +3,99 @@ package com.t_robop.yuusuke.a01_spica_android.UI.Script;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.databinding.Bindable;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.TextView;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.t_robop.yuusuke.a01_spica_android.R;
+import com.t_robop.yuusuke.a01_spica_android.databinding.ActivitySettingBinding;
 
 public class SettingActivity extends AppCompatActivity {
 
-    TextView ipEditText;
-    TextView portEditText;
-    private EditText configSpeedEdit;
-    private CheckBox ifCheckBox;
-    private CheckBox loopCheckBox;
+    private ActivitySettingBinding binding;
+    private SharedPreferences preferences;
 
-
-    Button saveButton;
-    Button cancelButton;
-    Button qrButton;
-    SharedPreferences pref;
+    private final String preferenceIpKey = "ip";
+    private final String preferenceCheckLoopKey = "loopState";
+    private final String preferenceCheckIfKey = "ifState";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
-        ipEditText = findViewById(R.id.ip_edit);
-        portEditText = findViewById(R.id.port_edit);
-        configSpeedEdit = findViewById(R.id.config_speed_edit);
-        ifCheckBox = findViewById(R.id.checkBoxIf);
-        loopCheckBox = findViewById(R.id.checkBoxLoop);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_setting);
 
-        pref = getSharedPreferences("udp_config", Context.MODE_PRIVATE);
-        final String ip = pref.getString("ip", "");
-        final int port = pref.getInt("port", 50000);
-        ipEditText.setText(ip);
-        portEditText.setText(String.valueOf(port));
+        final String preferenceKey = "udp_config";
+        preferences = getSharedPreferences(preferenceKey, Context.MODE_PRIVATE);
 
-        ifCheckBox.setChecked(pref.getBoolean("ifState", true));
-        loopCheckBox.setChecked(pref.getBoolean("loopState", true));
+        setSupportActionBar(binding.settingToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
 
-        int configSpeedNum = pref.getInt("speed", 80);
-        configSpeedEdit.setText(String.valueOf(configSpeedNum));
+        String ip = preferences.getString(preferenceIpKey, "192.168.1.101");
+        binding.settingIpTextEdit.setText(ip);
 
-        saveButton = findViewById(R.id.save_btn);
-        saveButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        save();
-                    }
-                }
-        );
+        binding.checkboxLoop.setChecked(preferences.getBoolean(preferenceCheckLoopKey, true));
+        binding.checkboxIf.setChecked(preferences.getBoolean(preferenceCheckIfKey, false));
+    }
 
-        qrButton = findViewById(R.id.qr);
-        qrButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        new IntentIntegrator(SettingActivity.this).initiateScan();
-                    }
-                }
-        );
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.setting_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                saveSettings();
+                finish();
+                return true;
+
+            case R.id.menu_setting_detail:
+                Intent intent = new Intent(getApplicationContext(), SettingDetailActivity.class);
+                startActivity(intent);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveSettings();
+    }
+
+    public void onClickReadQr(View view) {
+        new IntentIntegrator(SettingActivity.this).initiateScan();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (data != null) {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             String resultData = result.getContents();
-            String[] Datas = resultData.split(";", 0);
-            String ipString = (Datas[0].split(":")[1]);
-            ipEditText.setText(ipString);
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
+            String[] parsedData = resultData.split(";", 0);
+            String ip = parsedData[0].split(":")[1];
+            binding.settingIpTextEdit.setText(ip);
         }
     }
 
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode != KeyEvent.KEYCODE_BACK) {
-            return super.onKeyDown(keyCode, event);
-        } else {
-            save();
-            finish();
-            return false;
-        }
-    }
-
-    private void save() {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("ip", ipEditText.getText().toString());
-        editor.putInt("port", Integer.parseInt(portEditText.getText().toString()));
-        editor.putInt("speed", Integer.parseInt(configSpeedEdit.getText().toString()));
-        editor.putBoolean("ifState", ifCheckBox.isChecked());
-        editor.putBoolean("loopState", loopCheckBox.isChecked());
+    private void saveSettings() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(preferenceIpKey, binding.settingIpTextEdit.getText().toString());
+        editor.putBoolean(preferenceCheckLoopKey, binding.checkboxLoop.isChecked());
+        editor.putBoolean(preferenceCheckIfKey, binding.checkboxIf.isChecked());
         editor.apply();
-        finish();
     }
 }
