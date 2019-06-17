@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/activity_setting_ip_name"
                 android:inputType="number"
+                android:digits="0123456789."
                 android:maxLines="1"
                 android:textColor="@color/default_text_color"
                 android:textSize="@dimen/setting_text_size_large"
