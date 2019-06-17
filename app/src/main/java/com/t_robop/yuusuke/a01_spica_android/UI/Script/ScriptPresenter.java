@@ -178,8 +178,8 @@ public class ScriptPresenter implements ScriptContract.Presenter {
             SharedPreferences preferences = context.getSharedPreferences("udp_config", Context.MODE_PRIVATE);
             String leftSpeed, rightSpeed;
             if (script.getBlock() != ScriptModel.SpicaBlock.IF_START) {
-                leftSpeed = String.format("%03d", preferences.getInt("speed", 80));
-                rightSpeed = String.format("%03d", preferences.getInt("speed", 80));
+                leftSpeed = String.format("%03d", preferences.getInt("speed", 60));
+                rightSpeed = String.format("%03d", preferences.getInt("speed", 60));
             } else {
                 leftSpeed = String.format("%03d", script.getIfOperator());
                 rightSpeed = "000";

@@ -36,7 +36,7 @@ public class SettingDetailActivity extends AppCompatActivity {
         int port = preferences.getInt(preferencePortKey, 50000);
         binding.settingDetailPortTextEdit.setText(String.valueOf(port));
 
-        int speed = preferences.getInt(preferenceSpeedKey, 80);
+        int speed = preferences.getInt(preferenceSpeedKey, 60);
         binding.settingDetailSpeedTextEdit.setText(String.valueOf(speed));
     }
 
